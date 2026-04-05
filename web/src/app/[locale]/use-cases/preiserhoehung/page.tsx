@@ -54,7 +54,7 @@ export default async function PreiserhoehungPage({
       <article className="max-w-4xl mx-auto px-6 py-20">
         <div className="nexus-card" style={{ padding: "1.5rem", marginBottom: "4rem", borderLeft: "3px solid #FFD600", background: "rgba(255,214,0,0.02)" }}>
            <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.65rem", color: "#FFD600", margin: 0 }}>
-             <span style={{ fontWeight: 700 }}>INFLATION SHIELD ACTIVE:</span> Automatische Überwachung von Kostenerhöhungen > 2%. Analyse via Finance Guardian Node.
+             <span style={{ fontWeight: 700 }}>INFLATION SHIELD ACTIVE:</span> Automatische Überwachung von Kostenerhöhungen &gt; 2%. Analyse via Finance Guardian Node.
            </p>
         </div>
 

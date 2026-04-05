@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "SOVEREIGN Platform API"
     VERSION: str = "2.0.0"
     GCP_PROJECT_ID: str = "opus-magnum-ai"
-    REGION: str = "us-central1"
+    REGION: str = "europe-west4"
     ENVIRONMENT: str = os.environ.get("K_SERVICE", "") and "production" or "local"
 
     # ═══════════════════════════════════════

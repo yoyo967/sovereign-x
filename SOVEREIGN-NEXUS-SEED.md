@@ -52,9 +52,9 @@
 ## 3 · EU AI ACT ART. 13 — DISCLAIMER (exakte Formulierungen, copy-paste)
 
 ### Standard-Disclaimer (alle Demo-Sektionen)
-Dieses System interagiert mit einem KI-Modell
-(Gemma 4 On-Device / Gemini 2.5 Flash · EU-Server europe-west4).
-Ergebnisse dienen der Demonstration. Keine PII-Speicherung.
+This system interacts with an AI model
+(Gemma 4 On-Device / Gemini 2.5 Flash · EU Server europe-west4).
+Results are for demonstration purposes. No PII storage.
 
 ### Live-Terminal Label (UI-Badge, dezent, technisch)
 System: Gemini 2.5 Flash · Processing: Cloud (EU-Region) · No PII storage
@@ -262,5 +262,5 @@ export const PAYMENT_METHODS = ["card", "sepa_debit", "google_pay"] as const;
 
 ---
 
-*SOVEREIGN-NEXUS-SEED.md · 2026-04-04 · Masterplan v4.1*
-*Single Source of Truth. Jede Abweichung im Code ist ein Bug.*
+*SOVEREIGN-NEXUS-SEED.md · 2026-04-05 · Masterplan v4.2*
+*EU-Infrastruktur verifiziert (europe-west4). Single Source of Truth.*
