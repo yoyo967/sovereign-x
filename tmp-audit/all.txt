@@ -1,0 +1,85 @@
+=== APIS ===
+NAME                                         TITLE
+aiplatform.googleapis.com                    Vertex AI API
+analyticshub.googleapis.com                  Analytics Hub API
+appengine.googleapis.com                     App Engine Admin API
+artifactregistry.googleapis.com              Artifact Registry API
+bigquery.googleapis.com                      BigQuery API
+bigqueryconnection.googleapis.com            BigQuery Connection API
+bigquerydatapolicy.googleapis.com            BigQuery Data Policy API
+bigquerydatatransfer.googleapis.com          BigQuery Data Transfer API
+bigquerymigration.googleapis.com             BigQuery Migration API
+bigqueryreservation.googleapis.com           BigQuery Reservation API
+bigquerystorage.googleapis.com               BigQuery Storage API
+cloudaicompanion.googleapis.com              Gemini for Google Cloud API
+cloudapis.googleapis.com                     Google Cloud APIs
+cloudbuild.googleapis.com                    Cloud Build API
+clouderrorreporting.googleapis.com           Error Reporting API
+cloudresourcemanager.googleapis.com          Cloud Resource Manager API
+cloudtrace.googleapis.com                    Cloud Trace API
+containerregistry.googleapis.com             Container Registry API
+dataform.googleapis.com                      Dataform API
+dataplex.googleapis.com                      Cloud Dataplex API
+datastore.googleapis.com                     Cloud Datastore API
+drive.googleapis.com                         Google Drive API
+fcm.googleapis.com                           Firebase Cloud Messaging API
+fcmregistrations.googleapis.com              FCM Registration API
+firebase.googleapis.com                      Firebase Management API
+firebaseappdistribution.googleapis.com       Firebase App Distribution API
+firebasehosting.googleapis.com               Firebase Hosting API
+firebaseinstallations.googleapis.com         Firebase Installations API
+firebaseremoteconfig.googleapis.com          Firebase Remote Config API
+firebaseremoteconfigrealtime.googleapis.com  Firebase Remote Config Realtime API
+firebaserules.googleapis.com                 Firebase Rules API
+firebasevertexai.googleapis.com              Firebase AI Logic API
+firestore.googleapis.com                     Cloud Firestore API
+generativelanguage.googleapis.com            Generative Language API
+gmail.googleapis.com                         Gmail API
+iam.googleapis.com                           Identity and Access Management (IAM) API
+iamcredentials.googleapis.com                IAM Service Account Credentials API
+identitytoolkit.googleapis.com               Identity Toolkit API
+logging.googleapis.com                       Cloud Logging API
+monitoring.googleapis.com                    Cloud Monitoring API
+pubsub.googleapis.com                        Cloud Pub/Sub API
+run.googleapis.com                           Cloud Run Admin API
+runtimeconfig.googleapis.com                 Cloud Runtime Configuration API
+securetoken.googleapis.com                   Token Service API
+servicemanagement.googleapis.com             Service Management API
+serviceusage.googleapis.com                  Service Usage API
+sql-component.googleapis.com                 Cloud SQL
+storage-api.googleapis.com                   Google Cloud Storage JSON API
+storage-component.googleapis.com             Cloud Storage
+storage.googleapis.com                       Cloud Storage API
+testing.googleapis.com                       Cloud Testing API
+=== ARTIFACT REGISTRY ===
+                                                                   ARTIFACT_REGISTRY
+REPOSITORY      FORMAT  MODE                 DESCRIPTION  LOCATION      LABELS  ENCRYPTION          CREATE_TIME          UPDATE_TIME          SIZE (MB)
+sovereign-repo  DOCKER  STANDARD_REPOSITORY               europe-west3          Google-managed key  2026-03-27T09:33:00  2026-03-27T14:26:38  117.726
+=== SERVICE ACCOUNTS ===
+DISPLAY NAME                     EMAIL                                                           DISABLED
+firebase-adminsdk                firebase-adminsdk-fbsvc@opus-magnum-ai.iam.gserviceaccount.com  False
+Default compute service account  923137317598-compute@developer.gserviceaccount.com              False
+sovereign-backend-sa             sovereign-backend-sa@opus-magnum-ai.iam.gserviceaccount.com     False
+=== SECRETS ===
+=== FIRESTORE ===
+---
+appEngineIntegrationMode: DISABLED
+concurrencyMode: PESSIMISTIC
+createTime: '2026-03-27T08:23:50.860057Z'
+databaseEdition: STANDARD
+deleteProtectionState: DELETE_PROTECTION_DISABLED
+earliestVersionTime: '2026-03-31T05:37:29.029708Z'
+etag: IIO0+pvDyZMDMJWPwoiRwJMD
+freeTier: true
+keyPrefix: h
+locationId: europe-west3
+name: projects/opus-magnum-ai/databases/(default)
+pointInTimeRecoveryEnablement: POINT_IN_TIME_RECOVERY_DISABLED
+realtimeUpdatesMode: REALTIME_UPDATES_MODE_ENABLED
+type: FIRESTORE_NATIVE
+uid: ad93b094-20a1-4dce-a65f-24911ca37ab1
+updateTime: '2026-03-27T08:23:50.860057Z'
+versionRetentionPeriod: 3600s
+=== CLOUD RUN ===
+   SERVICE        REGION        URL                                                      LAST DEPLOYED BY            LAST DEPLOYED AT
++  sovereign-api  europe-west3  https://sovereign-api-923137317598.europe-west3.run.app  yildirimyahya716@gmail.com  2026-03-27T13:27:05.458261Z

@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "sovereignty": "主権",
+    "features": "機能",
+    "pricing": "料金",
+    "security": "セキュリティ",
+    "login": "ログイン",
+    "start": "始める",
+    "toDashboard": "マイTwin"
+  },
+  "hero": {
+    "badge": {
+      "gdpr": "GDPR・データ法対応済み",
+      "audit": "100%監査証跡",
+      "hitl": "HITL保護"
+    },
+    "headline1": "個人データ主権のための",
+    "headline2": "オペレーティングシステム。",
+    "sub": "ローカルで動作する自律型デジタルツイン。ハイパースケーラー依存ゼロ。バウンダリーファーストデザイン。すべてのアクション、APIコール、データセットに対する完全な制御を維持。",
+    "cta": {
+      "primary": "実行センターを起動",
+      "secondary": "アーキテクチャを理解する"
+    },
+    "stats": {
+      "contracts": "保護された契約",
+      "value": "自動化された価値",
+      "nodes": "Sovereignノード"
+    }
+  },
+  "trust": {
+    "techPartner": "テクノロジーパートナーとコンプライアンス",
+    "compliance": "EU AI ACT準拠"
+  },
+  "features": {
+    "tag": "システムアーキテクチャ",
+    "headline1": "主権の",
+    "headline2": "4つの層。",
+    "sub": "Sovereignは一つの原則に基づいています：ガードレールを制御できるときのみ、自動化を信頼できる。これはディールアプリではありません — インフラです。",
+    "items": {
+      "0": { "title": "AgentMemory（データウェアハウス）", "description": "あなたのパーソナルなコンポーザブルCDP。すべての契約、財務データ、IDが隔離されたカプセルの中に。ハイパースケーラー依存なし。データアクセスを物理的に制御。" },
+      "1": { "title": "Privacy Guardian（コンセントレイヤー）", "description": "あなたの生活の物理的な守護者。Sovereign OSが厳格なBoundary Conditionsを検証しない限り、どのAPIサービスも外部LLMモデルもあなたのデータにアクセスできません。" },
+      "2": { "title": "実行センター（HITL / HOTL）", "description": "バウンダリーファーストデザインの完成形。システムがあなたの承認を必要とする時（Human-in-the-Loop）と、ルーティンタスクを自律的に処理できる時（Human-on-the-Loop）を定義できます。" },
+      "3": { "title": "100%監査証跡＆エスクロー", "description": "主権とは証明可能性を意味します。エージェントのすべての自律的なアクション、すべての異議申し立て、すべてのキャンセルが改ざん不可能な方法で記録されます。アーキテクチャ層としてのコンプライアンス。" }
+    }
+  },
+  "architecture": {
+    "tag": "コア原則",
+    "headline": "主権はアーキテクチャ上の決断です。",
+    "pillar1": { "title": "Privacy Guardian", "description": "あなたのBoundary Conditionsなしに、AIアクションはありません。すべての外部APIコールは、実行される前にあなたのルールに対して検証されます。" },
+    "pillar2": { "title": "実行センター", "description": "ツインがいつ尋ねるか（HITL）といつ自律的に行動するか（HOTL）を決定するのはあなたです。制御は常にあなたにあります — アルゴリズムではありません。" },
+    "pillar3": { "title": "監査証跡", "description": "ブラックボックスAIはありません。すべてのアクションが記録されます。ツインがあなたの代わりに行ったすべてのことに完全な透明性を。" }
+  },
+  "comparison": {
+    "tag": "違い",
+    "headline1": "Sovereign Twin",
+    "vs": "vs.",
+    "headline2": "標準SaaS",
+    "rows": {
+      "ownership": { "label": "データ所有権", "sovereign": "あなたのデバイス、あなたのルール", "saas": "ベンダーのサーバー" },
+      "ai": { "label": "AIアクセス", "sovereign": "バウンダリーファースト、HITL制御", "saas": "無制限、不透明" },
+      "audit": { "label": "透明性", "sovereign": "完全な監査証跡", "saas": "ブラックボックス" },
+      "infra": { "label": "インフラ", "sovereign": "EUデータレジデンシー、ロックインなし", "saas": "ハイパースケーラー、ベンダーロックイン" },
+      "autonomy": { "label": "自律レベル", "sovereign": "あなたがパラメータを設定", "saas": "ベンダーがルールを設定" }
+    }
+  },
+  "brainstormer": {
+    "headline": "Twinをライブでテスト",
+    "sub": "契約や財務戦略についてデジタルツインに質問してみてください。Sovereign Intelligenceをリアルタイムで体験できます。"
+  },
+  "pricing": {
+    "headline": "保護レベルを選択",
+    "sub": "主権はすべての人のためにあります。無料で始めるか、あなたと家族のための最大自律保護を選択してください。",
+    "popular": "最も人気",
+    "perMonth": "/ 月",
+    "cta": { "free": "今すぐ始める", "pro": "Proになる", "shield": "最大保護" }
+  },
+  "cta": {
+    "headline1": "完全な主権の準備は",
+    "headline2": "できていますか？",
+    "sub": "財務と契約を運任せにしなくなった何千ものユーザーに加わりましょう。今日から無料で始める。",
+    "primary": "無料登録",
+    "secondary": "お問い合わせ"
+  },
+  "footer": {
+    "tagline": "デジタル主権のための初の自律Life-OSプラットフォーム。Google Gemini 2.x & finAPI搭載。",
+    "status": "システムステータス：最適",
+    "builtIn": "誇りを持ってドイツで製造",
+    "copyright": "© 2026 SOVEREIGN 2030 — Autonomous Life-OS. 全著作権所有。",
+    "sections": {
+      "product": { "title": "製品", "features": "機能", "pricing": "料金", "security": "セキュリティ", "business": "ビジネス" },
+      "legal": { "title": "法律", "impressum": "発行者情報", "privacy": "プライバシー", "terms": "利用規約", "compliance": "EU AI Act" },
+      "resources": { "title": "リソース", "blog": "ブログ", "docs": "ドキュメント", "api": "API", "press": "プレスキット" }
+    }
+  }
+}

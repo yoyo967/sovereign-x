@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "sovereignty": "Soberanía",
+    "features": "Funciones",
+    "pricing": "Precios",
+    "security": "Seguridad",
+    "login": "Iniciar sesión",
+    "start": "Comenzar",
+    "toDashboard": "Mi Twin"
+  },
+  "hero": {
+    "badge": {
+      "gdpr": "RGPD & Data Act Ready",
+      "audit": "100% Rastro de Auditoría",
+      "hitl": "Asegurado HITL"
+    },
+    "headline1": "El Sistema Operativo para",
+    "headline2": "la soberanía de datos personales.",
+    "sub": "Un gemelo autónomo que actúa localmente. Sin dependencia de hipernube. Diseño Boundary-First. Mantienes el control total sobre cada acción, cada llamada API y cada dato.",
+    "cta": {
+      "primary": "Lanzar Centro de Ejecución",
+      "secondary": "Entender la Arquitectura"
+    },
+    "stats": {
+      "contracts": "Contratos Asegurados",
+      "value": "Valor Automatizado",
+      "nodes": "Nodos Sovereign"
+    }
+  },
+  "trust": {
+    "techPartner": "Socios Tecnológicos y Cumplimiento",
+    "compliance": "CONFORME EU AI ACT"
+  },
+  "features": {
+    "tag": "Arquitectura del Sistema",
+    "headline1": "Cuatro Capas de",
+    "headline2": "Soberanía.",
+    "sub": "Sovereign se basa en un principio: solo puedes confiar en la automatización cuando controlas las barreras. Esta no es una app de ofertas — es infraestructura.",
+    "items": {
+      "0": { "title": "AgentMemory (Data Warehouse)", "description": "Tu CDP composable personal. Todos los contratos, datos financieros e identidades en una cápsula aislada. Sin dependencia de hipernube. Controlas el acceso a datos físicamente." },
+      "1": { "title": "Privacy Guardian (Capa de Consentimiento)", "description": "El guardián físico de tu vida. Ningún servicio API ni modelo LLM externo accede a tus datos sin que tu Sovereign OS valide las estrictas Boundary Conditions." },
+      "2": { "title": "Centro de Ejecución (HITL / HOTL)", "description": "Diseño Boundary-First en perfección. Defines cuándo el sistema requiere tu aprobación (Human-in-the-Loop) y cuándo puede gestionar tareas rutinarias de forma autónoma (Human-on-the-Loop)." },
+      "3": { "title": "100% Rastro de Auditoría & Escrow", "description": "Soberanía significa demostrabilidad. Cada acción autónoma del agente, cada objeción y cada cancelación se documenta a prueba de manipulaciones. Cumplimiento como capa arquitectónica." }
+    }
+  },
+  "architecture": {
+    "tag": "Principios Fundamentales",
+    "headline": "La soberanía es una decisión arquitectónica.",
+    "pillar1": {
+      "title": "Privacy Guardian",
+      "description": "Ninguna acción de IA sin tus Boundary Conditions. Cada llamada API externa se verifica contra tus reglas — antes de ejecutarse."
+    },
+    "pillar2": {
+      "title": "Centro de Ejecución",
+      "description": "Decides cuándo el twin pregunta (HITL) y cuándo actúa autónomamente (HOTL). El control siempre permanece contigo — no con el algoritmo."
+    },
+    "pillar3": {
+      "title": "Rastro de Auditoría",
+      "description": "Sin IA de caja negra. Cada acción documentada. Transparencia total sobre todo lo que tu twin ha hecho en tu nombre."
+    }
+  },
+  "comparison": {
+    "tag": "La Diferencia",
+    "headline1": "Sovereign Twin",
+    "vs": "vs.",
+    "headline2": "SaaS Estándar",
+    "rows": {
+      "ownership": { "label": "Propiedad de Datos", "sovereign": "Tu dispositivo, tus reglas", "saas": "Servidores del proveedor" },
+      "ai": { "label": "Acceso IA", "sovereign": "Boundary-First, controlado HITL", "saas": "Sin restricciones, opaco" },
+      "audit": { "label": "Transparencia", "sovereign": "Rastro de auditoría completo", "saas": "Caja negra" },
+      "infra": { "label": "Infraestructura", "sovereign": "Residencia EU, sin lock-in", "saas": "Hipernube, lock-in proveedor" },
+      "autonomy": { "label": "Nivel de Autonomía", "sovereign": "Tú estableces los parámetros", "saas": "El proveedor pone las reglas" }
+    }
+  },
+  "brainstormer": {
+    "headline": "Prueba tu Twin en vivo",
+    "sub": "Haz una pregunta a tu gemelo digital sobre tus contratos o estrategia financiera. Experimenta Sovereign Intelligence en tiempo real."
+  },
+  "pricing": {
+    "headline": "Elige tu nivel de protección",
+    "sub": "La soberanía es para todos. Comienza gratis o elige protección autónoma máxima para ti y tu familia.",
+    "popular": "MÁS ELEGIDO",
+    "perMonth": "/ mes",
+    "cta": { "free": "Comenzar ahora", "pro": "Hacerse Pro", "shield": "Protección Máxima" }
+  },
+  "cta": {
+    "headline1": "¿Estás listo para la plena",
+    "headline2": "Soberanía?",
+    "sub": "Únete a miles de usuarios que ya no dejan sus finanzas y contratos al azar. Comienza gratis hoy.",
+    "primary": "Registrarse gratis",
+    "secondary": "Contactar"
+  },
+  "footer": {
+    "tagline": "La primera plataforma autónoma Life-OS para la soberanía digital. Impulsado por Google Gemini 2.x & finAPI.",
+    "status": "ESTADO DEL SISTEMA: ÓPTIMO",
+    "builtIn": "CON ORGULLO CONSTRUIDO EN ALEMANIA",
+    "copyright": "© 2026 SOVEREIGN 2030 — Autonomous Life-OS. Todos los derechos reservados.",
+    "sections": {
+      "product": { "title": "PRODUCTO", "features": "Funciones", "pricing": "Precios", "security": "Seguridad", "business": "Business" },
+      "legal": { "title": "LEGAL", "impressum": "Aviso legal", "privacy": "Privacidad", "terms": "Términos", "compliance": "EU AI Act" },
+      "resources": { "title": "RECURSOS", "blog": "Blog", "docs": "Documentación", "api": "API", "press": "Kit de Prensa" }
+    }
+  }
+}

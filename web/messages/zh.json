@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "sovereignty": "主权",
+    "features": "功能",
+    "pricing": "价格",
+    "security": "安全",
+    "login": "登录",
+    "start": "开始使用",
+    "toDashboard": "我的Twin"
+  },
+  "hero": {
+    "badge": {
+      "gdpr": "符合GDPR和数据法案",
+      "audit": "100%审计追踪",
+      "hitl": "HITL安全保障"
+    },
+    "headline1": "个人数据主权的",
+    "headline2": "操作系统。",
+    "sub": "本地运作的自主数字孪生。无需依赖超大规模云服务商。边界优先设计。您对每一个操作、每一个API调用和每一条数据保持完全控制。",
+    "cta": {
+      "primary": "启动执行中心",
+      "secondary": "了解架构"
+    },
+    "stats": {
+      "contracts": "受保护合同",
+      "value": "自动化价值",
+      "nodes": "主权节点"
+    }
+  },
+  "trust": {
+    "techPartner": "技术合作伙伴与合规",
+    "compliance": "符合EU AI ACT"
+  },
+  "features": {
+    "tag": "系统架构",
+    "headline1": "主权的",
+    "headline2": "四个层次。",
+    "sub": "Sovereign建立在一个原则之上：只有当您控制护栏时，才能信任自动化。这不是一个交易应用——这是基础设施。",
+    "items": {
+      "0": { "title": "AgentMemory（数据仓库）", "description": "您的个人可组合CDP。所有合同、财务数据和身份信息都在一个隔离的胶囊中。无超大规模依赖。您物理控制数据访问权限。" },
+      "1": { "title": "Privacy Guardian（同意层）", "description": "您生活的物理守护者。没有任何API服务或外部LLM模型可以在您的Sovereign OS验证严格的边界条件之前访问您的数据。" },
+      "2": { "title": "执行中心（HITL / HOTL）", "description": "边界优先设计的完美体现。您定义系统何时需要您的批准（人在循环中）以及何时可以自主处理例行任务（人在循环上）。" },
+      "3": { "title": "100%审计追踪与托管", "description": "主权意味着可证明性。代理的每一个自主行动、每一次异议和每一次取消都以防篡改的方式记录在案。合规作为架构层。" }
+    }
+  },
+  "architecture": {
+    "tag": "核心原则",
+    "headline": "主权是一个架构决策。",
+    "pillar1": { "title": "Privacy Guardian", "description": "没有您的边界条件，AI不会采取任何行动。每个外部API调用在执行之前都会根据您的规则进行检查。" },
+    "pillar2": { "title": "执行中心", "description": "您决定数字孪生何时询问（HITL）以及何时自主行动（HOTL）。控制权始终在您手中——而不是算法。" },
+    "pillar3": { "title": "审计追踪", "description": "没有黑盒AI。每个操作都有记录。对您的数字孪生代表您所做的一切保持完全透明。" }
+  },
+  "comparison": {
+    "tag": "区别所在",
+    "headline1": "主权孪生",
+    "vs": "对比",
+    "headline2": "标准SaaS",
+    "rows": {
+      "ownership": { "label": "数据所有权", "sovereign": "您的设备，您的规则", "saas": "供应商服务器" },
+      "ai": { "label": "AI访问", "sovereign": "边界优先，HITL控制", "saas": "不受限制，不透明" },
+      "audit": { "label": "透明度", "sovereign": "完整审计追踪", "saas": "黑盒" },
+      "infra": { "label": "基础设施", "sovereign": "EU数据驻留，无锁定", "saas": "超大规模，供应商锁定" },
+      "autonomy": { "label": "自主级别", "sovereign": "您设置参数", "saas": "供应商设置规则" }
+    }
+  },
+  "brainstormer": {
+    "headline": "实时测试您的数字孪生",
+    "sub": "向您的数字孪生询问关于合同或财务策略的问题。实时体验主权智能。"
+  },
+  "pricing": {
+    "headline": "选择您的保护级别",
+    "sub": "主权属于每个人。免费开始，或为您和您的家人选择最大自主保护。",
+    "popular": "最受欢迎",
+    "perMonth": "/ 月",
+    "cta": { "free": "立即开始", "pro": "升级Pro", "shield": "最大保护" }
+  },
+  "cta": {
+    "headline1": "准备好实现完整的",
+    "headline2": "主权了吗？",
+    "sub": "加入数千名不再将财务和合同留给命运安排的用户。今天免费开始。",
+    "primary": "免费注册",
+    "secondary": "联系我们"
+  },
+  "footer": {
+    "tagline": "首个面向数字主权的自主Life-OS平台。由Google Gemini 2.x和finAPI驱动。",
+    "status": "系统状态：最优",
+    "builtIn": "自豪地在德国制造",
+    "copyright": "© 2026 SOVEREIGN 2030 — Autonomous Life-OS. 保留所有权利。",
+    "sections": {
+      "product": { "title": "产品", "features": "功能", "pricing": "价格", "security": "安全", "business": "商业" },
+      "legal": { "title": "法律", "impressum": "版权信息", "privacy": "隐私政策", "terms": "条款", "compliance": "EU AI Act" },
+      "resources": { "title": "资源", "blog": "博客", "docs": "文档", "api": "API", "press": "新闻资料" }
+    }
+  }
+}

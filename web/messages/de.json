@@ -1,0 +1,436 @@
+{
+  "nav": {
+    "sovereignty": "Souveränität",
+    "features": "Architektur",
+    "pricing": "Preise",
+    "security": "Sicherheit",
+    "login": "Login",
+    "start": "Starten",
+    "toDashboard": "Zum Twin",
+    "statusBar": "SYSTEM STATUS: NOMINAL // BUILD: 2030.AI // EU-FIRST"
+  },
+  "hero": {
+    "badge": {
+      "status": "STATUS: KANONISCH",
+      "location": "BERLIN",
+      "region": "EU-FIRST",
+      "build": "BUILD: 2030.AI"
+    },
+    "eyebrow": "Das autonome Life-OS.",
+    "headline1": "SOVEREIGN",
+    "headline2": "2030",
+    "sub": "Nicht eine App. Eine Architektur. Ein digitaler Zwilling, der deine Daten schützt, deine Verträge analysiert und autonom handelt — mit dir im Zentrum jeder Entscheidung.",
+    "cta": {
+      "primary": "Execution Center Starten",
+      "secondary": "Architektur Verstehen"
+    },
+    "stats": {
+      "contracts": "Gesicherte Verträge",
+      "value": "Automatisierter Value",
+      "nodes": "Sovereign Nodes"
+    }
+  },
+  "problem": {
+    "tag": "01 — DIE ASYMMETRIE",
+    "headline1": "Deine Daten arbeiten",
+    "headline2": "für andere.",
+    "sub": "Jeden Tag werden Milliarden von Datenpunkten gegen dich verwendet. Versicherungen, Banken, Plattformen — sie alle nutzen deine Informationen, ohne dass du es weißt, ohne dass du profitierst.",
+    "items": {
+      "0": {
+        "stat": "94%",
+        "label": "der Verbraucher kennen ihre eigenen Vertragsbedingungen nicht"
+      },
+      "1": {
+        "stat": "€2.400",
+        "label": "durchschnittlicher Verlust pro Person durch unbemerkte Klauseln"
+      },
+      "2": {
+        "stat": "0%",
+        "label": "Transparenz über KI-Entscheidungen, die dein Leben betreffen"
+      }
+    },
+    "solution": "Sovereign dreht die Asymmetrie um."
+  },
+  "trust": {
+    "techPartner": "Technologie-Partner & Compliance",
+    "compliance": "EU AI ACT KONFORM"
+  },
+  "features": {
+    "tag": "02 — APEX ARCHITEKTUR",
+    "headline1": "Vier Schichten.",
+    "headline2": "Absolute Kontrolle.",
+    "sub": "Sovereign ist kein Tool — es ist Infrastruktur. Gebaut auf dem Prinzip, dass vollständige Autonomie nur durch vollständige Transparenz möglich ist.",
+    "items": {
+      "0": {
+        "index": "01",
+        "title": "AgentMemory",
+        "subtitle": "Personal Data Warehouse",
+        "description": "Dein persönliches Composable CDP. Alle Verträge, Finanzdaten und Identitäten in einer isolierten Kapsel — keine Hyperscaler-Abhängigkeit, keine Datenweitergabe ohne deine explizite Freigabe.",
+        "tag": "DATA LAYER"
+      },
+      "1": {
+        "index": "02",
+        "title": "Privacy Guardian",
+        "subtitle": "Consent & Boundary Layer",
+        "description": "Der physische Gatekeeper deines Lebens. Kein API-Call, kein LLM-Modell erhält Zugriff auf deine Daten, ohne dass Sovereign OS die Boundary Conditions validiert hat.",
+        "tag": "PROTECTION LAYER"
+      },
+      "2": {
+        "index": "03",
+        "title": "Execution Center",
+        "subtitle": "HITL / HOTL Engine",
+        "description": "Boundary-First Design in Perfektion. Du definierst wann das System deine Freigabe erzwingt (Human-in-the-Loop) und wann es Routineaufgaben autonom abwickelt (Human-on-the-Loop).",
+        "tag": "CONTROL LAYER"
+      },
+      "3": {
+        "index": "04",
+        "title": "Audit Trail",
+        "subtitle": "100% Transparency Engine",
+        "description": "Sovereignty bedeutet Beweisbarkeit. Jede autonome Handlung, jeder Widerspruch, jede Kündigung wird fälschungssicher dokumentiert. Compliance als Architektur-Layer — nicht als nachträglicher Gedanke.",
+        "tag": "TRUST LAYER"
+      }
+    }
+  },
+  "twin": {
+    "tag": "03 — SOVEREIGN TWIN",
+    "headline1": "Dein digitaler Zwilling.",
+    "headline2": "Deine Regeln.",
+    "sub": "Der Sovereign Twin ist kein Chatbot. Er ist ein autonomes System, das deine Interessen vertritt — mit vollständiger Transparenz über jede Entscheidung.",
+    "capabilities": {
+      "0": { "title": "Vertrags-Tresor", "description": "Automatische Analyse und Klassifikation aller Verträge. Fristen, Klauseln, Risiken — alles auf einen Blick." },
+      "1": { "title": "Finance Guardian", "description": "PSD2-basierte Echtzeit-Analyse deiner Finanzen. Sparpotenziale, Abonnement-Fallen, Optimierungsvorschläge." },
+      "2": { "title": "Brainstormer AI", "description": "Gemini 2.5 Flash — verankert in deinen Daten. Keine Halluzinationen, keine Datenweitergabe ohne Consent." },
+      "3": { "title": "Algorithmic Senate", "description": "Du stimmst über jede automatische Aktion ab. KI handelt — du entscheidest. Immer." }
+    }
+  },
+  "architecture": {
+    "tag": "Kern-Prinzipien",
+    "headline": "Souveränität ist eine Architektur-Entscheidung.",
+    "pillar1": {
+      "title": "Privacy Guardian",
+      "description": "Keine KI-Aktion ohne deine Boundary Conditions. Jeder externe API-Call wird gegen deine Regeln geprüft — bevor er ausgeführt wird."
+    },
+    "pillar2": {
+      "title": "Execution Center",
+      "description": "Du entscheidest wann der Twin fragt (HITL) und wann er autonom handelt (HOTL). Die Kontrolle bleibt immer bei dir — nicht beim Algorithmus."
+    },
+    "pillar3": {
+      "title": "Audit-Trail",
+      "description": "Keine Blackbox-KI. Jede Aktion dokumentiert. Vollständige Transparenz über alles, was dein Twin in deinem Namen getan hat."
+    }
+  },
+  "comparison": {
+    "tag": "04 — DER UNTERSCHIED",
+    "headline1": "Sovereign Twin",
+    "vs": "vs.",
+    "headline2": "Standard SaaS",
+    "sub": "Es gibt keine neutrale Position. Entweder du kontrollierst deine Daten — oder jemand anderes tut es.",
+    "rows": {
+      "ownership": { "label": "Dateneigentum", "sovereign": "Dein Gerät, deine Regeln", "saas": "Server des Anbieters" },
+      "ai": { "label": "KI-Zugriff", "sovereign": "Boundary-First, HITL-kontrolliert", "saas": "Uneingeschränkt, intransparent" },
+      "audit": { "label": "Transparenz", "sovereign": "Vollständiger Audit-Trail", "saas": "Blackbox" },
+      "infra": { "label": "Infrastruktur", "sovereign": "EU-Datenresidenz, kein Lock-in", "saas": "Hyperscaler, Vendor-Lock-in" },
+      "autonomy": { "label": "Autonomie-Level", "sovereign": "Du setzt die Parameter", "saas": "Anbieter setzt die Regeln" }
+    }
+  },
+  "brainstormer": {
+    "tag": "05 — LIVE DEMO",
+    "headline": "Teste deinen Twin live.",
+    "sub": "Stelle deinem digitalen Zwilling eine Frage zu deinen Verträgen oder deiner finanziellen Strategie. Erlebe Sovereign Intelligence in Echtzeit — powered by Gemini 2.5 Flash."
+  },
+  "pricing": {
+    "tag": "06 — SCHUTZLEVEL",
+    "headline": "Wähle dein Niveau.",
+    "sub": "Souveränität ist für jeden. Starte kostenlos oder wähle maximalen autonomen Schutz.",
+    "popular": "EMPFOHLEN",
+    "perMonth": "/ Monat",
+    "cta": { "free": "Jetzt starten", "pro": "Pro werden", "shield": "Maximum Schutz" }
+  },
+  "manifest": {
+    "tag": "07 — DIE DEKLARATION",
+    "headline1": "The 2030",
+    "headline2": "Declaration.",
+    "lines": {
+      "0": "Ich gehöre mir.",
+      "1": "Meine Daten sind kein Produkt.",
+      "2": "Kein Algorithmus entscheidet über mich.",
+      "3": "Ich setze die Boundary Conditions.",
+      "4": "Sovereignty ist kein Privileg — es ist ein Standard."
+    },
+    "cta": {
+      "primary": "Sovereign werden",
+      "secondary": "Die Architektur verstehen"
+    }
+  },
+  "socialProof": {
+    "tag": "08 — VERTRAUEN & BEWEIS",
+    "headline1": "Gebaut auf",
+    "headline2": "Fundament.",
+    "sub": "SOVEREIGN 2030 vereint modernste Technologie, juristische Präzision und das Vertrauen der Nutzer, die ihre Daten zurückgefordert haben.",
+    "stats": {
+      "0": { "value": "247+", "label": "Verified Reviews", "suffix": "" },
+      "1": { "value": "4.8", "label": "App-Bewertung", "suffix": "/5" },
+      "2": { "value": "€2.4k", "label": "Ø Ersparnis/Nutzer/Jahr", "suffix": "" },
+      "3": { "value": "100%", "label": "EU AI Act Konform", "suffix": "" }
+    },
+    "testimonials": {
+      "0": {
+        "quote": "SOVEREIGN hat mir in 48 Stunden drei versteckte Abonnements aufgedeckt und automatisch gekündigt. €340 Ersparnis im ersten Monat.",
+        "name": "Markus T.",
+        "role": "Selbstständiger, München",
+        "tier": "PRO"
+      },
+      "1": {
+        "quote": "Als Juristin war ich skeptisch. Aber die Vertragsanalyse ist präziser als erwartet — inklusive BGB-Paragraphen und Risikoklassifikation.",
+        "name": "Dr. Sabine K.",
+        "role": "Rechtsanwältin, Berlin",
+        "tier": "SHIELD"
+      },
+      "2": {
+        "quote": "Endlich ein Tool, das wirklich meine Interessen vertritt. Nicht meine Daten verkauft, nicht Provisionen kassiert. Einfach: meinen Vorteil sucht.",
+        "name": "Jonas M.",
+        "role": "Software-Ingenieur, Hamburg",
+        "tier": "PRO"
+      }
+    },
+    "techBadges": {
+      "0": "Google Cloud",
+      "1": "Vertex AI",
+      "2": "Gemini 2.5 Flash",
+      "3": "Firebase",
+      "4": "finAPI PSD2",
+      "5": "EU AI Act"
+    },
+    "compliance": "EU AI Act Konform · DSGVO · ISO 27001 Ready · Made in Germany"
+  },
+  "faq": {
+    "tag": "09 — HÄUFIGE FRAGEN",
+    "headline1": "Alle Antworten.",
+    "headline2": "Keine Ausreden.",
+    "sub": "Die wichtigsten Fragen zu SOVEREIGN 2030 — transparent, präzise, ohne Marketing-Sprache.",
+    "items": {
+      "0": {
+        "q": "Was ist SOVEREIGN 2030?",
+        "a": "SOVEREIGN 2030 ist ein autonomes Life-OS — ein digitaler Zwilling, der deine Verträge analysiert, deine Finanzen überwacht und autonom in deinem Interesse handelt. Im Gegensatz zu herkömmlichen Finanz-Apps basiert SOVEREIGN auf einer Boundary-First-Architektur: Du definierst die Regeln, die KI führt aus — vollständig transparent, vollständig nachvollziehbar."
+      },
+      "1": {
+        "q": "Wie schützt SOVEREIGN meine persönlichen Daten?",
+        "a": "SOVEREIGN verwendet eine 4-Schichten-Architektur: AgentMemory (isolierte Datenhaltung ohne Hyperscaler-Abhängigkeit), Privacy Guardian (validiert jeden API-Call gegen deine Consent-Regeln bevor er ausgeführt wird), Execution Center (HITL/HOTL — du entscheidest wann die KI autonom handelt) und ein vollständiger Audit Trail. Alle Daten werden ausschließlich in EU-Rechenzentren verarbeitet. SOVEREIGN ist vollständig DSGVO-konform und EU AI Act-compliant."
+      },
+      "2": {
+        "q": "Was bedeutet Human-in-the-Loop (HITL)?",
+        "a": "Human-in-the-Loop (HITL) bedeutet, dass du vor jeder kritischen KI-Aktion explizit gefragt wirst. Beim Human-on-the-Loop (HOTL) handelt die KI autonom innerhalb deiner vordefinierten Grenzen, informiert dich aber über jede Aktion im Audit Trail. Du entscheidest für jede Kategorie von Aktionen, welchen Modus du bevorzugst — maximale Kontrolle oder maximale Automatisierung."
+      },
+      "3": {
+        "q": "Kann SOVEREIGN meine Verträge automatisch kündigen?",
+        "a": "Ja — im HOTL-Modus kann SOVEREIGN Verträge automatisch kündigen, wenn du entsprechende Regeln definiert hast (z.B. 'Kündige alle Abonnements über €15/Monat die ich nicht in den letzten 30 Tagen genutzt habe'). Im HITL-Modus erstellt SOVEREIGN Kündigungsschreiben und legt sie dir zur Freigabe vor. Jede Kündigung wird fälschungssicher im Audit Trail dokumentiert."
+      },
+      "4": {
+        "q": "Ist SOVEREIGN DSGVO- und EU AI Act-konform?",
+        "a": "Ja, vollständig. SOVEREIGN wurde von Grund auf für EU-Compliance designed: Alle Daten in EU-Rechenzentren (Google Cloud, Region europe-west3), vollständige Datenlöschung auf Anfrage, Zweckbindung durch Privacy Guardian, transparente KI-Entscheidungen durch Audit Trail. Der EU AI Act klassifiziert SOVEREIGN als Low-Risk AI System mit vollständiger Transparency-Compliance."
+      },
+      "5": {
+        "q": "Was kostet SOVEREIGN 2030?",
+        "a": "SOVEREIGN bietet drei Stufen: FREE (kostenlos, Basis-Vertragsanalyse), PRO (€6,99/Monat — vollständige Automatisierung, Finance Guardian, Brainstormer AI) und SHIELD (€14,99/Monat — maximaler Schutz für Familie & Business, inkl. PSD2-Banking, Family Vault, Priority Support). Keine versteckten Kosten, keine Provisionen, keine Datenweitergabe an Dritte."
+      },
+      "6": {
+        "q": "Wie unterscheidet sich SOVEREIGN von Check24 oder Finanzguru?",
+        "a": "Der fundamentale Unterschied: Check24 und Finanzguru finanzieren sich durch Provisionen für Vertragsabschlüsse — ihre KI optimiert für ihre Einnahmen, nicht für dein Interesse. SOVEREIGN finanziert sich ausschließlich durch Abo-Gebühren. Kein Incentive für Vertragsempfehlungen. Zusätzlich: SOVEREIGN hat einen vollständigen Audit Trail, Boundary-First-Architektur und Human-in-the-Loop-Kontrolle — keine dieser Plattformen bietet das."
+      },
+      "7": {
+        "q": "Was ist ein digitaler Zwilling im Kontext von SOVEREIGN?",
+        "a": "Der SOVEREIGN Twin ist eine KI-Instanz, die vollständig mit deinen persönlichen Daten (Verträge, Finanzen, Präferenzen) trainiert ist und in deinem Namen handelt. Im Gegensatz zu generischen KI-Assistenten hat dein Twin keinen Zugriff auf externe Daten — er agiert ausschließlich innerhalb deiner Datengrenzen. Das macht ihn präziser, sicherer und zu 100% auf deine Situation zugeschnitten."
+      },
+      "8": {
+        "q": "Welche Vertragsarten kann SOVEREIGN analysieren?",
+        "a": "SOVEREIGN analysiert alle gängigen Vertragstypen: Mobilfunkverträge, Strom- & Gasverträge, Versicherungen (KFZ, Haftpflicht, Hausrat), Mietverträge, Software-Abonnements (Netflix, Spotify etc.), Finanzprodukte (Kredite, Depots), Telekommunikationsverträge und Arbeitsverträge. Die Analyse umfasst Fristen, Kündigungsrechte nach BGB, versteckte Klauseln, Preiserhöhungsrechte und Risikobewertung."
+      },
+      "9": {
+        "q": "Wie sicher ist meine Bankverbindung bei SOVEREIGN?",
+        "a": "Die Banking-Integration erfolgt ausschließlich über die regulierte PSD2-Schnittstelle via finAPI — demselben Standard, den Banken selbst nutzen. SOVEREIGN speichert keine Bankdaten, sondern nur aggregierte Transaktionsdaten. finAPI ist BaFin-reguliert und ISO 27001-zertifiziert. Der Privacy Guardian blockiert jeden Datenzugriff, der nicht explizit von dir genehmigt wurde."
+      }
+    }
+  },
+  "hub": {
+    "tag": "10 — WISSENS-HUB",
+    "headline1": "Alles Wissen.",
+    "headline2": "Sofort verfügbar.",
+    "sub": "Umfassende Guides zu Vertragsrecht, Datenschutz und autonomer KI — von Juristen geprüft, von der Community gelesen.",
+    "readMore": "Vollständigen Guide lesen",
+    "minRead": "Min. Lesezeit",
+    "articles": {
+      "0": {
+        "title": "Vertrag kündigen: Der ultimative Guide 2026",
+        "desc": "BGB §314, §628, Sonderkündigungsrechte, Fristen und kostenlose Vorlagen. Alles was du brauchst — in einer Seite.",
+        "href": "/blog/vertrag-kuendigen",
+        "tag": "VERTRAGSRECHT",
+        "mins": "12"
+      },
+      "1": {
+        "title": "Preiserhöhung widersprechen: Deine Rechte",
+        "desc": "Netflix, Strom, Telekom — so widersprichst du Preiserhöhungen rechtssicher. Mit Musterbrief-Vorlage.",
+        "href": "/blog/preiserhoehung-widersprechen",
+        "tag": "VERBRAUCHERRECHT",
+        "mins": "8"
+      },
+      "2": {
+        "title": "Datensouveränität 2030: Grundlagen & Strategie",
+        "desc": "Was Datensouveränität bedeutet, warum sie 2026 entscheidend ist, und wie SOVEREIGN sie technisch implementiert.",
+        "href": "/souveraenitaet",
+        "tag": "DATENSCHUTZ",
+        "mins": "15"
+      },
+      "3": {
+        "title": "SOVEREIGN APEX Architektur: Die 4 Schichten",
+        "desc": "Privacy Guardian, AgentMemory, Execution Center, Audit Trail — wie die vier Architektur-Layer zusammenwirken.",
+        "href": "/architektur",
+        "tag": "TECHNOLOGIE",
+        "mins": "10"
+      },
+      "4": {
+        "title": "Abofalle: Erkennen, widersprechen, entkommen",
+        "desc": "Versteckte Abos kosten Deutsche durchschnittlich €340/Jahr. So beendest du die Abofalle dauerhaft.",
+        "href": "/blog/abofalle-was-tun",
+        "tag": "FINANZEN",
+        "mins": "7"
+      },
+      "5": {
+        "title": "EU AI Act & Datenschutz: Was du wissen musst",
+        "desc": "Der EU AI Act gilt ab 2026 vollständig. Was bedeutet das für KI-Anwendungen und deine Rechte?",
+        "href": "/sicherheit",
+        "tag": "EU AI ACT",
+        "mins": "11"
+      }
+    }
+  },
+  "journey": {
+    "tag": "02 — DEIN PFAD",
+    "headline1": "Wer bist du?",
+    "headline2": "Wähle deinen Weg.",
+    "sub": "SOVEREIGN ist für jeden. Aber nicht jeder fängt am selben Punkt an. Wähle deinen Ausgangspunkt — und wir zeigen dir den kürzesten Weg zu deiner Souveränität.",
+    "archetypes": {
+      "0": {
+        "tag": "VERBRAUCHER",
+        "title": "Ich will Kosten sparen.",
+        "sub": "Verträge, Abos, Preiserhöhungen.",
+        "pain0": "94% der Deutschen kennen ihre Vertragsbedingungen nicht",
+        "pain1": "€2.400 Verlust/Jahr durch unbemerkte Klauseln",
+        "pain2": "15 Verträge im Schnitt — wer behält den Überblick?",
+        "cta": "Jetzt Verträge analysieren",
+        "href": "/blog/vertrag-kuendigen"
+      },
+      "1": {
+        "tag": "DATENSCHUTZ-FIRST",
+        "title": "Meine Daten gehören mir.",
+        "sub": "DSGVO, Datensouveränität, Kontrolle.",
+        "pain0": "Deine Daten werden verkauft — ohne dein Wissen",
+        "pain1": "0% Transparenz über KI-Entscheidungen, die dich betreffen",
+        "pain2": "73% der Deutschen wollen mehr Kontrolle über ihre Daten",
+        "cta": "Datensouveränität verstehen",
+        "href": "/souveraenitaet"
+      },
+      "2": {
+        "tag": "TECH-AFFIN",
+        "title": "Ich will die Architektur verstehen.",
+        "sub": "APEX, HITL, Zero-Trust, API.",
+        "pain0": "KI-Systeme sind Blackboxen — keine Erklärbarkeit",
+        "pain1": "Vendor Lock-in durch Hyperscaler",
+        "pain2": "EU AI Act 2026: Compliance by Design oder Bußgeld",
+        "cta": "APEX Architektur erkunden",
+        "href": "/architektur"
+      },
+      "3": {
+        "tag": "BUSINESS",
+        "title": "Ich brauche das für mein Team.",
+        "sub": "SHIELD Plan, Family Vault, B2B.",
+        "pain0": "Teams brauchen geteilte Vertrags-Compliance",
+        "pain1": "DSGVO-Konformität ist kein Einzelproblem",
+        "pain2": "Unternehmen verlieren durchschnittlich 5% Revenue durch schlechtes Vertragsmanagement",
+        "cta": "SHIELD Plan ansehen",
+        "href": "/#pricing"
+      }
+    }
+  },
+  "nexus": {
+    "tag": "07 — SOVEREIGN NEXUS",
+    "headline1": "Das System.",
+    "headline2": "Alle Module.",
+    "sub": "SOVEREIGN 2030 ist nicht eine App — es ist ein Ökosystem. Erkunde alle Module, Guides, Features und Use Cases des Systems.",
+    "categories": {
+      "pillars": "Pillar Guides — Autoritätswissen",
+      "features": "APEX Feature-Module",
+      "usecases": "Use Cases — Konkrete Anwendungen",
+      "blog": "Cluster Artikel — Deep Dives",
+      "book": "Das Buch — SOVEREIGN MARKETING"
+    },
+    "modules": {
+      "0": { "title": "Datensouveränität 2030", "tag": "DATENSCHUTZ", "href": "/souveraenitaet", "desc": "Rechte, Strategien, DSGVO" },
+      "1": { "title": "APEX Architektur", "tag": "TECHNOLOGIE", "href": "/architektur", "desc": "4-Schichten System" },
+      "2": { "title": "EU AI Act & DSGVO", "tag": "EU AI ACT", "href": "/sicherheit", "desc": "Compliance by Design" },
+      "3": { "title": "Sovereign Twin", "tag": "PRODUKT", "href": "/twin", "desc": "Dein digitaler Zwilling" },
+      "4": { "title": "AgentMemory", "tag": "FEATURE", "href": "/features/agentmemory", "desc": "Personal Data Warehouse" },
+      "5": { "title": "Privacy Guardian", "tag": "FEATURE", "href": "/features/privacy-guardian", "desc": "Zero-Trust Gatekeeper" },
+      "6": { "title": "Execution Center", "tag": "FEATURE", "href": "/features/execution-center", "desc": "HITL / HOTL Engine" },
+      "7": { "title": "Audit Trail", "tag": "FEATURE", "href": "/features/audit-trail", "desc": "100% Transparenz" },
+      "8": { "title": "Vertrag kündigen", "tag": "USE CASE", "href": "/use-cases/kuendigung", "desc": "Automatisch & rechtssicher" },
+      "9": { "title": "Preiserhöhung", "tag": "USE CASE", "href": "/use-cases/preiserhoehung", "desc": "Widerspruch & Sonderkündigung" },
+      "10": { "title": "Datenschutz", "tag": "USE CASE", "href": "/use-cases/datenschutz", "desc": "DSGVO durchsetzen" },
+      "11": { "title": "Finanzen", "tag": "USE CASE", "href": "/use-cases/finanzen", "desc": "PSD2 Optimierung" }
+    },
+    "explore": "Alle erkunden"
+  },
+  "book": {
+    "tag": "11 — DAS HANDBUCH",
+    "headline1": "SOVEREIGN MARKETING.",
+    "headline2": "Das Buch.",
+    "sub": "18 Kapitel. 4 Teile. Das vollständige Handbuch für Online Marketing Manager, die in einer KI-definierten, datengetriebenen Welt souverän führen wollen. EU-First. Maximum Excellence Edition.",
+    "badge": "ERSCHEINT 2026",
+    "chapters": {
+      "0": {
+        "part": "TEIL I",
+        "title": "Fundament & Souveränität",
+        "chapters": "Kap. 01–04",
+        "hook": "Warum das alte Marketing tot ist — und was es ersetzen wird."
+      },
+      "1": {
+        "part": "TEIL II",
+        "title": "Strategie-Architektur",
+        "chapters": "Kap. 05–08",
+        "hook": "Wie du eine Marketing-Architektur baust, die in 5 Jahren noch gilt."
+      },
+      "2": {
+        "part": "TEIL III",
+        "title": "Kanal-Exzellenz",
+        "chapters": "Kap. 09–12",
+        "hook": "SEO, AEO, GEO, Paid, Social — die Kanäle der Souveränität."
+      },
+      "3": {
+        "part": "TEIL IV",
+        "title": "KI-Operationalisierung",
+        "chapters": "Kap. 13–15",
+        "hook": "Wie KI nicht dein Feind sondern dein Execution Layer wird."
+      }
+    },
+    "cta": "Zum Handbuch",
+    "ctaSecondary": "Kapitel-Vorschau lesen"
+  },
+  "cta": {
+    "headline1": "Bist du bereit für volle",
+    "headline2": "Souveränität?",
+    "sub": "Schließe dich tausenden Nutzern an, die ihre Finanzen und Verträge nicht mehr dem Zufall überlassen. Starte heute kostenlos.",
+    "primary": "Kostenlos registrieren",
+    "secondary": "Kontakt aufnehmen"
+  },
+  "footer": {
+    "tagline": "Das autonome Life-OS für digitale Souveränität. Powered by Google Gemini 2.5 Flash & finAPI PSD2.",
+    "status": "SYSTEM STATUS: NOMINAL",
+    "builtIn": "BUILT IN GERMANY // EU-FIRST",
+    "build": "BUILD: 2030.AI",
+    "copyright": "© 2026 SOVEREIGN 2030 — Autonomous Life-OS. Alle Rechte vorbehalten.",
+    "sections": {
+      "product": { "title": "PRODUKT", "features": "Architektur", "pricing": "Preise", "security": "Sicherheit", "business": "Business" },
+      "legal": { "title": "RECHTLICHES", "impressum": "Impressum", "privacy": "Datenschutz", "terms": "AGB", "compliance": "EU AI Act" },
+      "resources": { "title": "RESSOURCEN", "blog": "Blog", "docs": "Dokumentation", "api": "API", "press": "Presse Kit" }
+    }
+  }
+}

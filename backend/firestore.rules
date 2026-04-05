@@ -1,0 +1,150 @@
+// firestore.rules
+// SOVEREIGN 2030 — Production Security Rules
+// Standard: Strict Data Isolation | EU AI Act Compliant Access Control
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ══════════════════════════════════════════════
+    // HILFSFUNKTIONEN
+    // ══════════════════════════════════════════════
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isVaultMember(vaultId) {
+      return isAuthenticated()
+        && exists(/databases/$(database)/documents/vaults/$(vaultId)/members/$(request.auth.uid));
+    }
+
+    function isVaultAdmin(vaultId) {
+      return isAuthenticated()
+        && get(/databases/$(database)/documents/vaults/$(vaultId)/members/$(request.auth.uid)).data.role == "ADMIN";
+    }
+
+    function hasValidTier(requiredTiers) {
+      let userTier = get(/databases/$(database)/documents/users/$(request.auth.uid)/profile/main).data.tier;
+      return userTier in requiredTiers;
+    }
+
+    // ══════════════════════════════════════════════
+    // USER-DATEN (private, nur eigene)
+    // ══════════════════════════════════════════════
+
+    match /users/{userId} {
+      
+      match /profile/main {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId);
+      }
+
+      match /settings/main {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Alle Subcollections: nur eigene Daten
+      match /contracts/{contractId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /documents/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /lifeCases/{caseId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /approvals/{approvalId} {
+        allow read: if isOwner(userId);
+        allow update: if isOwner(userId)
+          && request.resource.data.status in ["APPROVED", "REJECTED"];
+        allow create: if false;  // Nur Backend erstellt Approvals
+        allow delete: if false;
+      }
+
+      match /claims/{claimId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && hasValidTier(["PRO", "SHIELD"]);
+        allow update: if false;  // Nur Backend aktualisiert Claims
+        allow delete: if false;
+      }
+
+      match /savings/{savingId} {
+        allow read: if isOwner(userId);
+        allow write: if false;  // Nur Backend schreibt Savings
+      }
+
+      match /transactions/{txId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId);
+        allow update, delete: if isOwner(userId);
+      }
+
+      match /insights/{insightId} {
+        allow read: if isOwner(userId);
+        allow write: if false;  // Nur Backend/AI schreibt Insights
+      }
+
+      match /agentMemories/{memoryId} {
+        allow read: if isOwner(userId);
+        allow write: if false;  // Nur Backend/AI schreibt Memories
+      }
+    }
+
+    // ══════════════════════════════════════════════
+    // FAMILY VAULT (Multi-User)
+    // ══════════════════════════════════════════════
+
+    match /vaults/{vaultId} {
+      allow read: if isVaultMember(vaultId);
+      allow create: if isAuthenticated()
+        && hasValidTier(["SHIELD"]);
+      allow update: if isVaultAdmin(vaultId);
+      allow delete: if isVaultAdmin(vaultId);
+
+      match /members/{memberId} {
+        allow read: if isVaultMember(vaultId);
+        allow write: if isVaultAdmin(vaultId);
+      }
+
+      match /sharedContracts/{contractId} {
+        allow read: if isVaultMember(vaultId);
+        allow write: if isVaultMember(vaultId)
+          && get(/databases/$(database)/documents/vaults/$(vaultId)/members/$(request.auth.uid)).data.role in ["ADMIN", "MEMBER"];
+      }
+
+      match /auditLog/{logId} {
+        allow read: if isVaultMember(vaultId);
+        allow write: if false;  // Nur Backend schreibt Audit-Logs
+      }
+    }
+
+    // ══════════════════════════════════════════════
+    // INVITES
+    // ══════════════════════════════════════════════
+
+    match /invites/{inviteId} {
+      allow read: if isAuthenticated() && request.auth.token.email == resource.data.email;
+      allow create: if isAuthenticated();
+      allow delete: if isAuthenticated();
+    }
+
+    // ══════════════════════════════════════════════
+    // PLATFORM (Public stats)
+    // ══════════════════════════════════════════════
+
+    match /platform/stats {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

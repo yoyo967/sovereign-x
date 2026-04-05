@@ -1,0 +1,67 @@
+
+> web@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.2.2 (Turbopack)
+- Environments: .env.production
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 4 errors:
+./src/app/[locale]/features/execution-center/page.tsx:107:72
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  105 | ...
+  106 | ...fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.75rem", color: "rgba(255,...
+> 107 | ...igung Stromvertrag aufgrund Preiserh├Âhung > 15%"
+      |                                              ^
+  108 | ...
+  109 | ...padding: "10px", background: "rgba(255,255,255,0.03)", fontSize: "0.65rem", color: "rg...
+  110 | ...Scan_PDF -> [02] Extract_Klausel_┬º4.2 -> [03] Compare_Marktwert -> [04] Logic_Check: S...
+
+Parsing ecmascript source code failed
+
+
+./src/app/[locale]/features/execution-center/page.tsx:110:39
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  108 |               </div>
+  109 |               <div style={{ padding: "10px", background: "rgba(255,255,255,0.03)", fontSi...
+> 110 |                 TRACE: [01] Scan_PDF -> [02] Extract_Klausel_┬º4.2 -> [03] Compare_Marktwe...
+      |                                       ^
+  111 |               </div>
+  112 |             </div>
+  113 |           </section>
+
+Parsing ecmascript source code failed
+
+
+./src/app/[locale]/features/execution-center/page.tsx:110:69
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  108 | ...
+  109 | ...{{ padding: "10px", background: "rgba(255,255,255,0.03)", fontSize: "0.65rem", color: ...
+> 110 | ...1] Scan_PDF -> [02] Extract_Klausel_┬º4.2 -> [03] Compare_Marktwert -> [04] Logic_Check...
+      |                                              ^
+  111 | ...
+  112 | ...
+  113 | ...
+
+Parsing ecmascript source code failed
+
+
+./src/app/[locale]/features/execution-center/page.tsx:110:95
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  108 | ...
+  109 | ...ound: "rgba(255,255,255,0.03)", fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", f...
+> 110 | ...t_Klausel_┬º4.2 -> [03] Compare_Marktwert -> [04] Logic_Check: SUCCESS
+      |                                              ^
+  111 | ...
+  112 | ...
+  113 | ...
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (./src/app/[locale]/features/execution-center/page.tsx:107:72)
+    at <unknown> (./src/app/[locale]/features/execution-center/page.tsx:110:39)
+    at <unknown> (./src/app/[locale]/features/execution-center/page.tsx:110:69)
+    at <unknown> (./src/app/[locale]/features/execution-center/page.tsx:110:95)

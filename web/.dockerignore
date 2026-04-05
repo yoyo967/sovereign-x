@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.github
+.firebase
+out
+*.log
+*.md
+.env.local
+.env.development
+.env.test
+.gitignore
+Dockerfile
+.dockerignore
