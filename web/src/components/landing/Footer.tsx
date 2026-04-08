@@ -9,30 +9,43 @@ export default function Footer() {
 
   const sections = [
     {
-      title: t("sections.product.title"),
+      title: "Platform",
       links: [
-        { name: t("sections.product.features"), href: `/${locale}#features` },
-        { name: t("sections.product.pricing"), href: `/${locale}#pricing` },
-        { name: t("sections.product.security"), href: `/${locale}#security` },
-        { name: t("sections.product.business"), href: `/${locale}/business` },
+        { name: "Module Registry",       href: `/${locale}/module` },
+        { name: "Sovereign Twin",        href: `/${locale}/module/sovereign-twin` },
+        { name: "Privacy Guardian",      href: `/${locale}/module/privacy-guardian` },
+        { name: "Security Senate",       href: `/${locale}/module/sicherheit` },
+        { name: "Finanzautonomie",       href: `/${locale}/module/finanzautonomie` },
+        { name: "KI & Recht",            href: `/${locale}/module/ki-recht` },
       ],
     },
     {
-      title: t("sections.legal.title"),
+      title: "Wissen",
       links: [
-        { name: t("sections.legal.impressum"), href: `/${locale}/impressum` },
-        { name: t("sections.legal.privacy"), href: `/${locale}/datenschutz` },
-        { name: t("sections.legal.terms"), href: `/${locale}/agb` },
-        { name: t("sections.legal.compliance"), href: `/${locale}/compliance` },
+        { name: "Vertrag kündigen",      href: `/${locale}/use-cases/kuendigung` },
+        { name: "Preiserhöhung",         href: `/${locale}/use-cases/preiserhoehung` },
+        { name: "DSGVO Anfragen",        href: `/${locale}/use-cases/datenschutz` },
+        { name: "Blog & Guides",         href: `/${locale}/blog` },
+        { name: "EU-Regulierung",        href: `/${locale}/eu-regulierung` },
+        { name: "Das Buch",              href: `/${locale}/buch` },
       ],
     },
     {
-      title: t("sections.resources.title"),
+      title: "Über uns",
       links: [
-        { name: t("sections.resources.blog"), href: `/${locale}/blog` },
-        { name: t("sections.resources.docs"), href: `/${locale}/docs` },
-        { name: t("sections.resources.api"), href: `/${locale}/api-docs` },
-        { name: t("sections.resources.press"), href: `/${locale}/presse` },
+        { name: "Das Manifest",          href: `/${locale}/manifesto` },
+        { name: "Roadmap 2030",          href: `/${locale}#roadmap` },
+        { name: "Presse",                href: `/${locale}/presse` },
+        { name: "Dashboard",             href: `/dashboard` },
+        { name: "Preise",                href: `/${locale}#pricing` },
+      ],
+    },
+    {
+      title: "Rechtliches",
+      links: [
+        { name: "Datenschutz",           href: `/${locale}/datenschutz` },
+        { name: "AGB",                   href: `/${locale}/agb` },
+        { name: "Impressum",             href: `/${locale}/impressum` },
       ],
     },
   ];
@@ -56,7 +69,7 @@ export default function Footer() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
 
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">

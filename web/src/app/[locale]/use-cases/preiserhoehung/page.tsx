@@ -3,6 +3,7 @@ import Link from "next/link";
 import JsonLd from "@/components/SEO/JsonLd";
 import PremiumBanner from "@/components/landing/PremiumBanner";
 import NexusIcon from "@/components/landing/NexusIcon";
+import PreiserhoehungGenerator from "@/components/use-cases/PreiserhoehungGenerator";
 
 const BASE_URL = "https://sovereign.de";
 
@@ -71,7 +72,8 @@ export default async function PreiserhoehungPage({
           </div>
         </section>
 
-        <section style={{ border: "1px solid rgba(255,214,0,0.1)", padding: "3rem", background: "rgba(255,214,0,0.02)", marginBottom: "4rem" }}>
+        {/* Rechtssicherheit */}
+        <section style={{ border: "1px solid rgba(255,214,0,0.1)", padding: "2rem", background: "rgba(255,214,0,0.02)", marginBottom: "4rem" }}>
           <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
             <NexusIcon type="execution" size={40} />
             <div>
@@ -80,6 +82,40 @@ export default async function PreiserhoehungPage({
                 Dein Twin nutzt aktuelle BGB-Vorlagen und Sonderkündigungsrechte, um unbegründete Erhöhungen abzuwehren. Jede Aktion wird dokumentiert und ist rechtlich bindend.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Widerspruchsschreiben Generator */}
+        <section style={{ marginBottom: "5rem" }}>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <h2 style={{ fontFamily: "var(--font-space-grotesk, sans-serif)", fontWeight: 800, fontSize: "1.8rem", color: "rgba(255,255,255,0.95)", marginBottom: "0.5rem" }}>
+              Widerspruchsschreiben Generator
+            </h2>
+            <p style={{ fontSize: "0.92rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.65, margin: 0, maxWidth: 580 }}>
+              Erstelle in unter 2 Minuten ein rechtssicheres Widerspruchsschreiben — kostenlos, personalisiert, sofort versendbereit.
+            </p>
+          </div>
+          <PreiserhoehungGenerator />
+        </section>
+
+        {/* Rechtsgrundlagen */}
+        <section style={{ marginBottom: "4rem" }}>
+          <h2 style={{ fontFamily: "var(--font-space-grotesk, sans-serif)", fontWeight: 800, fontSize: "1.5rem", color: "rgba(255,255,255,0.95)", marginBottom: "1.5rem" }}>
+            Wichtige Rechtsgrundlagen
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            {[
+              { gesetz: "§ 41 Abs. 3 EnWG", bereich: "Strom & Gas", detail: "Sonderkündigungsrecht bei Preisanpassung — Frist: 2 Wochen nach Ankündigung" },
+              { gesetz: "§ 57 Abs. 1 TKG", bereich: "Mobilfunk / Internet", detail: "Sonderkündigung bei Vertragsänderung — Frist: 3 Monate nach Ankündigung" },
+              { gesetz: "§ 40 VVG", bereich: "Kfz-Versicherung", detail: "Sonderkündigung bei Beitragserhöhung — Frist: 1 Monat nach Zugang" },
+              { gesetz: "§ 314 BGB", bereich: "Alle Dauerschuldverh.", detail: "Außerordentliche Kündigung aus wichtigem Grund — unverzüglich nach Kenntnis" },
+            ].map((row) => (
+              <div key={row.gesetz} style={{ padding: "1.25rem", background: "#080E1A" }}>
+                <div style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.65rem", color: "rgba(0,212,255,0.7)", marginBottom: "0.35rem" }}>{row.gesetz}</div>
+                <div style={{ fontWeight: 700, fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", marginBottom: "0.3rem" }}>{row.bereich}</div>
+                <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.55 }}>{row.detail}</div>
+              </div>
+            ))}
           </div>
         </section>
 

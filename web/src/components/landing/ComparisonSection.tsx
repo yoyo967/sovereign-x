@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-const rowKeys = ["ownership", "ai", "audit", "infra", "autonomy"] as const;
+const rowKeys = ["ownership", "ai", "audit", "infra", "autonomy", "compliance", "exit", "cost"] as const;
 
 export default function ComparisonSection() {
   const t = useTranslations("comparison");
@@ -179,6 +179,79 @@ export default function ComparisonSection() {
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Score row */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="grid mt-0"
+          style={{
+            gridTemplateColumns: "1fr 1fr 1fr",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "none",
+          }}
+        >
+          <div className="p-5" />
+          <div
+            className="p-5 flex items-center gap-3"
+            style={{
+              borderLeft: "1px solid rgba(0,212,255,0.15)",
+              background: "rgba(0,212,255,0.06)",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "var(--font-jetbrains, monospace)",
+                fontSize: "0.6rem",
+                letterSpacing: "0.1em",
+                color: "rgba(0,212,255,0.6)",
+                textTransform: "uppercase",
+              }}
+            >
+              Score
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-space-grotesk, sans-serif)",
+                fontWeight: 900,
+                fontSize: "1.4rem",
+                color: "#00D4FF",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              8 / 8
+            </div>
+          </div>
+          <div
+            className="p-5 flex items-center gap-3"
+            style={{ borderLeft: "1px solid rgba(255,255,255,0.05)" }}
+          >
+            <div
+              style={{
+                fontFamily: "var(--font-jetbrains, monospace)",
+                fontSize: "0.6rem",
+                letterSpacing: "0.1em",
+                color: "rgba(255,255,255,0.2)",
+                textTransform: "uppercase",
+              }}
+            >
+              Score
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-space-grotesk, sans-serif)",
+                fontWeight: 900,
+                fontSize: "1.4rem",
+                color: "rgba(255,255,255,0.2)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              0 / 8
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -276,6 +276,9 @@ export default async function LocaleLayout({
         className={`${inter.variable} ${spaceGrotesk.variable} ${notoSansArabic.variable} ${jetbrainsMono.variable} antialiased selection:bg-cyan selection:text-black`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <a href="#main-content" className="skip-link">
+            Zum Hauptinhalt springen
+          </a>
           {children}
         </NextIntlClientProvider>
       </body>

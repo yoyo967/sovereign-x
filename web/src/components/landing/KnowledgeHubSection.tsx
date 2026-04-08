@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 
-const ARTICLE_KEYS = [0, 1, 2, 3, 4, 5] as const;
+const ARTICLE_KEYS = [0, 1, 2, 3, 4, 5, 6] as const;
 
 // Blueprint-aesthetic SVG illustrations for each article category
 function ArticleIllustration({ index }: { index: number }) {
@@ -69,6 +69,19 @@ function ArticleIllustration({ index }: { index: number }) {
       <path d="M32 6L36 18H49L39 26L43 38L32 31L21 38L25 26L15 18H28L32 6Z" stroke="rgba(0,212,255,0.5)" strokeWidth="1.2" fill="rgba(0,212,255,0.04)" />
       <path d="M20 44L32 42L44 44V52C44 56 38 58 32 58C26 58 20 56 20 52V44Z" stroke="rgba(0,212,255,0.35)" strokeWidth="1.2" fill="rgba(0,212,255,0.03)" />
       <path d="M27 51L30 54L37 47" stroke="rgba(0,212,255,0.6)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>,
+
+    // 6: EU Regulierung — 5 stacked law books / scrolls
+    <svg key={6} width="64" height="64" viewBox="0 0 64 64" fill="none">
+      <rect x="8" y="8" width="10" height="48" rx="1" stroke="rgba(0,212,255,0.5)" strokeWidth="1.2" fill="rgba(0,212,255,0.04)" />
+      <rect x="21" y="12" width="10" height="44" rx="1" stroke="rgba(0,212,255,0.42)" strokeWidth="1.2" fill="rgba(0,212,255,0.03)" />
+      <rect x="34" y="16" width="10" height="40" rx="1" stroke="rgba(0,212,255,0.35)" strokeWidth="1.2" fill="rgba(0,212,255,0.025)" />
+      <rect x="47" y="20" width="9" height="36" rx="1" stroke="rgba(0,212,255,0.28)" strokeWidth="1.2" fill="rgba(0,212,255,0.02)" />
+      <line x1="10" y1="20" x2="16" y2="20" stroke="rgba(0,212,255,0.3)" strokeWidth="0.8" />
+      <line x1="10" y1="26" x2="16" y2="26" stroke="rgba(0,212,255,0.2)" strokeWidth="0.8" />
+      <line x1="10" y1="32" x2="16" y2="32" stroke="rgba(0,212,255,0.15)" strokeWidth="0.8" />
+      <circle cx="50" cy="14" r="8" fill="#080E1A" stroke="rgba(0,212,255,0.4)" strokeWidth="1" />
+      <text x="47" y="18" fill="rgba(0,212,255,0.7)" fontSize="7" fontFamily="monospace" fontWeight="bold">EU</text>
     </svg>,
   ];
   return illos[index] ?? null;
@@ -146,7 +159,7 @@ export default function KnowledgeHubSection() {
                 className="group relative flex flex-col p-8 transition-all duration-300"
                 style={{
                   borderRight: i % 3 < 2 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                  borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none",
+                  borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.07)" : "none",
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,212,255,0.025)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}

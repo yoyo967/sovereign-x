@@ -149,14 +149,54 @@ function TierCard({
   );
 }
 
+const STATIC_TIERS: Tier[] = [
+  {
+    name: "FREE",
+    priceMonthlyEur: 0,
+    features: [
+      "3 Use Cases (Kündigung, Preiserhöhung, DSGVO)",
+      "Basis-KI (Gemini 2.5 Flash)",
+      "10 Aktionen pro Monat",
+      "Blog & Wissens-Hub Zugang",
+      "EU-Hosting (europe-west4)",
+    ],
+  },
+  {
+    name: "PRO",
+    priceMonthlyEur: 19,
+    features: [
+      "Alle 8 Sovereign Module",
+      "Sovereign Twin (Gemma 4 · On-Device)",
+      "Unbegrenzte Aktionen",
+      "Priority EU-Cloud Processing",
+      "Audit Trail Export (PDF/JSON)",
+      "Senate Score für alle Outputs",
+      "E-Mail Support",
+    ],
+  },
+  {
+    name: "APEX",
+    priceMonthlyEur: 49,
+    features: [
+      "Alles aus PRO",
+      "API-Zugang (REST + Webhooks)",
+      "Dedizierte EU-Cloud-Instanz",
+      "White-Label Option",
+      "SLA 99.9% Uptime",
+      "Buch: Sovereign Marketing (PDF)",
+      "Priority Support + Onboarding",
+    ],
+  },
+];
+
 export default function Pricing() {
   const t = useTranslations("pricing");
-  const [tiers, setTiers] = useState<Tier[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [tiers, setTiers] = useState<Tier[]>(STATIC_TIERS);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     api.public.getPricing()
-      .then((data) => { if (data?.tiers) setTiers(data.tiers); })
+      .then((data) => { if (data?.tiers?.length) setTiers(data.tiers); })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);

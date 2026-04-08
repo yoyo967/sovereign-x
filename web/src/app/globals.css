@@ -71,23 +71,23 @@
    ═══════════════════════════════════════════════════════════ */
 
 :root {
-  --background: #050d18;
-  --foreground: #e0e0e0;
+  --background: #080E1A;
+  --foreground: #F0F4FF;
 
-  /* Sovereign Specific */
-  --sovereign-navy: #0a1628;
-  --sovereign-space-black: #050d18;
-  --sovereign-surface: #0f2035;
-  --sovereign-surface-elevated: #142a45;
-  --sovereign-cyan: #00e5ff;
+  /* Sovereign Specific — System A: Blueprint Dark */
+  --sovereign-navy: #080E1A;
+  --sovereign-space-black: #060B15;
+  --sovereign-surface: #0A1628;
+  --sovereign-surface-elevated: #0F1E35;
+  --sovereign-cyan: #00D4FF;
   --sovereign-purple: #bb86fc;
   --sovereign-teal: #00bfa5;
   --sovereign-gold: #ffd600;
   --sovereign-pink: #ff4081;
   --sovereign-riskred: #ff1744;
   --sovereign-success: #00e676;
-  --sovereign-alabaster: #e0e0e0;
-  --sovereign-slate: #9e9e9e;
+  --sovereign-alabaster: #F0F4FF;
+  --sovereign-slate: #8892A4;
   --sovereign-silver: rgba(255, 255, 255, 0.1);
   --sovereign-glass-10: rgba(255, 255, 255, 0.05);
   --sovereign-glass-15: rgba(255, 255, 255, 0.08);
@@ -96,13 +96,38 @@
 
   /* Sidebar */
   --sidebar-width: 280px;
+
+  /* ── System A: Blueprint Dark (kanonisch ab v2.0) ── */
+  --s-bg:            #080E1A;
+  --s-bg-deep:       #060B15;
+  --s-surface:       #0A1628;
+  --s-glass:         rgba(8, 14, 26, 0.92);
+  --s-cyan:          #00D4FF;
+  --s-purple:        #BB86FC;
+  --s-teal:          #00BFA5;
+  --s-gold:          #FFD600;
+  --s-pink:          #FF4081;
+  --s-risk:          #FF1744;
+  --s-success:       #00E676;
+  --s-text:          #F0F4FF;
+  --s-text-muted:    #8892A4;
+  --s-text-faint:    #5A6478;
+  --s-border:        rgba(255, 255, 255, 0.06);
+  --s-border-strong: rgba(255, 255, 255, 0.18);
+  --s-divider:       rgba(255, 255, 255, 0.04);
+  --s-shadow:        0 1px 3px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.45);
+  --s-glow:          0 0 40px rgba(0, 212, 255, 0.10);
+  --s-radius-sm:     8px;
+  --s-radius-md:     16px;
+  --s-radius-lg:     24px;
+  --font-body:       'Inter', 'Helvetica Neue', sans-serif;
+  --font-mono:       'JetBrains Mono', 'Fira Code', monospace;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
-  overflow-x: hidden;
+  background-color: #080E1A;
+  color: #F0F4FF;
+  font-family: var(--font-body);
 }
 
 * {
@@ -1185,3 +1210,56 @@ body {
 
 .nexus-hover-cyan:hover { color: rgba(0, 212, 255, 0.8) !important; }
 .nexus-footer-card:hover { background: rgba(0, 212, 255, 0.025) !important; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   ACCESSIBILITY — WCAG 2.1 AA
+   ═══════════════════════════════════════════════════════════ */
+
+/* Screen-reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip-to-main link (keyboard navigation) */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00D4FF;
+  color: #080E1A;
+  font-family: var(--font-space-grotesk, sans-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 12px 28px;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid #080E1A;
+  outline-offset: 2px;
+}
+
+/* Global focus-visible — keyboard users get clear outlines */
+:focus-visible {
+  outline: 2px solid #00D4FF;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Remove focus ring for mouse users only where browser supports it */
+:focus:not(:focus-visible) {
+  outline: none;
+}

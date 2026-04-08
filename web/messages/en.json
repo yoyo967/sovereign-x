@@ -121,7 +121,10 @@
       "ai": { "label": "AI Access", "sovereign": "Boundary-First, HITL-controlled", "saas": "Unrestricted, opaque" },
       "audit": { "label": "Transparency", "sovereign": "Full audit trail", "saas": "Black box" },
       "infra": { "label": "Infrastructure", "sovereign": "EU data residency, no lock-in", "saas": "Hyperscaler, vendor lock-in" },
-      "autonomy": { "label": "Autonomy Level", "sovereign": "You set the parameters", "saas": "Vendor sets the rules" }
+      "autonomy": { "label": "Autonomy Level", "sovereign": "You set the parameters", "saas": "Vendor sets the rules" },
+      "compliance": { "label": "EU Compliance", "sovereign": "DSGVO + EU AI Act automated", "saas": "Your burden, alone" },
+      "exit": { "label": "Exit Freedom", "sovereign": "Data export anytime, zero lock-in", "saas": "Notice periods, data loss" },
+      "cost": { "label": "Cost Transparency", "sovereign": "Fixed price, no hidden fees", "saas": "Usage-based, unpredictable" }
     }
   },
   "brainstormer": {
@@ -265,18 +268,18 @@
         "mins": "8"
       },
       "2": {
-        "title": "Data Sovereignty 2030: Fundamentals & Strategy",
-        "desc": "What data sovereignty means, why it's crucial in 2026, and how SOVEREIGN implements it technically.",
-        "href": "/souveraenitaet",
-        "tag": "DATA PROTECTION",
-        "mins": "15"
+        "title": "Digital Sovereignty 2030: Why It Matters Now",
+        "desc": "What digital sovereignty means, why it becomes the defining topic in 2026, and how you as an individual can regain control of your digital life.",
+        "href": "/blog/digitale-souveraenitaet-2030",
+        "tag": "DATA SOVEREIGNTY",
+        "mins": "11"
       },
       "3": {
-        "title": "SOVEREIGN APEX Architecture: The 4 Layers",
-        "desc": "Privacy Guardian, AgentMemory, Execution Center, Audit Trail — how the four architecture layers work together.",
-        "href": "/architektur",
-        "tag": "TECHNOLOGY",
-        "mins": "10"
+        "title": "GDPR Data Request: How to Get Your Data Back",
+        "desc": "Art. 15 GDPR gives you the right to full information about stored data. Template letter, deadlines, and what companies must provide.",
+        "href": "/blog/dsgvo-auskunft-antrag",
+        "tag": "DATA PROTECTION",
+        "mins": "9"
       },
       "4": {
         "title": "Subscription Trap: Recognize, Challenge, Escape",
@@ -286,11 +289,18 @@
         "mins": "7"
       },
       "5": {
-        "title": "EU AI Act & Data Protection: What You Need to Know",
-        "desc": "The EU AI Act applies fully from 2026. What does this mean for AI applications and your rights?",
-        "href": "/sicherheit",
+        "title": "EU AI Act Explained: What You Need to Know in 2026",
+        "desc": "The EU AI Act is the world's first AI law. What does it mean for you as a consumer, for businesses, and for AI applications you use daily?",
+        "href": "/blog/eu-ai-act-erklaert",
         "tag": "EU AI ACT",
-        "mins": "11"
+        "mins": "13"
+      },
+      "6": {
+        "title": "5 EU Laws That Change Your Digital Life",
+        "desc": "GDPR, DSA, DMA, EU AI Act and Data Act — complete compliance overview with penalty risks and checklists.",
+        "href": "/eu-regulierung",
+        "tag": "EU LAW",
+        "mins": "14"
       }
     }
   },
@@ -355,18 +365,18 @@
       "book": "The Book — SOVEREIGN MARKETING"
     },
     "modules": {
-      "0": { "title": "Data Sovereignty 2030", "tag": "PRIVACY", "href": "/souveraenitaet", "desc": "Rights, strategies, GDPR" },
-      "1": { "title": "APEX Architecture", "tag": "TECHNOLOGY", "href": "/architektur", "desc": "4-layer system" },
-      "2": { "title": "EU AI Act & GDPR", "tag": "EU AI ACT", "href": "/sicherheit", "desc": "Compliance by design" },
-      "3": { "title": "Sovereign Twin", "tag": "PRODUCT", "href": "/twin", "desc": "Your digital twin" },
-      "4": { "title": "AgentMemory", "tag": "FEATURE", "href": "/features/agentmemory", "desc": "Personal Data Warehouse" },
-      "5": { "title": "Privacy Guardian", "tag": "FEATURE", "href": "/features/privacy-guardian", "desc": "Zero-Trust Gatekeeper" },
-      "6": { "title": "Execution Center", "tag": "FEATURE", "href": "/features/execution-center", "desc": "HITL / HOTL Engine" },
-      "7": { "title": "Audit Trail", "tag": "FEATURE", "href": "/features/audit-trail", "desc": "100% Transparency" },
+      "0": { "title": "Data Sovereignty 2030", "tag": "PRIVACY", "href": "/module/souveraenitaet", "desc": "Rights, strategies, GDPR" },
+      "1": { "title": "APEX Architecture", "tag": "TECHNOLOGY", "href": "/module/sovereign-twin", "desc": "4-layer OS system" },
+      "2": { "title": "EU AI Act & GDPR", "tag": "EU AI ACT", "href": "/module/sicherheit", "desc": "Compliance by design" },
+      "3": { "title": "Sovereign Twin", "tag": "PRODUCT", "href": "/module/sovereign-twin", "desc": "Your digital twin" },
+      "4": { "title": "Privacy Guardian", "tag": "FEATURE", "href": "/module/privacy-guardian", "desc": "Zero-Trust Gatekeeper" },
+      "5": { "title": "Execution Center", "tag": "FEATURE", "href": "/module/execution-center", "desc": "HITL / HOTL Engine" },
+      "6": { "title": "Audit Trail", "tag": "FEATURE", "href": "/module/audit-trail", "desc": "100% Transparency" },
+      "7": { "title": "AI & Law", "tag": "FEATURE", "href": "/module/ki-recht", "desc": "Contract law & GDPR" },
       "8": { "title": "Cancel Contracts", "tag": "USE CASE", "href": "/use-cases/kuendigung", "desc": "Automatic & legally secure" },
       "9": { "title": "Price Increases", "tag": "USE CASE", "href": "/use-cases/preiserhoehung", "desc": "Object & special cancel" },
       "10": { "title": "Data Protection", "tag": "USE CASE", "href": "/use-cases/datenschutz", "desc": "Enforce GDPR" },
-      "11": { "title": "Finances", "tag": "USE CASE", "href": "/use-cases/finanzen", "desc": "PSD2 optimization" }
+      "11": { "title": "Finances", "tag": "USE CASE", "href": "/use-cases/finanzen", "desc": "Wealth & PSD2 optimization" }
     },
     "explore": "Explore all"
   },

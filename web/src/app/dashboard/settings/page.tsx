@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { User, Sliders, LogOut, CheckCircle2, AlertTriangle, Save } from 'lucide-react';
+import { User, Sliders, LogOut, CheckCircle2, AlertTriangle, Save, CreditCard, Trash2, Shield, ChevronRight, Zap } from 'lucide-react';
 import { api } from '@/lib/api';
 import { useRequireAuth } from '@/hooks/useRequireAuth';
 import { auth } from '@/lib/firebase';
@@ -171,6 +171,68 @@ export default function SettingsPage() {
             </div>
           </section>
 
+          {/* Abonnement */}
+          <section className="glass-card-level-1" style={{ padding: '36px' }}>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ padding: '8px', background: 'rgba(0, 229, 255, 0.1)', borderRadius: '8px' }}>
+                <CreditCard size={18} color="var(--sovereign-cyan)" />
+              </div>
+              Abonnement
+            </h3>
+
+            {/* Current plan */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '1.5rem', alignItems: 'center', padding: '1.25rem', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.15)', marginBottom: '1.5rem' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
+                  <Zap size={14} color="var(--sovereign-cyan)" />
+                  <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: '0.6rem', letterSpacing: '0.12em', color: 'rgba(0,212,255,0.7)', textTransform: 'uppercase' }}>
+                    Aktueller Plan
+                  </span>
+                </div>
+                <p style={{ fontFamily: 'var(--font-space-grotesk, sans-serif)', fontWeight: 800, fontSize: '1.3rem', color: 'var(--sovereign-alabaster)', margin: '0 0 0.3rem', letterSpacing: '-0.02em' }}>
+                  SOVEREIGN Citizen
+                </p>
+                <p style={{ fontSize: '0.82rem', color: 'var(--sovereign-slate)', margin: 0 }}>
+                  €14,90 / Monat · Nächste Abbuchung: <strong style={{ color: 'var(--sovereign-alabaster)' }}>01.05.2026</strong>
+                </p>
+              </div>
+              <button className="secondary-button" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', whiteSpace: 'nowrap' }}>
+                Upgrade auf Nexus
+                <ChevronRight size={14} />
+              </button>
+            </div>
+
+            {/* Plan comparison */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.06)', marginBottom: '1.5rem' }}>
+              {[
+                { name: 'Citizen', price: '€14,90', features: ['5 Module', 'Basis-Analyse', 'E-Mail-Support'], current: true },
+                { name: 'Nexus', price: '€29,90', features: ['Alle Module', 'Autonome Agents', 'Priority Support'], current: false },
+                { name: 'Sovereign OS', price: '€79,90', features: ['White-Label', 'API-Zugang', 'Dedicated Manager'], current: false },
+              ].map((plan) => (
+                <div key={plan.name} style={{ padding: '1.25rem', background: plan.current ? 'rgba(0,212,255,0.04)' : '#0D1929', position: 'relative' }}>
+                  {plan.current && (
+                    <span style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', fontFamily: 'var(--font-jetbrains, monospace)', fontSize: '0.48rem', letterSpacing: '0.08em', color: 'rgba(0,212,255,0.7)', border: '1px solid rgba(0,212,255,0.25)', padding: '2px 6px' }}>
+                      AKTIV
+                    </span>
+                  )}
+                  <p style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--sovereign-alabaster)', margin: '0 0 0.25rem' }}>{plan.name}</p>
+                  <p style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: '0.85rem', color: 'rgba(0,212,255,0.8)', margin: '0 0 0.75rem' }}>{plan.price}/mo</p>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                    {plan.features.map((f) => (
+                      <li key={f} style={{ fontSize: '0.75rem', color: 'var(--sovereign-slate)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <Shield size={10} color="rgba(0,212,255,0.4)" /> {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0, lineHeight: 1.55 }}>
+              Alle Pläne beinhalten EU AI Act-Konformität, DSGVO-Automatisierung und Zero-Tracking. Kündigung jederzeit monatlich möglich.
+            </p>
+          </section>
+
           {/* Boundary Conditions (God Mode Logic) */}
           <section className="glass-card-level-1" style={{ padding: '36px', border: '1px solid rgba(0, 229, 255, 0.25)' }}>
             <div className="floating-aura" style={{ position: 'absolute', top: 0, right: 0, width: '200px', height: '200px', opacity: 0.05 }} />
@@ -236,6 +298,63 @@ export default function SettingsPage() {
                 </div>
               </div>
 
+            </div>
+          </section>
+
+          {/* Datenlöschung */}
+          <section className="glass-card-level-1" style={{ padding: '36px', border: '1px solid rgba(255,23,68,0.12)' }}>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ padding: '8px', background: 'rgba(255,23,68,0.08)', borderRadius: '8px' }}>
+                <Trash2 size={18} color="var(--sovereign-riskred)" />
+              </div>
+              Datenverwaltung & Löschung
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: 'var(--sovereign-slate)', marginBottom: '1.5rem', lineHeight: 1.6, maxWidth: 560 }}>
+              Du hast das Recht auf Vergessenwerden (Art. 17 DSGVO). Alle Löschvorgänge sind unwiderruflich und werden innerhalb von 30 Tagen vollständig ausgeführt.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {[
+                {
+                  title: 'Analysehistorie löschen',
+                  desc: 'Alle gespeicherten KI-Analysen, Chat-Verläufe und Empfehlungen unwiderruflich entfernen.',
+                  label: 'Verlauf löschen',
+                  danger: false,
+                },
+                {
+                  title: 'Alle Vertragsdaten löschen',
+                  desc: 'Alle hochgeladenen Verträge, erkannten Konditionen und Fristen-Erinnerungen entfernen.',
+                  label: 'Verträge löschen',
+                  danger: false,
+                },
+                {
+                  title: 'Konto vollständig löschen',
+                  desc: 'Löscht dein Sovereign-Konto, alle persönlichen Daten, Dokumente und Zahlungsdaten permanent. Dieser Vorgang kann nicht rückgängig gemacht werden.',
+                  label: 'Konto löschen',
+                  danger: true,
+                },
+              ].map((item) => (
+                <div key={item.title} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '1rem 1.25rem', border: `1px solid ${item.danger ? 'rgba(255,23,68,0.15)' : 'rgba(255,255,255,0.06)'}`, background: item.danger ? 'rgba(255,23,68,0.03)' : 'transparent' }}>
+                  <div>
+                    <p style={{ fontWeight: 600, fontSize: '0.92rem', color: item.danger ? 'rgba(255,100,100,0.9)' : 'var(--sovereign-alabaster)', margin: '0 0 0.25rem' }}>
+                      {item.title}
+                    </p>
+                    <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0, lineHeight: 1.5, maxWidth: 440 }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                  <button
+                    className="secondary-button"
+                    style={{
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      ...(item.danger ? { borderColor: 'rgba(255,23,68,0.3)', color: 'var(--sovereign-riskred)' } : {}),
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                </div>
+              ))}
             </div>
           </section>
 

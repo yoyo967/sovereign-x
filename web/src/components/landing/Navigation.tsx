@@ -14,6 +14,8 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [wissenOpen, setWissenOpen] = useState(false);
+  const [mobileCoreOpen, setMobileCoreOpen] = useState(false);
+  const [mobileIntelOpen, setMobileIntelOpen] = useState(false);
   const wissenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,9 +35,14 @@ export default function Navigation() {
   }, []);
 
   const pillarLinks = [
-    { href: `/${locale}/souveraenitaet`, label: "Datensouveränität", tag: "DATENSCHUTZ", desc: "Deine Daten, deine Regeln" },
-    { href: `/${locale}/architektur`, label: "APEX Architektur", tag: "TECHNOLOGIE", desc: "Die 4 Schichten des Systems" },
-    { href: `/${locale}/sicherheit`, label: "EU AI Act & DSGVO", tag: "EU AI ACT", desc: "Compliance durch Design" },
+    { href: `/${locale}/module/sovereign-twin`,   label: "Sovereign Twin",     tag: "CORE",       desc: "Digitaler Zwilling · On-Device" },
+    { href: `/${locale}/module/privacy-guardian`, label: "Privacy Guardian",   tag: "GOVERNANCE", desc: "PII-Schutz in Echtzeit" },
+    { href: `/${locale}/module/execution-center`, label: "Execution Center",   tag: "CORE",       desc: "Autonome Task-Ausführung" },
+    { href: `/${locale}/module/audit-trail`,      label: "Audit Trail",        tag: "GOVERNANCE", desc: "Kryptographische Transparenz" },
+    { href: `/${locale}/module/sicherheit`,       label: "Security Senate",    tag: "GOVERNANCE", desc: "EU AI Act & Zero-Trust" },
+    { href: `/${locale}/module/finanzautonomie`,  label: "Finanzautonomie",    tag: "INTELLIGENCE", desc: "Preiserhöhungen & Wealth" },
+    { href: `/${locale}/module/ki-recht`,         label: "KI & Recht",         tag: "INTELLIGENCE", desc: "Vertragsrecht & DSGVO" },
+    { href: `/${locale}/module/souveraenitaet`,   label: "Datensouveränität",  tag: "CORE",       desc: "Vollständige Datenkontrolle" },
   ];
 
 
@@ -92,6 +99,7 @@ export default function Navigation() {
 
       {/* Main nav */}
       <nav
+        aria-label="Hauptnavigation"
         className="fixed left-0 right-0 z-40 transition-all duration-300"
         style={{
           top: "24px",
@@ -189,95 +197,138 @@ export default function Navigation() {
                     boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
                   }}
                 >
-                  <div className="grid grid-cols-3 gap-8">
-                    {/* Column 1: Pillars & Book */}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2rem" }}>
+
+                    {/* Column 1: Pillars Core + Governance */}
                     <div>
-                      <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "1rem" }}>
-                        Pillars & Basis
-                      </p>
-                      <div className="flex flex-col gap-1">
-                        {pillarLinks.map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            onClick={() => setWissenOpen(false)}
-                            style={{ display: "flex", flexDirection: "column", padding: "0.75rem", background: "transparent", textDecoration: "none", transition: "background 0.15s" }}
-                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
-                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
-                          >
-                            <span style={{ fontFamily: "var(--font-space-grotesk, sans-serif)", fontWeight: 600, fontSize: "0.85rem", color: "rgba(255,255,255,0.9)" }}>{link.label}</span>
-                            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>{link.desc}</span>
-                          </Link>
-                        ))}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+                        <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.5rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase" }}>
+                          Module Registry
+                        </p>
                         <Link
-                          href={`/${locale}/buch`}
+                          href={`/${locale}/module`}
                           onClick={() => setWissenOpen(false)}
-                          style={{ display: "flex", flexDirection: "column", padding: "0.75rem", background: "rgba(255,214,0,0.05)", border: "1px solid rgba(255,214,0,0.1)", textDecoration: "none", marginTop: "0.5rem" }}
+                          style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.48rem", color: "rgba(0,212,255,0.5)", textDecoration: "none", textTransform: "uppercase" }}
                         >
-                          <span style={{ fontFamily: "var(--font-space-grotesk, sans-serif)", fontWeight: 700, fontSize: "0.85rem", color: "#FFD600" }}>Sovereign Marketing</span>
-                          <span style={{ fontSize: "0.65rem", color: "rgba(255,214,0,0.5)" }}>Das Handbuch (erscheint 2026)</span>
+                          All 8 →
                         </Link>
                       </div>
-                    </div>
-
-                    {/* Column 2: APEX Features */}
-                    <div>
-                      <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "1rem" }}>
-                        APEX Architecture
-                      </p>
-                      <div className="flex flex-col gap-1">
-                        {[
-                          { href: `/${locale}/features/agentmemory`, label: "AgentMemory", tag: "DATA LAYER" },
-                          { href: `/${locale}/features/privacy-guardian`, label: "Privacy Guardian", tag: "PROTECTION" },
-                          { href: `/${locale}/features/execution-center`, label: "Execution Center", tag: "CONTROL" },
-                          { href: `/${locale}/features/audit-trail`, label: "Audit Trail", tag: "TRUST" },
-                        ].map((link) => (
+                      <div className="flex flex-col gap-0">
+                        {pillarLinks.slice(0, 4).map((link) => (
                           <Link
                             key={link.href}
                             href={link.href}
                             onClick={() => setWissenOpen(false)}
-                            style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.65rem", textDecoration: "none", transition: "background 0.15s" }}
+                            style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.55rem 0.5rem", textDecoration: "none", transition: "background 0.15s", borderBottom: "1px solid rgba(255,255,255,0.03)" }}
                             onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                           >
-                            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.45rem", color: "rgba(0,212,255,0.4)", minWidth: "55px" }}>{link.tag}</span>
-                            <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)" }}>{link.label}</span>
+                            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(0,212,255,0.35)", minWidth: "60px", textTransform: "uppercase" }}>{link.tag}</span>
+                            <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>{link.label}</span>
+                          </Link>
+                        ))}
+                        {pillarLinks.slice(4).map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setWissenOpen(false)}
+                            style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.55rem 0.5rem", textDecoration: "none", transition: "background 0.15s", borderBottom: "1px solid rgba(255,255,255,0.03)" }}
+                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
+                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                          >
+                            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(187,134,252,0.35)", minWidth: "60px", textTransform: "uppercase" }}>{link.tag}</span>
+                            <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>{link.label}</span>
                           </Link>
                         ))}
                       </div>
                     </div>
 
-                    {/* Column 3: Use Cases */}
+                    {/* Column 2: Use Cases + Blog */}
                     <div>
-                      <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "1rem" }}>
+                      <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.5rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "1rem" }}>
                         Use Case Hub
                       </p>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-0">
                         {[
-                          { href: `/${locale}/use-cases/kuendigung`, label: "Vertrag kündigen", tag: "BGB" },
-                          { href: `/${locale}/use-cases/preiserhoehung`, label: "Widerspruch", tag: "FINANCE" },
-                          { href: `/${locale}/use-cases/datenschutz`, label: "DSGVO Anfragen", tag: "PRIVACY" },
-                          { href: `/${locale}/use-cases/finanzen`, label: "Wealth Twin", tag: "WEALTH" },
+                          { href: `/${locale}/use-cases/kuendigung`,    label: "Vertrag kündigen",  tag: "BGB" },
+                          { href: `/${locale}/use-cases/preiserhoehung`, label: "Preiserhöhung",     tag: "FINANCE" },
+                          { href: `/${locale}/use-cases/datenschutz`,   label: "DSGVO Anfragen",    tag: "PRIVACY" },
+                          { href: `/${locale}/use-cases/finanzen`,      label: "Wealth Twin",       tag: "WEALTH" },
                         ].map((link) => (
                           <Link
                             key={link.href}
                             href={link.href}
                             onClick={() => setWissenOpen(false)}
-                            style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.65rem", textDecoration: "none", transition: "background 0.15s" }}
+                            style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.55rem 0.5rem", textDecoration: "none", transition: "background 0.15s", borderBottom: "1px solid rgba(255,255,255,0.03)" }}
                             onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                           >
-                            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.45rem", color: "rgba(187,134,252,0.4)", minWidth: "45px" }}>{link.tag}</span>
-                            <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)" }}>{link.label}</span>
+                            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(0,230,118,0.35)", minWidth: "48px", textTransform: "uppercase" }}>{link.tag}</span>
+                            <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>{link.label}</span>
                           </Link>
                         ))}
-                        <Link
-                          href={`/${locale}/use-cases`}
-                          onClick={() => setWissenOpen(false)}
-                          style={{ marginTop: "0.75rem", paddingLeft: "0.65rem", fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.55rem", color: "var(--sovereign-cyan, #00E5FF)", textDecoration: "none", textTransform: "uppercase" }}
-                        >
-                          Alle Use Cases →
+                      </div>
+                      <div style={{ marginTop: "1.25rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                        <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.5rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "0.6rem" }}>
+                          Intelligence Matrix
+                        </p>
+                        <Link href={`/${locale}/blog`} onClick={() => setWissenOpen(false)} style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.55rem 0.5rem", textDecoration: "none", transition: "background 0.15s" }}
+                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
+                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
+                          <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(0,212,255,0.35)", minWidth: "48px", textTransform: "uppercase" }}>BLOG</span>
+                          <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>Blog & Cluster</span>
                         </Link>
+                      </div>
+                    </div>
+
+                    {/* Column 3: Quick Access + Mehr */}
+                    <div>
+                      <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.5rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "0.75rem" }}>
+                        Quick Access
+                      </p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1rem" }}>
+                        <Link href={`/${locale}/module`} onClick={() => setWissenOpen(false)} style={{
+                          padding: "0.75rem",
+                          background: "rgba(0,212,255,0.06)", border: "1px solid rgba(0,212,255,0.15)",
+                          textDecoration: "none", display: "flex", flexDirection: "column", gap: 3,
+                        }}>
+                          <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.5rem", color: "rgba(0,212,255,0.6)", textTransform: "uppercase" }}>PILLAR REGISTRY</span>
+                          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>Module Registry →</span>
+                          <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.3)" }}>Alle 8 Module im Überblick</span>
+                        </Link>
+                        <Link href="/dashboard" onClick={() => setWissenOpen(false)} style={{
+                          padding: "0.65rem",
+                          background: "#00D4FF", color: "#080E1A",
+                          textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center",
+                          fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.6rem",
+                          letterSpacing: "0.1em", fontWeight: 700, textTransform: "uppercase",
+                        }}>
+                          Enter OS →
+                        </Link>
+                      </div>
+                      {/* Mehr */}
+                      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "0.75rem" }}>
+                        <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.5rem", letterSpacing: "0.12em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase", marginBottom: "0.6rem" }}>
+                          Mehr
+                        </p>
+                        {[
+                          { href: `/${locale}/manifesto`,      label: "Das Manifest",      tag: "VISION" },
+                          { href: `/${locale}/eu-regulierung`, label: "EU-Regulierung",    tag: "LEGAL" },
+                          { href: `/${locale}/buch`,           label: "Das Handbuch",      tag: "BUCH" },
+                          { href: `/${locale}/roadmap`,        label: "Roadmap 2030",      tag: "PLAN" },
+                        ].map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setWissenOpen(false)}
+                            style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.45rem 0.5rem", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.03)" }}
+                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
+                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                          >
+                            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(255,255,255,0.2)", minWidth: "40px", textTransform: "uppercase" }}>{link.tag}</span>
+                            <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.65)", fontWeight: 500 }}>{link.label}</span>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -338,31 +389,93 @@ export default function Navigation() {
               </Link>
             ))}
 
-            {/* Mobile Pillar links */}
-            <div>
-              <p style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.6rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.4)", textTransform: "uppercase", marginBottom: "1rem" }}>
-                Pillar Guides
-              </p>
-              {pillarLinks.map((link) => (
+            {/* Mobile Pillar links — 2 collapsible groups */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {/* Group 1: Core + Governance */}
+              <div>
+                <button
+                  onClick={() => setMobileCoreOpen(!mobileCoreOpen)}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    width: "100%", padding: "0.75rem 0",
+                    background: "none", border: "none", borderBottom: "1px solid rgba(255,255,255,0.07)",
+                    cursor: "pointer", textAlign: "left",
+                  }}
+                >
+                  <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.6rem", letterSpacing: "0.12em", color: "rgba(0,212,255,0.5)", textTransform: "uppercase" }}>
+                    Core / Governance
+                  </span>
+                  <ChevronDown size={14} style={{ color: "rgba(255,255,255,0.3)", transition: "transform 0.2s", transform: mobileCoreOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
+                </button>
+                {mobileCoreOpen && (
+                  <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
+                    {pillarLinks.filter(l => l.tag === "CORE" || l.tag === "GOVERNANCE").map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMenuOpen(false)}
+                        style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.6rem 0.5rem", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.03)" }}
+                      >
+                        <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(0,212,255,0.4)", minWidth: "60px", textTransform: "uppercase" }}>{link.tag}</span>
+                        <span style={{ fontSize: "1rem", fontWeight: 700, color: "rgba(255,255,255,0.8)", fontFamily: "var(--font-space-grotesk, sans-serif)" }}>{link.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Group 2: Intelligence */}
+              <div>
+                <button
+                  onClick={() => setMobileIntelOpen(!mobileIntelOpen)}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    width: "100%", padding: "0.75rem 0",
+                    background: "none", border: "none", borderBottom: "1px solid rgba(255,255,255,0.07)",
+                    cursor: "pointer", textAlign: "left",
+                  }}
+                >
+                  <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.6rem", letterSpacing: "0.12em", color: "rgba(187,134,252,0.5)", textTransform: "uppercase" }}>
+                    Intelligence Layer
+                  </span>
+                  <ChevronDown size={14} style={{ color: "rgba(255,255,255,0.3)", transition: "transform 0.2s", transform: mobileIntelOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
+                </button>
+                {mobileIntelOpen && (
+                  <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
+                    {pillarLinks.filter(l => l.tag === "INTELLIGENCE").map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMenuOpen(false)}
+                        style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.6rem 0.5rem", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.03)" }}
+                      >
+                        <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.44rem", color: "rgba(187,134,252,0.4)", minWidth: "60px", textTransform: "uppercase" }}>{link.tag}</span>
+                        <span style={{ fontSize: "1rem", fontWeight: 700, color: "rgba(255,255,255,0.8)", fontFamily: "var(--font-space-grotesk, sans-serif)" }}>{link.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Mobile secondary links */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              {[
+                { href: `/${locale}/blog`,           label: "Blog & Wissen" },
+                { href: `/${locale}/manifesto`,      label: "Das Manifest" },
+                { href: `/${locale}/eu-regulierung`, label: "EU-Regulierung" },
+                { href: `/${locale}/module`,         label: "Module Registry" },
+              ].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  style={{ display: "block", fontFamily: "var(--font-space-grotesk, sans-serif)", fontSize: "1.1rem", fontWeight: 700, color: "rgba(255,255,255,0.75)", textDecoration: "none", marginBottom: "0.75rem" }}
+                  style={{ fontFamily: "var(--font-space-grotesk, sans-serif)", fontSize: "1.05rem", fontWeight: 600, color: "rgba(255,255,255,0.6)", textDecoration: "none" }}
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
-
-            {/* Mobile Blog link */}
-            <Link
-              href={`/${locale}/blog`}
-              onClick={() => setMenuOpen(false)}
-              style={{ fontFamily: "var(--font-space-grotesk, sans-serif)", fontSize: "1.1rem", fontWeight: 700, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}
-            >
-              Blog & Wissen
-            </Link>
 
             <div className="mt-4 flex flex-col gap-3">
               {user ? (

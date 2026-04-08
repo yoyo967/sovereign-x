@@ -130,7 +130,10 @@
       "ai": { "label": "KI-Zugriff", "sovereign": "Boundary-First, HITL-kontrolliert", "saas": "Uneingeschränkt, intransparent" },
       "audit": { "label": "Transparenz", "sovereign": "Vollständiger Audit-Trail", "saas": "Blackbox" },
       "infra": { "label": "Infrastruktur", "sovereign": "EU-Datenresidenz, kein Lock-in", "saas": "Hyperscaler, Vendor-Lock-in" },
-      "autonomy": { "label": "Autonomie-Level", "sovereign": "Du setzt die Parameter", "saas": "Anbieter setzt die Regeln" }
+      "autonomy": { "label": "Autonomie-Level", "sovereign": "Du setzt die Parameter", "saas": "Anbieter setzt die Regeln" },
+      "compliance": { "label": "EU-Compliance", "sovereign": "DSGVO + EU AI Act automatisiert", "saas": "Deine Pflicht, allein" },
+      "exit": { "label": "Exit-Freiheit", "sovereign": "Daten-Export jederzeit, 0 Lock-in", "saas": "Kündigungsfristen, Datenverlust" },
+      "cost": { "label": "Kostentransparenz", "sovereign": "Festpreis, keine versteckten Gebühren", "saas": "Usage-basiert, unvorhersehbar" }
     }
   },
   "brainstormer": {
@@ -274,18 +277,18 @@
         "mins": "8"
       },
       "2": {
-        "title": "Datensouveränität 2030: Grundlagen & Strategie",
-        "desc": "Was Datensouveränität bedeutet, warum sie 2026 entscheidend ist, und wie SOVEREIGN sie technisch implementiert.",
-        "href": "/souveraenitaet",
-        "tag": "DATENSCHUTZ",
-        "mins": "15"
+        "title": "Digitale Souveränität 2030: Warum es jetzt entscheidet",
+        "desc": "Was digitale Souveränität bedeutet, warum sie 2026 zum entscheidenden Thema wird, und wie du die Kontrolle über dein digitales Leben zurückgewinnst.",
+        "href": "/blog/digitale-souveraenitaet-2030",
+        "tag": "DATENSOUVERÄNITÄT",
+        "mins": "11"
       },
       "3": {
-        "title": "SOVEREIGN APEX Architektur: Die 4 Schichten",
-        "desc": "Privacy Guardian, AgentMemory, Execution Center, Audit Trail — wie die vier Architektur-Layer zusammenwirken.",
-        "href": "/architektur",
-        "tag": "TECHNOLOGIE",
-        "mins": "10"
+        "title": "DSGVO-Auskunft: So forderst du deine Daten zurück",
+        "desc": "Art. 15 DSGVO gibt dir das Recht auf vollständige Auskunft über gespeicherte Daten. Musterbrief, Fristen und was Unternehmen liefern müssen.",
+        "href": "/blog/dsgvo-auskunft-antrag",
+        "tag": "DATENSCHUTZ",
+        "mins": "9"
       },
       "4": {
         "title": "Abofalle: Erkennen, widersprechen, entkommen",
@@ -295,11 +298,18 @@
         "mins": "7"
       },
       "5": {
-        "title": "EU AI Act & Datenschutz: Was du wissen musst",
-        "desc": "Der EU AI Act gilt ab 2026 vollständig. Was bedeutet das für KI-Anwendungen und deine Rechte?",
-        "href": "/sicherheit",
+        "title": "EU AI Act erklärt: Was du 2026 wissen musst",
+        "desc": "Der EU AI Act ist das weltweit erste KI-Gesetz. Was bedeutet das für dich als Verbraucher, für Unternehmen und für KI-Anwendungen die du täglich nutzt?",
+        "href": "/blog/eu-ai-act-erklaert",
         "tag": "EU AI ACT",
-        "mins": "11"
+        "mins": "13"
+      },
+      "6": {
+        "title": "5 EU-Gesetze die dein digitales Leben verändern",
+        "desc": "DSGVO, DSA, DMA, EU AI Act und Data Act — vollständige Compliance-Übersicht mit Bußgeld-Risiken und Checklisten.",
+        "href": "/eu-regulierung",
+        "tag": "EU-RECHT",
+        "mins": "14"
       }
     }
   },
@@ -316,8 +326,8 @@
         "pain0": "94% der Deutschen kennen ihre Vertragsbedingungen nicht",
         "pain1": "€2.400 Verlust/Jahr durch unbemerkte Klauseln",
         "pain2": "15 Verträge im Schnitt — wer behält den Überblick?",
-        "cta": "Jetzt Verträge analysieren",
-        "href": "/blog/vertrag-kuendigen"
+        "cta": "KI & Recht Modul erkunden",
+        "href": "/module/ki-recht"
       },
       "1": {
         "tag": "DATENSCHUTZ-FIRST",
@@ -326,8 +336,8 @@
         "pain0": "Deine Daten werden verkauft — ohne dein Wissen",
         "pain1": "0% Transparenz über KI-Entscheidungen, die dich betreffen",
         "pain2": "73% der Deutschen wollen mehr Kontrolle über ihre Daten",
-        "cta": "Datensouveränität verstehen",
-        "href": "/souveraenitaet"
+        "cta": "Privacy Guardian erkunden",
+        "href": "/module/privacy-guardian"
       },
       "2": {
         "tag": "TECH-AFFIN",
@@ -336,18 +346,18 @@
         "pain0": "KI-Systeme sind Blackboxen — keine Erklärbarkeit",
         "pain1": "Vendor Lock-in durch Hyperscaler",
         "pain2": "EU AI Act 2026: Compliance by Design oder Bußgeld",
-        "cta": "APEX Architektur erkunden",
-        "href": "/architektur"
+        "cta": "Sovereign Twin erkunden",
+        "href": "/module/sovereign-twin"
       },
       "3": {
         "tag": "BUSINESS",
         "title": "Ich brauche das für mein Team.",
-        "sub": "SHIELD Plan, Family Vault, B2B.",
+        "sub": "APEX Plan, Family Vault, B2B.",
         "pain0": "Teams brauchen geteilte Vertrags-Compliance",
         "pain1": "DSGVO-Konformität ist kein Einzelproblem",
-        "pain2": "Unternehmen verlieren durchschnittlich 5% Revenue durch schlechtes Vertragsmanagement",
-        "cta": "SHIELD Plan ansehen",
-        "href": "/#pricing"
+        "pain2": "Unternehmen verlieren 5% Revenue durch schlechtes Vertragsmanagement",
+        "cta": "Finanzautonomie Modul erkunden",
+        "href": "/module/finanzautonomie"
       }
     }
   },
@@ -364,18 +374,18 @@
       "book": "Das Buch — SOVEREIGN MARKETING"
     },
     "modules": {
-      "0": { "title": "Datensouveränität 2030", "tag": "DATENSCHUTZ", "href": "/souveraenitaet", "desc": "Rechte, Strategien, DSGVO" },
-      "1": { "title": "APEX Architektur", "tag": "TECHNOLOGIE", "href": "/architektur", "desc": "4-Schichten System" },
-      "2": { "title": "EU AI Act & DSGVO", "tag": "EU AI ACT", "href": "/sicherheit", "desc": "Compliance by Design" },
-      "3": { "title": "Sovereign Twin", "tag": "PRODUKT", "href": "/twin", "desc": "Dein digitaler Zwilling" },
-      "4": { "title": "AgentMemory", "tag": "FEATURE", "href": "/features/agentmemory", "desc": "Personal Data Warehouse" },
-      "5": { "title": "Privacy Guardian", "tag": "FEATURE", "href": "/features/privacy-guardian", "desc": "Zero-Trust Gatekeeper" },
-      "6": { "title": "Execution Center", "tag": "FEATURE", "href": "/features/execution-center", "desc": "HITL / HOTL Engine" },
-      "7": { "title": "Audit Trail", "tag": "FEATURE", "href": "/features/audit-trail", "desc": "100% Transparenz" },
+      "0": { "title": "Datensouveränität 2030", "tag": "DATENSCHUTZ", "href": "/module/souveraenitaet", "desc": "Rechte, Strategien, DSGVO" },
+      "1": { "title": "APEX Architektur", "tag": "TECHNOLOGIE", "href": "/module/sovereign-twin", "desc": "4-Schichten OS-System" },
+      "2": { "title": "EU AI Act & DSGVO", "tag": "EU AI ACT", "href": "/module/sicherheit", "desc": "Compliance by Design" },
+      "3": { "title": "Sovereign Twin", "tag": "PRODUKT", "href": "/module/sovereign-twin", "desc": "Dein digitaler Zwilling" },
+      "4": { "title": "Privacy Guardian", "tag": "FEATURE", "href": "/module/privacy-guardian", "desc": "Zero-Trust Gatekeeper" },
+      "5": { "title": "Execution Center", "tag": "FEATURE", "href": "/module/execution-center", "desc": "HITL / HOTL Engine" },
+      "6": { "title": "Audit Trail", "tag": "FEATURE", "href": "/module/audit-trail", "desc": "100% Transparenz" },
+      "7": { "title": "KI & Recht", "tag": "FEATURE", "href": "/module/ki-recht", "desc": "Vertragsrecht & DSGVO" },
       "8": { "title": "Vertrag kündigen", "tag": "USE CASE", "href": "/use-cases/kuendigung", "desc": "Automatisch & rechtssicher" },
       "9": { "title": "Preiserhöhung", "tag": "USE CASE", "href": "/use-cases/preiserhoehung", "desc": "Widerspruch & Sonderkündigung" },
       "10": { "title": "Datenschutz", "tag": "USE CASE", "href": "/use-cases/datenschutz", "desc": "DSGVO durchsetzen" },
-      "11": { "title": "Finanzen", "tag": "USE CASE", "href": "/use-cases/finanzen", "desc": "PSD2 Optimierung" }
+      "11": { "title": "Finanzen", "tag": "USE CASE", "href": "/use-cases/finanzen", "desc": "Wealth & PSD2 Optimierung" }
     },
     "explore": "Alle erkunden"
   },

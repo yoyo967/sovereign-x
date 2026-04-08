@@ -8,6 +8,7 @@ import {
   Bot, Globe, Scale, Activity, Clock
 } from 'lucide-react';
 import { api } from '@/lib/api';
+import OnboardingModal from '@/components/dashboard/OnboardingModal';
 
 // ─── Types ──────────────────────────────────────────────
 interface DashboardData {
@@ -189,6 +190,7 @@ export default function DashboardOverview() {
 
   return (
     <div style={{ maxWidth: '1280px' }}>
+      <OnboardingModal />
       {/* ─── Header ─── */}
       <motion.header
         initial={{ opacity: 0, y: -10 }}

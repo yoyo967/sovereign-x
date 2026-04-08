@@ -91,6 +91,41 @@ export default function FinancePage() {
         </motion.div>
       </div>
 
+      {/* Cashflow Chart */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="glass-card-level-1"
+        style={{ padding: '28px', marginBottom: '28px' }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+          <div>
+            <div className="section-header" style={{ margin: '0 0 4px' }}>Cashflow — letzte 6 Monate</div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--sovereign-slate)', margin: 0 }}>Einnahmen vs. Ausgaben · automatisch aus PSD2-Daten</p>
+          </div>
+          <div style={{ display: 'flex', gap: '16px' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: 'var(--sovereign-slate)' }}>
+              <span style={{ width: 10, height: 10, borderRadius: 2, background: 'rgba(0,230,118,0.7)', flexShrink: 0 }} />
+              Einnahmen
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: 'var(--sovereign-slate)' }}>
+              <span style={{ width: 10, height: 10, borderRadius: 2, background: 'rgba(0,212,255,0.6)', flexShrink: 0 }} />
+              Ausgaben
+            </span>
+          </div>
+        </div>
+        <CashflowChart summary={summary} />
+
+        {/* Category breakdown */}
+        <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: '1px solid var(--sovereign-silver)' }}>
+          <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-jetbrains, monospace)', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', marginBottom: '16px' }}>
+            Ausgaben nach Kategorie
+          </p>
+          <SpendingBreakdown summary={summary} />
+        </div>
+      </motion.section>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 400px', gap: '28px' }}>
         
         {/* Recent Transactions */}
@@ -203,6 +238,167 @@ export default function FinancePage() {
           </motion.section>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ── CashflowChart — pure SVG bar chart ────────────────────────
+
+const MOCK_MONTHS = [
+  { label: "Nov", income: 3200, expenses: 2650 },
+  { label: "Dez", income: 3200, expenses: 3180 },
+  { label: "Jan", income: 3400, expenses: 2720 },
+  { label: "Feb", income: 3400, expenses: 2890 },
+  { label: "Mär", income: 3400, expenses: 2540 },
+  { label: "Apr", income: 3550, expenses: 2810 },
+];
+
+function CashflowChart({ summary }: { summary: any }) {
+  const chartH = 160;
+  const chartW = 560;
+  const barW = 28;
+  const gap = 18;
+  const groupW = barW * 2 + gap;
+  const groupGap = 24;
+  const totalGroupW = groupW + groupGap;
+  const paddingLeft = 48;
+  const paddingBottom = 28;
+
+  const maxVal = Math.max(...MOCK_MONTHS.flatMap((m) => [m.income, m.expenses]));
+  const scale = (chartH - paddingBottom) / maxVal;
+
+  const yTicks = [0, 1000, 2000, 3000, 4000].filter((v) => v <= maxVal * 1.05);
+
+  return (
+    <div style={{ overflowX: "auto" }}>
+      <svg
+        width="100%"
+        viewBox={`0 0 ${paddingLeft + MOCK_MONTHS.length * totalGroupW + 20} ${chartH + 10}`}
+        style={{ display: "block", minWidth: 320 }}
+      >
+        {/* Y-axis grid lines + labels */}
+        {yTicks.map((tick) => {
+          const y = chartH - paddingBottom - tick * scale;
+          return (
+            <g key={tick}>
+              <line
+                x1={paddingLeft}
+                y1={y}
+                x2={paddingLeft + MOCK_MONTHS.length * totalGroupW + 10}
+                y2={y}
+                stroke="rgba(255,255,255,0.05)"
+                strokeWidth={1}
+              />
+              <text
+                x={paddingLeft - 6}
+                y={y + 4}
+                textAnchor="end"
+                fontSize={9}
+                fill="rgba(255,255,255,0.25)"
+                fontFamily="var(--font-jetbrains, monospace)"
+              >
+                {tick >= 1000 ? `${tick / 1000}k` : tick}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Bars per month */}
+        {MOCK_MONTHS.map((month, i) => {
+          const x = paddingLeft + i * totalGroupW;
+          const incomeH = month.income * scale;
+          const expenseH = month.expenses * scale;
+          const baseY = chartH - paddingBottom;
+
+          return (
+            <g key={month.label}>
+              {/* Income bar */}
+              <rect
+                x={x}
+                y={baseY - incomeH}
+                width={barW}
+                height={incomeH}
+                fill="rgba(0,230,118,0.65)"
+                rx={2}
+              />
+              {/* Expense bar */}
+              <rect
+                x={x + barW + gap}
+                y={baseY - expenseH}
+                width={barW}
+                height={expenseH}
+                fill="rgba(0,212,255,0.55)"
+                rx={2}
+              />
+              {/* Month label */}
+              <text
+                x={x + groupW / 2}
+                y={chartH - 6}
+                textAnchor="middle"
+                fontSize={9}
+                fill="rgba(255,255,255,0.3)"
+                fontFamily="var(--font-jetbrains, monospace)"
+              >
+                {month.label}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Baseline */}
+        <line
+          x1={paddingLeft}
+          y1={chartH - paddingBottom}
+          x2={paddingLeft + MOCK_MONTHS.length * totalGroupW + 10}
+          y2={chartH - paddingBottom}
+          stroke="rgba(255,255,255,0.08)"
+          strokeWidth={1}
+        />
+      </svg>
+    </div>
+  );
+}
+
+// ── SpendingBreakdown — horizontal bar chart ──────────────────
+
+const MOCK_CATEGORIES = [
+  { label: "Wohnen & Miete",   value: 1150, color: "rgba(187,134,252,0.7)" },
+  { label: "Abonnements",      value: 247,  color: "rgba(0,212,255,0.7)" },
+  { label: "Lebensmittel",     value: 380,  color: "rgba(0,230,118,0.65)" },
+  { label: "Versicherungen",   value: 210,  color: "rgba(255,214,0,0.65)" },
+  { label: "Transport",        value: 178,  color: "rgba(255,160,0,0.65)" },
+  { label: "Sonstiges",        value: 645,  color: "rgba(255,255,255,0.2)" },
+];
+
+function SpendingBreakdown({ summary }: { summary: any }) {
+  const total = MOCK_CATEGORIES.reduce((s, c) => s + c.value, 0);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      {MOCK_CATEGORIES.map((cat) => {
+        const pct = (cat.value / total) * 100;
+        return (
+          <div key={cat.label} style={{ display: "grid", gridTemplateColumns: "140px 1fr 56px", gap: "12px", alignItems: "center" }}>
+            <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              {cat.label}
+            </span>
+            <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+              <div
+                style={{
+                  height: "100%",
+                  width: `${pct}%`,
+                  background: cat.color,
+                  borderRadius: 3,
+                  transition: "width 0.6s ease",
+                }}
+              />
+            </div>
+            <span style={{ fontFamily: "var(--font-jetbrains, monospace)", fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", textAlign: "right" }}>
+              €{cat.value}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }
