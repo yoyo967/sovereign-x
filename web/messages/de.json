@@ -544,6 +544,100 @@
       "noAccessText": "Du verfügst nicht über die erforderlichen Berechtigungen für diesen Bereich.",
       "requiredScope": "Erforderliche Berechtigung: {scope}",
       "upgradeRequired": "Upgrade erforderlich"
+    },
+    "contracts": {
+      "title": "Vertrags-Tresor",
+      "subtitle": "Management und Optimierung deines globalen Vertragsportfolios.",
+      "addNew": "Neuer Vertrag",
+      "searchPlaceholder": "Suchen nach Anbieter, Kategorie...",
+      "filter": "Filter",
+      "costLabel": "Kosten",
+      "costUnit": "/Monat",
+      "nextPayment": "Nächste Zahlung",
+      "unknown": "Unbekannt",
+      "aiConfidence": "KI-Konfidenz",
+      "riskBadge": {
+        "HIGH": "Hohes Risiko",
+        "MEDIUM": "Mittleres Risiko",
+        "LOW": "Geringes Risiko",
+        "NONE": "Kein Risiko"
+      },
+      "status": {
+        "ACTIVE": "Aktiv",
+        "CANCELLED": "Gekündigt",
+        "EXPIRED": "Abgelaufen",
+        "PENDING": "Ausstehend"
+      },
+      "empty": {
+        "title": "Keine Verträge gefunden",
+        "text": "Lade Vertragsdokumente (PDF) hoch oder verbinde dein Bankkonto, damit Sovereign Verträge automatisch erkennt.",
+        "connectBank": "Bank verbinden",
+        "uploadDoc": "Dokument hochladen"
+      },
+      "upload": {
+        "eyebrow": "Neuer Vertrag",
+        "title": "Vertrag hochladen",
+        "dropHint": "PDF-Vertrag hierher ziehen",
+        "dropSub": "oder klicken zum Auswählen",
+        "privacyNote": "Dein Dokument wird lokal analysiert und nicht dauerhaft gespeichert. Keine Weitergabe an Dritte.",
+        "privacyLabel": "Datenschutz:",
+        "analyzingEyebrow": "Analyse läuft",
+        "analyzingTitle": "SOVEREIGN analysiert…",
+        "steps": {
+          "read": "Dokument einlesen",
+          "ocr": "Textextraktion (OCR)",
+          "type": "Vertragstyp erkennen",
+          "terms": "Konditionen analysieren",
+          "deadlines": "Fristen berechnen",
+          "special": "Sonderkündigungsrechte prüfen",
+          "done": "Analyse abgeschlossen"
+        },
+        "resultEyebrow": "Analyse abgeschlossen · {confidence}% Konfidenz",
+        "resultTitle": "Vertrag erkannt",
+        "fields": {
+          "provider": "Anbieter",
+          "category": "Kategorie",
+          "cost": "Monatliche Kosten",
+          "noticePeriod": "Kündigungsfrist",
+          "nextRenewal": "Nächste Verlängerung"
+        },
+        "autoRenewalWarning": "Automatische Verlängerung erkannt. Soll SOVEREIGN eine Kündigung-Erinnerung zum {date} setzen?",
+        "save": "Vertrag speichern",
+        "discard": "Verwerfen",
+        "doneTitle": "Vertrag gespeichert.",
+        "doneText": "{provider} wurde deinem Vertrags-Tresor hinzugefügt. Kündigung-Erinnerung gesetzt für {date}.",
+        "doneCta": "Fertig",
+        "disclaimer": "KI-Analyse (EU AI Act, LIMITED Risk): Ergebnisse der automatischen Vertragserkennung wurden durch SOVEREIGN AI erstellt. Bitte prüfe alle Daten vor dem Speichern."
+      }
+    },
+    "finance": {
+      "title": "Finance Guardian",
+      "subtitle": "Überwachung und Analyse deiner Finanzströme in Echtzeit.",
+      "connectFinapi": "Konto verbinden (PSD2)",
+      "connected": "Verbunden",
+      "disconnected": "Nicht verbunden",
+      "connectCta": "Mit Bank verbinden",
+      "connectDesc": "Verbinde dein Konto über PSD2 (finAPI), um Transaktionen automatisch zu analysieren.",
+      "cashflow": "Cashflow — letzte 6 Monate",
+      "spending": "Ausgaben nach Kategorie",
+      "anomalies": "Finance Guardian Alerts",
+      "noAnomalies": "Keine Anomalien erkannt",
+      "noAnomaliesText": "Deine Finanzen sehen unauffällig aus.",
+      "noData": "Keine Finanzdaten verfügbar",
+      "noDataText": "Verbinde dein Bankkonto, um Transaktionen zu analysieren.",
+      "monthLabels": {
+        "0": "Jan", "1": "Feb", "2": "Mär", "3": "Apr", "4": "Mai",
+        "5": "Jun", "6": "Jul", "7": "Aug", "8": "Sep", "9": "Okt",
+        "10": "Nov", "11": "Dez"
+      },
+      "anomalyTypes": {
+        "UNUSUAL_SPENDING": "Ungewöhnliche Ausgabe",
+        "DUPLICATE_PAYMENT": "Doppelzahlung",
+        "PRICE_INCREASE": "Preiserhöhung",
+        "SAVINGS_OPPORTUNITY": "Sparpotenzial"
+      },
+      "wealthScore": "Wealth Score",
+      "wealthScoreShieldOnly": "Nur mit SHIELD verfügbar"
     }
   }
 }

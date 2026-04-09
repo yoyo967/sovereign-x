@@ -535,6 +535,100 @@
       "noAccessText": "You do not have the required permissions for this area.",
       "requiredScope": "Required permission: {scope}",
       "upgradeRequired": "Upgrade Required"
+    },
+    "contracts": {
+      "title": "Contract Vault",
+      "subtitle": "Management and optimization of your global contract portfolio.",
+      "addNew": "New Contract",
+      "searchPlaceholder": "Search by provider, category...",
+      "filter": "Filter",
+      "costLabel": "Cost",
+      "costUnit": "/mo",
+      "nextPayment": "Next Payment",
+      "unknown": "Unknown",
+      "aiConfidence": "AI Confidence",
+      "riskBadge": {
+        "HIGH": "High Risk",
+        "MEDIUM": "Medium Risk",
+        "LOW": "Low Risk",
+        "NONE": "No Risk"
+      },
+      "status": {
+        "ACTIVE": "Active",
+        "CANCELLED": "Cancelled",
+        "EXPIRED": "Expired",
+        "PENDING": "Pending"
+      },
+      "empty": {
+        "title": "No contracts found",
+        "text": "Upload contract documents (PDF) or connect your bank account so Sovereign can automatically detect contracts.",
+        "connectBank": "Connect Bank",
+        "uploadDoc": "Upload Document"
+      },
+      "upload": {
+        "eyebrow": "New Contract",
+        "title": "Upload Contract",
+        "dropHint": "Drag PDF contract here",
+        "dropSub": "or click to select",
+        "privacyNote": "Your document is analyzed locally and not stored permanently. Not shared with third parties.",
+        "privacyLabel": "Privacy:",
+        "analyzingEyebrow": "Analysis running",
+        "analyzingTitle": "SOVEREIGN analyzing…",
+        "steps": {
+          "read": "Reading document",
+          "ocr": "Text extraction (OCR)",
+          "type": "Detecting contract type",
+          "terms": "Analyzing terms",
+          "deadlines": "Calculating deadlines",
+          "special": "Checking special cancellation rights",
+          "done": "Analysis complete"
+        },
+        "resultEyebrow": "Analysis complete · {confidence}% confidence",
+        "resultTitle": "Contract detected",
+        "fields": {
+          "provider": "Provider",
+          "category": "Category",
+          "cost": "Monthly Cost",
+          "noticePeriod": "Notice Period",
+          "nextRenewal": "Next Renewal"
+        },
+        "autoRenewalWarning": "Auto-renewal detected. Should SOVEREIGN set a cancellation reminder for {date}?",
+        "save": "Save Contract",
+        "discard": "Discard",
+        "doneTitle": "Contract saved.",
+        "doneText": "{provider} has been added to your Contract Vault. Cancellation reminder set for {date}.",
+        "doneCta": "Done",
+        "disclaimer": "AI Analysis (EU AI Act, LIMITED Risk): Automated contract recognition results were created by SOVEREIGN AI. Please verify all data before saving."
+      }
+    },
+    "finance": {
+      "title": "Finance Guardian",
+      "subtitle": "Real-time monitoring and analysis of your financial flows.",
+      "connectFinapi": "Connect Account (PSD2)",
+      "connected": "Connected",
+      "disconnected": "Not connected",
+      "connectCta": "Connect Bank",
+      "connectDesc": "Connect your account via PSD2 (finAPI) to automatically analyze transactions.",
+      "cashflow": "Cashflow — last 6 months",
+      "spending": "Spending by Category",
+      "anomalies": "Finance Guardian Alerts",
+      "noAnomalies": "No anomalies detected",
+      "noAnomaliesText": "Your finances look normal.",
+      "noData": "No financial data available",
+      "noDataText": "Connect your bank account to analyze transactions.",
+      "monthLabels": {
+        "0": "Jan", "1": "Feb", "2": "Mar", "3": "Apr", "4": "May",
+        "5": "Jun", "6": "Jul", "7": "Aug", "8": "Sep", "9": "Oct",
+        "10": "Nov", "11": "Dec"
+      },
+      "anomalyTypes": {
+        "UNUSUAL_SPENDING": "Unusual Spending",
+        "DUPLICATE_PAYMENT": "Duplicate Payment",
+        "PRICE_INCREASE": "Price Increase",
+        "SAVINGS_OPPORTUNITY": "Savings Opportunity"
+      },
+      "wealthScore": "Wealth Score",
+      "wealthScoreShieldOnly": "Available with SHIELD only"
     }
   }
 }
