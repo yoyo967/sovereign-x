@@ -149,11 +149,12 @@ export const api = {
       const url = status ? `${API_BASE_URL}/v2/approvals/?status=${status}` : `${API_BASE_URL}/v2/approvals/`;
       return fetch(url, { headers }).then(r => r.json());
     },
-    approve: async (id: string) => {
+    approve: async (id: string, biometricVerified = false) => {
       const headers = await getAuthHeaders();
       return fetch(`${API_BASE_URL}/v2/approvals/${id}/approve`, {
         method: 'POST',
         headers,
+        body: JSON.stringify({ biometric_verified: biometricVerified }),
       }).then(r => r.json());
     },
     reject: async (id: string, reason?: string) => {

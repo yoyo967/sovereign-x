@@ -433,5 +433,108 @@
       "legal": { "title": "LEGAL", "impressum": "Imprint", "privacy": "Privacy Policy", "terms": "Terms", "compliance": "EU AI Act" },
       "resources": { "title": "RESOURCES", "blog": "Blog", "docs": "Documentation", "api": "API", "press": "Press Kit" }
     }
+  },
+  "dashboard": {
+    "common": {
+      "loading": "Loading...",
+      "upgradeToPro": "Upgrade to PRO",
+      "managePlan": "Manage Plan",
+      "error": {
+        "connectionFailed": "Backend connection failed.",
+        "showingBasic": "Dashboard showing basic data."
+      }
+    },
+    "overview": {
+      "title": "Executive Overview",
+      "subtitle": "Your autonomous life-admin is active. Here is your current status.",
+      "approvalBadge": "{count, plural, one {# approval pending} other {# approvals pending}}"
+    },
+    "stats": {
+      "monthlyCost": "Monthly Cost",
+      "annualCostSub": "{amount} / year",
+      "activeContracts": "Active Contracts",
+      "totalContractsSub": "{count} total",
+      "savings": "Savings",
+      "savingsSub": "Achieved by Sovereign",
+      "pendingActions": "Pending Actions",
+      "pendingActionsSub": "{approvals} Approvals · {claims} Claims"
+    },
+    "senate": {
+      "title": "Algorithmic Senate — Live Feed",
+      "emptyTitle": "Your Senate is ready",
+      "emptyText": "Once contracts and transactions are analyzed, insights will appear here.",
+      "defaultDescription": "Sovereign is analyzing this event.",
+      "insightTypes": {
+        "PRICE_INCREASE": "Price Increase",
+        "NEW_SUBSCRIPTION": "New Subscription",
+        "SAVINGS_OPPORTUNITY": "Savings Opportunity",
+        "UNUSUAL_ACTIVITY": "Unusual Activity",
+        "DUPLICATE_PAYMENT": "Duplicate Payment",
+        "CONTRACT_DETECTED": "Contract Detected",
+        "DEFAULT": "Insight"
+      }
+    },
+    "score": {
+      "title": "Sovereignty Score",
+      "excellent": "Excellent. Your finances are under full control.",
+      "good": "Good start. There is still optimization potential.",
+      "start": "Add contracts to increase your score."
+    },
+    "tier": {
+      "title": "Your Tier",
+      "free": "Free",
+      "pro": "Pro",
+      "shield": "Shield"
+    },
+    "agents": {
+      "title": "Agent Status",
+      "items": {
+        "negotiation": { "name": "Negotiation Agent", "desc": "Observing contract conditions" },
+        "switch": { "name": "Switch Agent", "desc": "Ready for market comparisons" },
+        "claim": { "name": "Claim Agent", "desc": "Ready for claims" },
+        "finance": { "name": "Finance Guardian", "desc": "Monitoring transactions" }
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "addContract": "Add Contract",
+      "addContractDesc": "Manually or by scan",
+      "checkApprovals": "Check Approvals",
+      "checkApprovalsDesc": "{count} pending",
+      "analyzeFinance": "Analyze Finances",
+      "analyzeFinanceDesc": "Transactions & Insights",
+      "submitClaim": "Submit Claim",
+      "submitClaimDesc": "Claims & Compensation"
+    },
+    "approvals": {
+      "title": "Algorithmic Senate",
+      "subtitle": "Review and authorization of autonomous agent proposals.",
+      "openCount": "{count, plural, one {# open proposal} other {# open proposals}} — swipe or use buttons",
+      "approve": "Approve",
+      "reject": "Reject",
+      "swipeApprove": "✓ APPROVE",
+      "swipeReject": "✗ REJECT",
+      "swipeHintLeft": "reject",
+      "swipeHintOr": "or swipe",
+      "swipeHintRight": "approve",
+      "riskLabel": "RISK: {level}",
+      "deadlineLabel": "Deadline: {date}",
+      "reasonLabel": "Algorithmic Reasoning",
+      "savingsLabel": "Savings Potential: {amount}",
+      "allDoneTitle": "All proposals processed",
+      "allDoneText": "Your autonomous systems are operating within the defined boundary conditions. No further approvals required.",
+      "biometricTitle": "Biometric Verification Required",
+      "biometricText": "This action has high risk (HIGH). Please confirm with biometric authentication.",
+      "biometricConfirm": "Confirm with Biometrics",
+      "biometricSkip": "Skip (Demo Mode)",
+      "biometricFailed": "Biometric authentication failed. Please try again.",
+      "biometricUnsupported": "Biometrics not available — demo mode active."
+    },
+    "rbac": {
+      "noAccess": "No Access",
+      "noAccessText": "You do not have the required permissions for this area.",
+      "requiredScope": "Required permission: {scope}",
+      "upgradeRequired": "Upgrade Required"
+    }
   }
 }

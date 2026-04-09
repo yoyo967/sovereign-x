@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import {
   Zap, TrendingUp, Shield, AlertTriangle, FileText,
   ChevronRight, CheckCircle, Eye, ArrowUpRight,
   Bot, Globe, Scale, Activity, Clock
 } from 'lucide-react';
 import { api } from '@/lib/api';
-import OnboardingModal from '@/components/dashboard/OnboardingModal';
+import { useRBAC } from '@/hooks/useRBAC';
 
 // ─── Types ──────────────────────────────────────────────
 interface DashboardData {
@@ -29,7 +30,7 @@ interface DashboardData {
   }>;
 }
 
-// ─── Sovereignty Score Component ────────────────────────
+// ─── Sovereignty Score Ring ──────────────────────────────
 function SovereigntyScore({ score }: { score: number }) {
   const circumference = 2 * Math.PI * 52;
   const offset = circumference - (score / 100) * circumference;
@@ -59,7 +60,7 @@ function SovereigntyScore({ score }: { score: number }) {
   );
 }
 
-// ─── Stat Card Component ────────────────────────────────
+// ─── Stat Card ──────────────────────────────────────────
 function StatCard({
   label, value, sub, icon: Icon, color = 'var(--sovereign-cyan)', delay = 0
 }: {
@@ -99,35 +100,14 @@ function StatCard({
   );
 }
 
-// ─── Insight Type Helpers ───────────────────────────────
-function getInsightIcon(type?: string) {
-  switch (type) {
-    case 'PRICE_INCREASE': return { icon: AlertTriangle, color: 'var(--sovereign-riskred)', label: 'Preiserhöhung' };
-    case 'NEW_SUBSCRIPTION': return { icon: Eye, color: 'var(--sovereign-gold)', label: 'Neues Abo' };
-    case 'SAVINGS_OPPORTUNITY': return { icon: TrendingUp, color: 'var(--sovereign-success)', label: 'Sparpotenzial' };
-    case 'UNUSUAL_ACTIVITY': return { icon: Activity, color: 'var(--sovereign-pink)', label: 'Ungewöhnlich' };
-    case 'DUPLICATE_PAYMENT': return { icon: AlertTriangle, color: 'var(--sovereign-gold)', label: 'Doppelzahlung' };
-    case 'CONTRACT_DETECTED': return { icon: FileText, color: 'var(--sovereign-cyan)', label: 'Vertrag erkannt' };
-    default: return { icon: Zap, color: 'var(--sovereign-cyan)', label: 'Insight' };
-  }
-}
-
-// ─── Agent Status Data ──────────────────────────────────
-const agents = [
-  { name: 'Verhandlungs-Agent', status: 'active', icon: Scale, desc: 'Observiert Vertragskonditionen' },
-  { name: 'Wechsel-Agent', status: 'ready', icon: Globe, desc: 'Bereit für Marktvergleiche' },
-  { name: 'Claim-Agent', status: 'ready', icon: Shield, desc: 'Bereit für Forderungen' },
-  { name: 'Finance Guardian', status: 'active', icon: Eye, desc: 'Überwacht Transaktionen' },
-];
-
-// ─── Loading Skeleton ───────────────────────────────────
+// ─── Loading Skeleton ────────────────────────────────────
 function DashboardSkeleton() {
   return (
     <div style={{ maxWidth: '1280px' }}>
       <div className="skeleton skeleton-title" style={{ width: '300px', marginBottom: '8px' }} />
       <div className="skeleton skeleton-text" style={{ width: '400px', marginBottom: '40px' }} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '40px' }}>
-        {[1,2,3,4].map(i => <div key={i} className="skeleton skeleton-card" />)}
+        {[1, 2, 3, 4].map(i => <div key={i} className="skeleton skeleton-card" />)}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '28px' }}>
         <div className="skeleton" style={{ height: '320px' }} />
@@ -141,6 +121,9 @@ function DashboardSkeleton() {
 // MAIN DASHBOARD COMPONENT
 // ═══════════════════════════════════════════════════════
 export default function DashboardOverview() {
+  const t = useTranslations('dashboard');
+  const { tier: rbacTier } = useRBAC();
+
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -153,10 +136,9 @@ export default function DashboardOverview() {
         setData(result);
       } catch (err) {
         console.error('Dashboard fetch error:', err);
-        setError('Verbindung zum Backend fehlgeschlagen.');
-        // Fallback: Show UI with zero-state
+        setError(t('common.error.connectionFailed'));
         setData({
-          tier: 'FREE',
+          tier: rbacTier,
           totalContracts: 0,
           activeContracts: 0,
           totalMonthlyCostEur: 0,
@@ -171,15 +153,16 @@ export default function DashboardOverview() {
       }
     }
     fetchDashboard();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) return <DashboardSkeleton />;
 
   const d = data!;
-  const tierLabel = d.tier === 'SHIELD' ? 'Shield' : d.tier === 'PRO' ? 'Pro' : 'Free';
+  const tierKey = d.tier === 'SHIELD' ? 'shield' : d.tier === 'PRO' ? 'pro' : 'free';
+  const tierLabel = t(`tier.${tierKey}`);
   const tierClass = d.tier === 'SHIELD' ? 'badge-shield' : d.tier === 'PRO' ? 'badge-pro' : 'badge-free';
 
-  // Calculate sovereignty score based on real data
   const sovereigntyScore = Math.min(100, Math.round(
     (d.activeContracts > 0 ? 20 : 0) +
     (d.totalSavingsEur > 0 ? 25 : 0) +
@@ -188,9 +171,52 @@ export default function DashboardOverview() {
     (d.activeClaims > 0 ? 10 : 0)
   ));
 
+  const scoreMessage = sovereigntyScore >= 80
+    ? t('score.excellent')
+    : sovereigntyScore >= 50
+      ? t('score.good')
+      : t('score.start');
+
+  const insightTypeLabels: Record<string, string> = {
+    PRICE_INCREASE: t('senate.insightTypes.PRICE_INCREASE'),
+    NEW_SUBSCRIPTION: t('senate.insightTypes.NEW_SUBSCRIPTION'),
+    SAVINGS_OPPORTUNITY: t('senate.insightTypes.SAVINGS_OPPORTUNITY'),
+    UNUSUAL_ACTIVITY: t('senate.insightTypes.UNUSUAL_ACTIVITY'),
+    DUPLICATE_PAYMENT: t('senate.insightTypes.DUPLICATE_PAYMENT'),
+    CONTRACT_DETECTED: t('senate.insightTypes.CONTRACT_DETECTED'),
+  };
+
+  const insightIconMap: Record<string, { icon: React.ElementType; color: string }> = {
+    PRICE_INCREASE: { icon: AlertTriangle, color: 'var(--sovereign-riskred)' },
+    NEW_SUBSCRIPTION: { icon: Eye, color: 'var(--sovereign-gold)' },
+    SAVINGS_OPPORTUNITY: { icon: TrendingUp, color: 'var(--sovereign-success)' },
+    UNUSUAL_ACTIVITY: { icon: Activity, color: 'var(--sovereign-pink)' },
+    DUPLICATE_PAYMENT: { icon: AlertTriangle, color: 'var(--sovereign-gold)' },
+    CONTRACT_DETECTED: { icon: FileText, color: 'var(--sovereign-cyan)' },
+  };
+
+  function getInsightMeta(type?: string) {
+    const key = type ?? '';
+    return insightIconMap[key] ?? { icon: Zap, color: 'var(--sovereign-cyan)' };
+  }
+
+  const agents = [
+    { key: 'negotiation', status: 'active', icon: Scale },
+    { key: 'switch', status: 'ready', icon: Globe },
+    { key: 'claim', status: 'ready', icon: Shield },
+    { key: 'finance', status: 'active', icon: Eye },
+  ] as const;
+
+  const quickActions = [
+    { labelKey: 'addContract', descKey: 'addContractDesc', descParams: undefined, icon: FileText, href: '/dashboard/contracts', color: 'var(--sovereign-cyan)' },
+    { labelKey: 'checkApprovals', descKey: 'checkApprovalsDesc', descParams: { count: d.pendingApprovals }, icon: CheckCircle, href: '/dashboard/approvals', color: 'var(--sovereign-gold)' },
+    { labelKey: 'analyzeFinance', descKey: 'analyzeFinanceDesc', descParams: undefined, icon: TrendingUp, href: '/dashboard/finance', color: 'var(--sovereign-purple)' },
+    { labelKey: 'submitClaim', descKey: 'submitClaimDesc', descParams: undefined, icon: Shield, href: '/dashboard/claims', color: 'var(--sovereign-teal)' },
+  ] as const;
+
   return (
     <div style={{ maxWidth: '1280px' }}>
-      <OnboardingModal />
+
       {/* ─── Header ─── */}
       <motion.header
         initial={{ opacity: 0, y: -10 }}
@@ -204,31 +230,29 @@ export default function DashboardOverview() {
               fontFamily: 'var(--font-space-grotesk, sans-serif)',
               letterSpacing: '-0.03em'
             }}>
-              Executive Overview
+              {t('overview.title')}
             </h1>
             <p style={{ color: 'var(--sovereign-slate)', fontSize: '1rem' }}>
-              Dein autonomer Life-Admin ist aktiv. Hier ist dein aktueller Status.
+              {t('overview.subtitle')}
             </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {d.pendingApprovals > 0 && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                style={{
-                  background: 'rgba(255, 64, 129, 0.1)',
-                  border: '1px solid rgba(255, 64, 129, 0.2)',
-                  borderRadius: '12px', padding: '8px 16px',
-                  display: 'flex', alignItems: 'center', gap: '8px'
-                }}
-              >
-                <Clock size={14} color="var(--sovereign-pink)" />
-                <span style={{ fontSize: '0.8rem', color: 'var(--sovereign-pink)', fontWeight: 600 }}>
-                  {d.pendingApprovals} Genehmigung{d.pendingApprovals > 1 ? 'en' : ''} offen
-                </span>
-              </motion.div>
-            )}
-          </div>
+          {d.pendingApprovals > 0 && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              style={{
+                background: 'rgba(255, 64, 129, 0.1)',
+                border: '1px solid rgba(255, 64, 129, 0.2)',
+                borderRadius: '12px', padding: '8px 16px',
+                display: 'flex', alignItems: 'center', gap: '8px'
+              }}
+            >
+              <Clock size={14} color="var(--sovereign-pink)" />
+              <span style={{ fontSize: '0.8rem', color: 'var(--sovereign-pink)', fontWeight: 600 }}>
+                {t('overview.approvalBadge', { count: d.pendingApprovals })}
+              </span>
+            </motion.div>
+          )}
         </div>
       </motion.header>
 
@@ -247,7 +271,7 @@ export default function DashboardOverview() {
         >
           <AlertTriangle size={16} color="var(--sovereign-gold)" />
           <span style={{ fontSize: '0.85rem', color: 'var(--sovereign-gold)' }}>
-            {error} Dashboard zeigt Basis-Daten.
+            {error} {t('common.error.showingBasic')}
           </span>
         </motion.div>
       )}
@@ -259,39 +283,39 @@ export default function DashboardOverview() {
         gap: '20px', marginBottom: '36px'
       }}>
         <StatCard
-          label="Monatliche Kosten"
+          label={t('stats.monthlyCost')}
           value={`€${d.totalMonthlyCostEur.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`}
-          sub={`€${d.totalAnnualCostEur.toLocaleString('de-DE')} / Jahr`}
+          sub={t('stats.annualCostSub', { amount: `€${d.totalAnnualCostEur.toLocaleString('de-DE')}` })}
           icon={TrendingUp}
           delay={0.1}
         />
         <StatCard
-          label="Aktive Verträge"
+          label={t('stats.activeContracts')}
           value={d.activeContracts}
-          sub={`${d.totalContracts} gesamt`}
+          sub={t('stats.totalContractsSub', { count: d.totalContracts })}
           icon={FileText}
           color="var(--sovereign-purple)"
           delay={0.2}
         />
         <StatCard
-          label="Ersparnisse"
+          label={t('stats.savings')}
           value={`€${d.totalSavingsEur.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`}
-          sub="Durch Sovereign erzielt"
+          sub={t('stats.savingsSub')}
           icon={Zap}
           color="var(--sovereign-success)"
           delay={0.3}
         />
         <StatCard
-          label="Offene Aktionen"
+          label={t('stats.pendingActions')}
           value={d.pendingApprovals + d.activeClaims}
-          sub={`${d.pendingApprovals} Approvals · ${d.activeClaims} Claims`}
+          sub={t('stats.pendingActionsSub', { approvals: d.pendingApprovals, claims: d.activeClaims })}
           icon={CheckCircle}
           color="var(--sovereign-gold)"
           delay={0.4}
         />
       </div>
 
-      {/* ─── Main Content: Senate Feed + Sovereignty Score ─── */}
+      {/* ─── Senate Feed + Score ─── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: '28px', marginBottom: '36px' }}>
 
         {/* Algorithmic Senate Feed */}
@@ -303,16 +327,16 @@ export default function DashboardOverview() {
           style={{ padding: '28px' }}
         >
           <div className="section-header" style={{ marginBottom: '20px' }}>
-            Algorithmic Senate — Live Feed
+            {t('senate.title')}
           </div>
-
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {d.recentInsights.length > 0 ? (
               d.recentInsights.map((insight, i) => {
-                const { icon: InsightIcon, color, label } = getInsightIcon(insight.type);
+                const { icon: InsightIcon, color } = getInsightMeta(insight.type);
+                const label = insight.type ? (insightTypeLabels[insight.type] ?? t('senate.insightTypes.DEFAULT')) : t('senate.insightTypes.DEFAULT');
                 return (
                   <motion.div
-                    key={insight.id || i}
+                    key={insight.id ?? i}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 + i * 0.1 }}
@@ -320,13 +344,9 @@ export default function DashboardOverview() {
                       display: 'flex', gap: '14px', padding: '16px',
                       background: 'rgba(255,255,255,0.02)', borderRadius: '16px',
                       border: '1px solid var(--sovereign-silver)',
-                      transition: 'all 0.2s',
                       cursor: 'pointer'
                     }}
-                    whileHover={{
-                      backgroundColor: 'rgba(255,255,255,0.04)',
-                      borderColor: 'rgba(255,255,255,0.15)'
-                    }}
+                    whileHover={{ backgroundColor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.15)' }}
                   >
                     <div style={{
                       width: '40px', height: '40px', borderRadius: '12px',
@@ -338,16 +358,16 @@ export default function DashboardOverview() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                         <p style={{ fontWeight: 600, fontSize: '0.9rem', margin: 0 }}>
-                          {insight.merchantName || label}
+                          {insight.merchantName ?? label}
                         </p>
                         <span className={`deadline-chip${insight.type === 'PRICE_INCREASE' ? ' deadline-chip-urgent' : ''}`}>
                           {label}
                         </span>
                       </div>
                       <p style={{ fontSize: '0.82rem', color: 'var(--sovereign-slate)', margin: 0, lineHeight: 1.5 }}>
-                        {insight.description || 'Sovereign analysiert diesen Vorfall.'}
+                        {insight.description ?? t('senate.defaultDescription')}
                       </p>
-                      {insight.amount && (
+                      {insight.amount != null && (
                         <p style={{ fontSize: '0.82rem', color, margin: '6px 0 0', fontWeight: 600 }}>
                           {insight.amount > 0 ? '+' : ''}€{Math.abs(insight.amount).toFixed(2)}/Monat
                         </p>
@@ -358,11 +378,7 @@ export default function DashboardOverview() {
                 );
               })
             ) : (
-              /* Empty State mit Sovereign-Feel */
-              <div style={{
-                textAlign: 'center', padding: '48px 24px',
-                color: 'var(--sovereign-slate)'
-              }}>
+              <div style={{ textAlign: 'center', padding: '48px 24px', color: 'var(--sovereign-slate)' }}>
                 <div style={{
                   width: '56px', height: '56px', borderRadius: '50%',
                   background: 'var(--sovereign-glass-10)', margin: '0 auto 16px',
@@ -371,17 +387,17 @@ export default function DashboardOverview() {
                   <Bot size={24} color="var(--sovereign-cyan)" />
                 </div>
                 <p style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--sovereign-alabaster)', margin: '0 0 6px' }}>
-                  Dein Senate ist bereit
+                  {t('senate.emptyTitle')}
                 </p>
                 <p style={{ fontSize: '0.82rem', margin: 0 }}>
-                  Sobald Verträge und Transaktionen analysiert werden, erscheinen hier Insights.
+                  {t('senate.emptyText')}
                 </p>
               </div>
             )}
           </div>
         </motion.section>
 
-        {/* Sovereignty Score + Tier Status */}
+        {/* Sovereignty Score + Tier */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <motion.section
             className="glass-card-level-1"
@@ -391,17 +407,13 @@ export default function DashboardOverview() {
             style={{ padding: '28px', textAlign: 'center' }}
           >
             <div className="section-header" style={{ justifyContent: 'center', marginBottom: '24px' }}>
-              Souveränitäts-Score
+              {t('score.title')}
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
               <SovereigntyScore score={sovereigntyScore} />
             </div>
             <p style={{ fontSize: '0.82rem', color: 'var(--sovereign-slate)', margin: '0 0 4px', lineHeight: 1.5 }}>
-              {sovereigntyScore >= 80
-                ? 'Exzellent. Deine Finanzen sind unter voller Kontrolle.'
-                : sovereigntyScore >= 50
-                  ? 'Guter Start. Es gibt noch Optimierungspotenzial.'
-                  : 'Füge Verträge hinzu, um deinen Score zu steigern.'}
+              {scoreMessage}
             </p>
           </motion.section>
 
@@ -413,7 +425,7 @@ export default function DashboardOverview() {
             style={{ padding: '28px', textAlign: 'center', flex: 1 }}
           >
             <div className="section-header" style={{ justifyContent: 'center', marginBottom: '20px' }}>
-              Dein Tier
+              {t('tier.title')}
             </div>
             <div style={{
               width: '80px', height: '80px', borderRadius: '50%',
@@ -435,11 +447,11 @@ export default function DashboardOverview() {
             <div style={{ marginTop: '20px' }}>
               {d.tier === 'FREE' ? (
                 <button className="primary-aura-button" style={{ width: '100%' }}>
-                  Auf PRO upgraden
+                  {t('common.upgradeToPro')}
                 </button>
               ) : (
                 <button className="secondary-button" style={{ width: '100%' }}>
-                  Plan verwalten
+                  {t('common.managePlan')}
                 </button>
               )}
             </div>
@@ -447,7 +459,7 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      {/* ─── Agent Status + Savings Summary ─── */}
+      {/* ─── Agent Status + Quick Actions ─── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
 
         {/* Agent Status */}
@@ -458,11 +470,11 @@ export default function DashboardOverview() {
           transition={{ delay: 0.7 }}
           style={{ padding: '28px' }}
         >
-          <div className="section-header">Agenten-Status</div>
+          <div className="section-header">{t('agents.title')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {agents.map((agent, i) => (
               <motion.div
-                key={agent.name}
+                key={agent.key}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8 + i * 0.08 }}
@@ -471,7 +483,6 @@ export default function DashboardOverview() {
                   padding: '14px 16px', borderRadius: '14px',
                   background: agent.status === 'active' ? 'rgba(0, 229, 255, 0.03)' : 'transparent',
                   border: `1px solid ${agent.status === 'active' ? 'rgba(0, 229, 255, 0.1)' : 'transparent'}`,
-                  transition: 'all 0.2s'
                 }}
               >
                 <div style={{
@@ -482,8 +493,12 @@ export default function DashboardOverview() {
                   <agent.icon size={16} color={agent.status === 'active' ? 'var(--sovereign-cyan)' : 'var(--sovereign-slate)'} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: 600, fontSize: '0.88rem', margin: '0 0 2px' }}>{agent.name}</p>
-                  <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0 }}>{agent.desc}</p>
+                  <p style={{ fontWeight: 600, fontSize: '0.88rem', margin: '0 0 2px' }}>
+                    {t(`agents.items.${agent.key}.name`)}
+                  </p>
+                  <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0 }}>
+                    {t(`agents.items.${agent.key}.desc`)}
+                  </p>
                 </div>
                 <span className={`agent-dot ${agent.status === 'active' ? 'agent-dot-active' : 'agent-dot-ready'}`} />
               </motion.div>
@@ -499,16 +514,11 @@ export default function DashboardOverview() {
           transition={{ delay: 0.75 }}
           style={{ padding: '28px' }}
         >
-          <div className="section-header">Quick Actions</div>
+          <div className="section-header">{t('quickActions.title')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {[
-              { label: 'Vertrag hinzufügen', desc: 'Manuell oder per Scan', icon: FileText, href: '/dashboard/contracts', color: 'var(--sovereign-cyan)' },
-              { label: 'Genehmigungen prüfen', desc: `${d.pendingApprovals} ausstehend`, icon: CheckCircle, href: '/dashboard/approvals', color: 'var(--sovereign-gold)' },
-              { label: 'Finanzen analysieren', desc: 'Transaktionen & Insights', icon: TrendingUp, href: '/dashboard/finance', color: 'var(--sovereign-purple)' },
-              { label: 'Forderung einreichen', desc: 'Claims & Kompensationen', icon: Shield, href: '/dashboard/claims', color: 'var(--sovereign-teal)' },
-            ].map((action, i) => (
+            {quickActions.map((action, i) => (
               <motion.a
-                key={action.label}
+                key={action.labelKey}
                 href={action.href}
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -518,8 +528,7 @@ export default function DashboardOverview() {
                   padding: '14px 16px', borderRadius: '14px',
                   background: 'rgba(255,255,255,0.02)',
                   border: '1px solid var(--sovereign-silver)',
-                  textDecoration: 'none', color: 'inherit',
-                  cursor: 'pointer', transition: 'all 0.2s'
+                  textDecoration: 'none', color: 'inherit', cursor: 'pointer',
                 }}
               >
                 <div style={{
@@ -530,8 +539,15 @@ export default function DashboardOverview() {
                   <action.icon size={16} color={action.color} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: 600, fontSize: '0.88rem', margin: '0 0 2px' }}>{action.label}</p>
-                  <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0 }}>{action.desc}</p>
+                  <p style={{ fontWeight: 600, fontSize: '0.88rem', margin: '0 0 2px' }}>
+                    {t(`quickActions.${action.labelKey}`)}
+                  </p>
+                  <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0 }}>
+                    {action.descParams
+                      ? t(`quickActions.${action.descKey}`, action.descParams)
+                      : t(`quickActions.${action.descKey}`)
+                    }
+                  </p>
                 </div>
                 <ArrowUpRight size={14} color="var(--sovereign-slate)" />
               </motion.a>

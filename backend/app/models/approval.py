@@ -43,6 +43,7 @@ class ApprovalResponse(BaseModel):
 class ApprovalAction(BaseModel):
     """User action on an approval — approve or reject."""
     reason: Optional[str] = Field(None, max_length=500, description="Optionaler Grund bei Ablehnung")
+    biometric_verified: bool = Field(False, description="True wenn Biometrie-Gate erfolgreich durchlaufen")
 
 
 class ApprovalCreate(BaseModel):

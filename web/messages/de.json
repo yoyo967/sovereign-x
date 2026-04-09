@@ -442,5 +442,108 @@
       "legal": { "title": "RECHTLICHES", "impressum": "Impressum", "privacy": "Datenschutz", "terms": "AGB", "compliance": "EU AI Act" },
       "resources": { "title": "RESSOURCEN", "blog": "Blog", "docs": "Dokumentation", "api": "API", "press": "Presse Kit" }
     }
+  },
+  "dashboard": {
+    "common": {
+      "loading": "Wird geladen...",
+      "upgradeToPro": "Auf PRO upgraden",
+      "managePlan": "Plan verwalten",
+      "error": {
+        "connectionFailed": "Verbindung zum Backend fehlgeschlagen.",
+        "showingBasic": "Dashboard zeigt Basis-Daten."
+      }
+    },
+    "overview": {
+      "title": "Executive Overview",
+      "subtitle": "Dein autonomer Life-Admin ist aktiv. Hier ist dein aktueller Status.",
+      "approvalBadge": "{count, plural, one {# Genehmigung offen} other {# Genehmigungen offen}}"
+    },
+    "stats": {
+      "monthlyCost": "Monatliche Kosten",
+      "annualCostSub": "{amount} / Jahr",
+      "activeContracts": "Aktive Verträge",
+      "totalContractsSub": "{count} gesamt",
+      "savings": "Ersparnisse",
+      "savingsSub": "Durch Sovereign erzielt",
+      "pendingActions": "Offene Aktionen",
+      "pendingActionsSub": "{approvals} Approvals · {claims} Claims"
+    },
+    "senate": {
+      "title": "Algorithmic Senate — Live Feed",
+      "emptyTitle": "Dein Senate ist bereit",
+      "emptyText": "Sobald Verträge und Transaktionen analysiert werden, erscheinen hier Insights.",
+      "defaultDescription": "Sovereign analysiert diesen Vorfall.",
+      "insightTypes": {
+        "PRICE_INCREASE": "Preiserhöhung",
+        "NEW_SUBSCRIPTION": "Neues Abo",
+        "SAVINGS_OPPORTUNITY": "Sparpotenzial",
+        "UNUSUAL_ACTIVITY": "Ungewöhnlich",
+        "DUPLICATE_PAYMENT": "Doppelzahlung",
+        "CONTRACT_DETECTED": "Vertrag erkannt",
+        "DEFAULT": "Insight"
+      }
+    },
+    "score": {
+      "title": "Souveränitäts-Score",
+      "excellent": "Exzellent. Deine Finanzen sind unter voller Kontrolle.",
+      "good": "Guter Start. Es gibt noch Optimierungspotenzial.",
+      "start": "Füge Verträge hinzu, um deinen Score zu steigern."
+    },
+    "tier": {
+      "title": "Dein Tier",
+      "free": "Free",
+      "pro": "Pro",
+      "shield": "Shield"
+    },
+    "agents": {
+      "title": "Agenten-Status",
+      "items": {
+        "negotiation": { "name": "Verhandlungs-Agent", "desc": "Observiert Vertragskonditionen" },
+        "switch": { "name": "Wechsel-Agent", "desc": "Bereit für Marktvergleiche" },
+        "claim": { "name": "Claim-Agent", "desc": "Bereit für Forderungen" },
+        "finance": { "name": "Finance Guardian", "desc": "Überwacht Transaktionen" }
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "addContract": "Vertrag hinzufügen",
+      "addContractDesc": "Manuell oder per Scan",
+      "checkApprovals": "Genehmigungen prüfen",
+      "checkApprovalsDesc": "{count} ausstehend",
+      "analyzeFinance": "Finanzen analysieren",
+      "analyzeFinanceDesc": "Transaktionen & Insights",
+      "submitClaim": "Forderung einreichen",
+      "submitClaimDesc": "Claims & Kompensationen"
+    },
+    "approvals": {
+      "title": "Algorithmic Senate",
+      "subtitle": "Prüfung und Autorisierung autonomer Agenten-Vorschläge.",
+      "openCount": "{count, plural, one {# offener Vorschlag} other {# offene Vorschläge}} — wischen oder Buttons nutzen",
+      "approve": "Freigeben",
+      "reject": "Ablehnen",
+      "swipeApprove": "✓ FREIGEBEN",
+      "swipeReject": "✗ ABLEHNEN",
+      "swipeHintLeft": "ablehnen",
+      "swipeHintOr": "oder wischen",
+      "swipeHintRight": "freigeben",
+      "riskLabel": "RISIKO: {level}",
+      "deadlineLabel": "Frist: {date}",
+      "reasonLabel": "Algorithmische Begründung",
+      "savingsLabel": "Sparpotenzial: {amount}",
+      "allDoneTitle": "Alle Vorschläge bearbeitet",
+      "allDoneText": "Deine autonomen Systeme arbeiten innerhalb der festgelegten Boundary Conditions. Keine weiteren Freigaben erforderlich.",
+      "biometricTitle": "Biometrische Verifikation erforderlich",
+      "biometricText": "Diese Aktion hat hohes Risiko (HIGH). Bitte bestätige mit biometrischer Authentifizierung.",
+      "biometricConfirm": "Mit Biometrie bestätigen",
+      "biometricSkip": "Überspringen (Demo-Modus)",
+      "biometricFailed": "Biometrische Authentifizierung fehlgeschlagen. Erneut versuchen.",
+      "biometricUnsupported": "Biometrie nicht verfügbar — Demo-Modus aktiv."
+    },
+    "rbac": {
+      "noAccess": "Kein Zugriff",
+      "noAccessText": "Du verfügst nicht über die erforderlichen Berechtigungen für diesen Bereich.",
+      "requiredScope": "Erforderliche Berechtigung: {scope}",
+      "upgradeRequired": "Upgrade erforderlich"
+    }
   }
 }

@@ -36,3 +36,11 @@ def get_db():
         raise HTTPException(status_code=503, detail="Database unavailable")
     return db
 
+
+def get_audit_emitter():
+    """FastAPI dependency: returns a per-request AuditEventEmitter backed by Firestore."""
+    from .services.audit import AuditEventEmitter
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database unavailable")
+    return AuditEventEmitter(db)
+
