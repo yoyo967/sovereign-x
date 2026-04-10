@@ -13,7 +13,7 @@ from google.cloud import firestore
 from .config import config
 from .middleware.i18n_middleware import I18nMiddleware
 from .middleware.rate_limit import RateLimitMiddleware
-from .routers import ai, contracts, approvals, claims, finance, user, billing, family, public
+from .routers import ai, contracts, approvals, claims, finance, user, billing, family, public, admin
 import logging
 
 logging.basicConfig(
@@ -48,7 +48,7 @@ async def lifespan(app: FastAPI):
     logger.info(f"   Environment: {config.ENVIRONMENT}")
     logger.info(f"   Project: {config.GCP_PROJECT_ID}")
     logger.info(f"   Region: {config.REGION}")
-    logger.info(f"   Routers: 9 active (ai, contracts, approvals, claims, finance, user, billing, family, public)")
+    logger.info(f"   Routers: 10 active (ai, contracts, approvals, claims, finance, user, billing, family, public, admin)")
 
     yield
 
@@ -121,6 +121,9 @@ app.include_router(family.router)
 # 🌍 Public (No Auth — Landing Page, Pricing)
 app.include_router(public.router)
 
+# 🛡️ Platform Admin (platform:admin scope only)
+app.include_router(admin.router)
+
 
 # ═══════════════════════════════════════════
 # HEALTH CHECK
@@ -136,6 +139,6 @@ async def health_check():
         "platform": "SOVEREIGN 2030",
         "routers": [
             "ai", "contracts", "approvals", "claims",
-            "finance", "user", "billing", "family", "public"
+            "finance", "user", "billing", "family", "public", "admin"
         ],
     }

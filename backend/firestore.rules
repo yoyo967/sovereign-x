@@ -1,6 +1,7 @@
 // firestore.rules
 // SOVEREIGN 2030 — Production Security Rules
-// Standard: Strict Data Isolation | EU AI Act Compliant Access Control
+// Standard: Strict Data Isolation | EU AI Act Compliant | Immutable Audit Log
+// Version: 2.1.0
 
 rules_version = '2';
 
@@ -17,6 +18,26 @@ service cloud.firestore {
 
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isPlatformAdmin() {
+      // Relies on Firebase custom claims set by backend
+      return isAuthenticated()
+        && request.auth.token.get('scopes', []).hasAny(['platform:admin']);
+    }
+
+    function isTenantMember(tenantId) {
+      return isAuthenticated()
+        && exists(/databases/$(database)/documents/tenants/$(tenantId)/members/$(request.auth.uid));
+    }
+
+    function isTenantAdmin(tenantId) {
+      return isAuthenticated()
+        && get(/databases/$(database)/documents/tenants/$(tenantId)/members/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isTenantFrozen(tenantId) {
+      return get(/databases/$(database)/documents/tenants/$(tenantId)).data.status == 'frozen';
     }
 
     function isVaultMember(vaultId) {
@@ -39,7 +60,7 @@ service cloud.firestore {
     // ══════════════════════════════════════════════
 
     match /users/{userId} {
-      
+
       match /profile/main {
         allow read: if isOwner(userId);
         allow write: if isOwner(userId);
@@ -49,7 +70,6 @@ service cloud.firestore {
         allow read, write: if isOwner(userId);
       }
 
-      // Alle Subcollections: nur eigene Daten
       match /contracts/{contractId} {
         allow read, write: if isOwner(userId);
       }
@@ -101,6 +121,42 @@ service cloud.firestore {
     }
 
     // ══════════════════════════════════════════════
+    // TENANTS (Multi-Tenant Platform)
+    // ══════════════════════════════════════════════
+
+    match /tenants/{tenantId} {
+      // Platform admin can read all tenants
+      allow read: if isPlatformAdmin() || isTenantMember(tenantId);
+      // Only backend (via service account / platform:admin) creates/updates tenants
+      allow create, update, delete: if isPlatformAdmin();
+
+      match /members/{memberId} {
+        allow read: if isPlatformAdmin() || isTenantMember(tenantId);
+        // Only platform admin or tenant admin can manage members
+        allow write: if isPlatformAdmin() || isTenantAdmin(tenantId);
+      }
+    }
+
+    // ══════════════════════════════════════════════
+    // AUDIT LOG — IMMUTABLE (append-only, no update/delete)
+    // EU AI Act Art. 12/13 — Audit trail integrity
+    // ══════════════════════════════════════════════
+
+    match /audit_log/{tenantId}/events/{eventId} {
+      // Read: platform admin (for cross-tenant export) or tenant admin
+      allow read: if isPlatformAdmin()
+        || (isTenantMember(tenantId) && isTenantAdmin(tenantId));
+
+      // Create: backend only (no direct client writes in production)
+      // In emulator/test: allow authenticated writes for testing
+      allow create: if false;
+
+      // NO update, NO delete — immutable by rule
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // ══════════════════════════════════════════════
     // FAMILY VAULT (Multi-User)
     // ══════════════════════════════════════════════
 
@@ -124,7 +180,7 @@ service cloud.firestore {
 
       match /auditLog/{logId} {
         allow read: if isVaultMember(vaultId);
-        allow write: if false;  // Nur Backend schreibt Audit-Logs
+        allow write: if false;  // Nur Backend schreibt Vault Audit-Logs
       }
     }
 
@@ -136,15 +192,39 @@ service cloud.firestore {
       allow read: if isAuthenticated() && request.auth.token.email == resource.data.email;
       allow create: if isAuthenticated();
       allow delete: if isAuthenticated();
+      allow update: if false;
     }
 
     // ══════════════════════════════════════════════
-    // PLATFORM (Public stats)
+    // PLATFORM — Admin-only writes
     // ══════════════════════════════════════════════
 
     match /platform/stats {
       allow read: if true;
-      allow write: if false;
+      allow write: if false;  // CI/CD schreibt via Service Account
+    }
+
+    match /platform/security_status {
+      allow read: if isPlatformAdmin();
+      allow write: if false;  // Nur CI/CD Pipeline via Service Account
+    }
+
+    match /platform/slo {
+      allow read: if isPlatformAdmin();
+      allow write: if false;  // Nur Monitoring Pipeline via Service Account
+    }
+
+    match /platform/health_ping {
+      allow read: if isPlatformAdmin();
+      allow write: if false;  // Backend schreibt via Service Account
+    }
+
+    // ══════════════════════════════════════════════
+    // DEFAULT DENY (alles andere blockieren)
+    // ══════════════════════════════════════════════
+
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

@@ -638,6 +638,300 @@
       },
       "wealthScore": "Wealth Score",
       "wealthScoreShieldOnly": "Nur mit SHIELD verfügbar"
+    },
+    "claims": {
+      "title": "Claims Center",
+      "subtitle": "Durchsetzung deiner Rechte und automatische Forderungseintreibung.",
+      "addNew": "Neuer Claim",
+      "activeClaims": "Aktive Claims",
+      "openDemands": "Offene Forderungen",
+      "resolved": "Erfolgreich gelöst",
+      "expectedCompensation": "Erwartete Entschädigung",
+      "nextStep": "Nächster Schritt",
+      "nextStepDefault": "Warten auf Gegenseite",
+      "claimIdPrefix": "CLAIM: ",
+      "descriptionDefault": "Automatisiert verfolgter Rechtsanspruch.",
+      "successFeeNote": "Erfolgsgebühr: 25% nur bei Erfolg (SHIELD)",
+      "legalBasis": "Rechtsgrundlage",
+      "aiStrategy": "KI-Strategie",
+      "aiDisclaimer": "KI-Hinweis (EU AI Act): Diese Strategie wurde von SOVEREIGN AI erstellt. Keine Rechtsberatung. Bitte prüfe alle Schritte mit einem Anwalt.",
+      "biometricRequired": "Biometrie erforderlich für Klagewert > €500",
+      "empty": {
+        "title": "Keine Claims aktiv",
+        "text": "Deine Rechte sind gewahrt. Sovereign überwacht Flüge, Verspätungen und Vertragsbrüche automatisch im Hintergrund."
+      },
+      "status": {
+        "OPEN": "Offen",
+        "IN_PROGRESS": "In Bearbeitung",
+        "WAITING": "Warten",
+        "ESCALATED": "Eskaliert",
+        "LEGAL": "Rechtlich",
+        "NEGOTIATING": "Verhandlung",
+        "RESOLVED": "Gelöst",
+        "CLOSED": "Geschlossen"
+      },
+      "pipeline": {
+        "label": "7-Stufen Pipeline"
+      }
+    },
+    "ai": {
+      "title": "Sovereign Twin",
+      "subtitle": "Sprich mit deinem KI-Zwilling — er lernt deine Präferenzen und briefed die Sub-Agenten.",
+      "terminalLabel": "// SOVEREIGN TWIN (ALGORITHMIC SENATE)",
+      "statusReady": "Status: Bereit",
+      "statusProcessing": "Status: Assimiliert...",
+      "roleLabels": {
+        "system": "Senate",
+        "user": "Du",
+        "error": "System Fehler"
+      },
+      "inputPlaceholder": "Kontext eingeben (z.B. Mein Fokus ist Fixkosten-Senkung)…",
+      "send": "Senden",
+      "processing": "Verarbeite…",
+      "welcomeMessage": "Willkommen im Algorithmic Senate. Ich lerne deine Präferenzen und briefe die Sub-Agenten im Hintergrund.",
+      "killSwitch": "Kill-Switch",
+      "killSwitchConfirm": "Alle laufenden Agenten werden gestoppt. Fortfahren?",
+      "killSwitchActive": "Agenten gestoppt",
+      "killSwitchReset": "Agenten reaktivieren",
+      "boundaryTitle": "Boundary Conditions",
+      "boundaryDesc": "Leitplanken für autonome Aktionen",
+      "confidenceLabel": "Konfidenz",
+      "disclaimer": "KI-Hinweis (EU AI Act, LIMITED Risk): Alle Antworten des Sovereign Twin wurden durch SOVEREIGN AI (Gemini) erstellt. Der Senate bereitet vor — du entscheidest. Keine Rechts- oder Finanzberatung.",
+      "notLoggedIn": {
+        "title": "Senate aktivieren",
+        "text": "Der Algorithmic Senate lernt deine Präferenzen und brieft deine Sub-Agenten. Melde dich an, um den Twin live zu erleben.",
+        "cta": "Zugang freischalten"
+      },
+      "sessionError": "Sitzung abgelaufen. Bitte neu einloggen.",
+      "connectionError": "Verbindung zum Senate fehlgeschlagen. Bitte Backend prüfen."
+    },
+    "settings": {
+      "title": "System Settings",
+      "subtitle": "Konfiguration des Life-OS und Steuerung der autonomen Boundary Conditions.",
+      "save": "Änderungen speichern",
+      "saving": "Speichern…",
+      "saved": "Gespeichert",
+      "profile": {
+        "title": "Persönliches Profil",
+        "displayName": "Anzeigename",
+        "email": "E-Mail-Adresse",
+        "language": "Bevorzugte Sprache",
+        "langDe": "Deutsch (DE)",
+        "langEn": "English (EN)"
+      },
+      "plan": {
+        "title": "Abonnement",
+        "current": "Aktueller Plan",
+        "nextBilling": "Nächste Abbuchung: {date}",
+        "upgrade": "Upgrade auf Nexus",
+        "active": "AKTIV",
+        "note": "Alle Pläne beinhalten EU AI Act-Konformität, DSGVO-Automatisierung und Zero-Tracking. Kündigung jederzeit monatlich möglich.",
+        "citizen": { "name": "Citizen", "price": "€14,90", "f1": "5 Module", "f2": "Basis-Analyse", "f3": "E-Mail-Support" },
+        "nexus": { "name": "Nexus", "price": "€29,90", "f1": "Alle Module", "f2": "Autonome Agents", "f3": "Priority Support" },
+        "os": { "name": "Sovereign OS", "price": "€79,90", "f1": "White-Label", "f2": "API-Zugang", "f3": "Dedicated Manager" }
+      },
+      "boundary": {
+        "title": "Boundary Conditions",
+        "desc": "Diese Parameter definieren die Leitplanken der autonomen Sub-Agenten. Alles innerhalb dieser Grenzen kann ohne manuelle Freigabe ausgeführt werden.",
+        "autoApproveLabel": "Auto-Approve Savings",
+        "autoApproveDesc": "Erlaubt es dem System, Vertragswechsel und Optimierungen unterhalb dieses Schwellenwerts automatisch ohne Nachfrage durchzuführen.",
+        "privacyLabel": "Strict Privacy Filter",
+        "privacyDesc": "Anonymisiert sensible Finanzdaten, bevor Kontext an LLM-Provider gesendet wird (PII Redaction).",
+        "biometricLabel": "Biometrie für Hochrisiko-Aktionen",
+        "biometricDesc": "Erfordert Passkey / FaceID für Kündigungen oder Transaktionen oberhalb deines Standard-Limits.",
+        "maxFeeLabel": "Max. monatliche Gebühr (Verhandlung)",
+        "maxFeeDesc": "Agenten dürfen keine Vertragsabschlüsse über diesem Betrag autorisieren."
+      },
+      "notifications": {
+        "title": "Benachrichtigungen",
+        "desc": "Steuere, wann und wie Sovereign dich informiert.",
+        "emailLabel": "E-Mail-Benachrichtigungen",
+        "emailDesc": "Fristenalarme, Freigabe-Anfragen und monatliche Reports.",
+        "pushLabel": "Push-Benachrichtigungen",
+        "pushDesc": "Sofortbenachrichtigung bei Hochrisiko-Aktionen und Agenten-Entscheidungen.",
+        "digestLabel": "Wöchentlicher Digest",
+        "digestDesc": "Zusammenfassung aller Aktivitäten, Einsparungen und offenen Aufgaben."
+      },
+      "security": {
+        "title": "Sicherheit & Passkeys",
+        "desc": "Verwalte deine Authentifizierungsmethoden und Sitzungssicherheit.",
+        "passkeyLabel": "Passkey / FaceID",
+        "passkeyDesc": "WebAuthn-Passkey für biometrische Bestätigung von Hochrisiko-Aktionen.",
+        "passkeyRegistered": "Registriert",
+        "passkeyNotRegistered": "Nicht registriert",
+        "passkeyRegister": "Passkey einrichten",
+        "passkeyRemove": "Entfernen",
+        "sessionsLabel": "Aktive Sitzungen",
+        "sessionsDesc": "Alle anderen Geräte abmelden.",
+        "sessionsAction": "Alle abmelden",
+        "residencyLabel": "Datenstandort",
+        "residencyDesc": "Deine Daten werden ausschließlich in der EU gespeichert (Frankfurt, eur4).",
+        "residencyBadge": "EU · Frankfurt"
+      },
+      "danger": {
+        "title": "Datenverwaltung & Löschung",
+        "desc": "Du hast das Recht auf Vergessenwerden (Art. 17 DSGVO). Alle Löschvorgänge sind unwiderruflich und werden innerhalb von 30 Tagen vollständig ausgeführt.",
+        "historyTitle": "Analysehistorie löschen",
+        "historyDesc": "Alle gespeicherten KI-Analysen, Chat-Verläufe und Empfehlungen unwiderruflich entfernen.",
+        "historyAction": "Verlauf löschen",
+        "contractsTitle": "Alle Vertragsdaten löschen",
+        "contractsDesc": "Alle hochgeladenen Verträge, erkannten Konditionen und Fristen-Erinnerungen entfernen.",
+        "contractsAction": "Verträge löschen",
+        "accountTitle": "Konto vollständig löschen",
+        "accountDesc": "Löscht dein Sovereign-Konto, alle persönlichen Daten, Dokumente und Zahlungsdaten permanent. Dieser Vorgang kann nicht rückgängig gemacht werden.",
+        "accountAction": "Konto löschen"
+      },
+      "killSwitch": {
+        "title": "Sovereign Kill Switch",
+        "desc": "Friert sofort alle autonomen Agenten ein. Keine weiteren API-Calls oder Verhandlungen.",
+        "action": "Agenten Einfrieren"
+      },
+      "logout": "Session Beenden"
+    },
+    "admin": {
+      "title": "Platform Admin",
+      "subtitle": "Globale Kontrolle über alle Tenants, Sicherheitsstatus und KI-Audit.",
+      "accessDenied": {
+        "title": "Kein Zugriff",
+        "desc": "Dieser Bereich ist auf platform:admin beschränkt. Du verfügst nicht über die erforderlichen Berechtigungen.",
+        "back": "Zurück zum Dashboard"
+      },
+      "nav": {
+        "tenants": "Tenant-Matrix",
+        "security": "Sicherheitsstatus",
+        "aiAudit": "KI-Audit Export",
+        "slo": "SLO / Error Budget"
+      },
+      "tenants": {
+        "title": "Tenant-Matrix",
+        "subtitle": "Alle registrierten Tenants auf der Sovereign-Plattform.",
+        "filterPlan": "Plan filtern",
+        "filterStatus": "Status filtern",
+        "allPlans": "Alle Pläne",
+        "allStatuses": "Alle Status",
+        "createTenant": "Tenant erstellen",
+        "count": "{count} Tenants",
+        "cols": {
+          "name": "Name",
+          "plan": "Plan",
+          "status": "Status",
+          "members": "Mitglieder",
+          "security": "Security Score",
+          "created": "Erstellt",
+          "actions": "Aktionen"
+        },
+        "freeze": "Einfrieren",
+        "frozen": "Eingefroren",
+        "active": "Aktiv",
+        "freezeConfirm": "Tenant \"{name}\" wirklich einfrieren? Alle API-Calls werden blockiert.",
+        "createModal": {
+          "title": "Neuen Tenant erstellen",
+          "name": "Name",
+          "plan": "Plan",
+          "domain": "Domain (optional)",
+          "locale": "Primäre Locale",
+          "compliance": "Compliance-Profil",
+          "adminUid": "Admin Firebase UID",
+          "create": "Erstellen",
+          "cancel": "Abbrechen"
+        }
+      },
+      "security": {
+        "title": "Sicherheitsstatus",
+        "subtitle": "SAST-Befunde, Secrets-Status und CVE-Übersicht aus der CI/CD-Pipeline.",
+        "secrets": "Secrets Status",
+        "sast": "SAST letzter Lauf",
+        "sastFindings": "SAST Befunde",
+        "cve": "Dependency CVEs",
+        "postDeploy": "Post-Deploy Check",
+        "lastUpdated": "Zuletzt aktualisiert",
+        "unknown": "UNBEKANNT",
+        "ok": "OK",
+        "error": "FEHLER",
+        "noData": "Status wurde noch nicht von der CI/CD-Pipeline geschrieben."
+      },
+      "aiAudit": {
+        "title": "KI-Audit Export",
+        "subtitle": "Regulatorischer Export der KI-Audit-Logs für Behörden und Compliance-Teams.",
+        "filterTenant": "Tenant-ID filtern",
+        "filterRisk": "Risikoklasse",
+        "allRisks": "Alle Klassen",
+        "fromDate": "Von (ISO)",
+        "toDate": "Bis (ISO)",
+        "export": "Export laden",
+        "exporting": "Exportiere…",
+        "count": "{count} Datensätze",
+        "cols": {
+          "timestamp": "Zeitstempel",
+          "actor": "Akteur",
+          "action": "Aktion",
+          "resource": "Ressource",
+          "risk": "Risikoklasse",
+          "tenant": "Tenant"
+        },
+        "noRecords": "Keine Datensätze gefunden."
+      },
+      "slo": {
+        "title": "SLO / Error Budget",
+        "subtitle": "Service-Level-Objectives und verbleibende Fehlerbudgets.",
+        "uptime": "Uptime",
+        "budget": "Error Budget",
+        "latency": "p95 Latenz",
+        "noData": "SLO-Dokument wurde noch nicht von der Monitoring-Pipeline geschrieben."
+      }
+    },
+    "family": {
+      "title": "Family Vault",
+      "subtitle": "Sicheres Teilen von Verträgen und kollektiver finanzieller Schutz.",
+      "invite": "Mitglied einladen",
+      "shieldGate": {
+        "title": "SHIELD-exklusiv",
+        "desc": "Der Family Vault ist nur für SOVEREIGN SHIELD-Mitglieder verfügbar. Upgrade, um Schutz auf Familie und Treuhänder auszuweiten.",
+        "cta": "Auf SHIELD upgraden"
+      },
+      "members": {
+        "title": "Vault-Mitglieder",
+        "owner": "Inhaber",
+        "admin": "Admin",
+        "member": "Mitglied",
+        "trustee": "Treuhänder",
+        "empty": "Noch keine weiteren Mitglieder",
+        "emptyDesc": "Lade Familie oder Geschäftspartner ein, um Verträge und finanzielle Insights sicher zu teilen.",
+        "inviteModal": {
+          "title": "Mitglied einladen",
+          "email": "E-Mail-Adresse",
+          "role": "Rolle",
+          "send": "Einladung senden",
+          "cancel": "Abbrechen"
+        },
+        "roles": {
+          "member": "Mitglied — Lesezugriff auf geteilte Inhalte",
+          "trustee": "Treuhänder — Kann Freigaben erteilen",
+          "admin": "Admin — Vollzugriff außer Mitglieder verwalten"
+        }
+      },
+      "sharedDocs": {
+        "title": "Geteilte Dokumente",
+        "empty": "Noch keine geteilten Verträge",
+        "emptyDesc": "Markiere einen Vertrag als geteilt, um familienweite KI-Optimierung zu aktivieren.",
+        "sharedWith": "Geteilt mit {count} Mitgliedern",
+        "removeShare": "Freigabe entziehen"
+      },
+      "delegated": {
+        "title": "Delegierte Freigaben",
+        "desc": "Offene Entscheidungen, die du an Treuhänder delegiert hast.",
+        "empty": "Keine delegierten Freigaben",
+        "emptyDesc": "Wenn du eine Freigabe-Anfrage delegierst, erscheint sie hier.",
+        "delegatedTo": "Delegiert an",
+        "pending": "Ausstehend",
+        "recall": "Zurückrufen"
+      },
+      "shield": {
+        "title": "Shield Protection",
+        "desc": "Alle Mitglieder deines Vaults stehen unter deinem Sovereign Shield. Claims, KI-Verhandlungen und Optimierungen gelten für alle geteilten Verträge.",
+        "sharedAssets": "Geteilte Assets: {count}",
+        "sharedAssetsDesc": "Markiere einen beliebigen Vertrag in deinem Tresor als 'Geteilt', um die familienweite KI-Optimierung und Rechtsüberwachung zu aktivieren."
+      }
     }
   }
 }

@@ -177,5 +177,57 @@ export const api = {
         body: JSON.stringify({ conversation_chunk: chunk }),
       }).then(r => r.json());
     },
-  }
+  },
+
+  // 🛡️ PLATFORM ADMIN
+  admin: {
+    listTenants: async (params?: { plan?: string; status?: string; limit?: number }) => {
+      const headers = await getAuthHeaders();
+      const qs = new URLSearchParams();
+      if (params?.plan) qs.set('plan', params.plan);
+      if (params?.status) qs.set('status', params.status);
+      if (params?.limit) qs.set('limit', String(params.limit));
+      return fetch(`${API_BASE_URL}/v2/admin/tenants?${qs}`, { headers }).then(r => r.json());
+    },
+    getTenant: async (id: string) => {
+      const headers = await getAuthHeaders();
+      return fetch(`${API_BASE_URL}/v2/admin/tenants/${id}`, { headers }).then(r => r.json());
+    },
+    createTenant: async (payload: {
+      name: string; plan: string; domain?: string;
+      primary_locale: string; compliance_profile: string; admin_uid: string;
+    }) => {
+      const headers = await getAuthHeaders();
+      return fetch(`${API_BASE_URL}/v2/admin/tenants`, {
+        method: 'POST', headers,
+        body: JSON.stringify(payload),
+      }).then(r => r.json());
+    },
+    freezeTenant: async (id: string) => {
+      const headers = await getAuthHeaders();
+      return fetch(`${API_BASE_URL}/v2/admin/tenants/${id}/freeze`, {
+        method: 'PATCH', headers,
+      }).then(r => r.json());
+    },
+    getAiAuditExport: async (params?: {
+      tenant_id?: string; risk_class?: string; from_date?: string; to_date?: string; limit?: number;
+    }) => {
+      const headers = await getAuthHeaders();
+      const qs = new URLSearchParams();
+      if (params?.tenant_id) qs.set('tenant_id', params.tenant_id);
+      if (params?.risk_class) qs.set('risk_class', params.risk_class);
+      if (params?.from_date) qs.set('from_date', params.from_date);
+      if (params?.to_date) qs.set('to_date', params.to_date);
+      if (params?.limit) qs.set('limit', String(params.limit));
+      return fetch(`${API_BASE_URL}/v2/admin/ai-audit-export?${qs}`, { headers }).then(r => r.json());
+    },
+    getSecurityStatus: async () => {
+      const headers = await getAuthHeaders();
+      return fetch(`${API_BASE_URL}/v2/admin/security-status`, { headers }).then(r => r.json());
+    },
+    getSlo: async () => {
+      const headers = await getAuthHeaders();
+      return fetch(`${API_BASE_URL}/v2/admin/slo`, { headers }).then(r => r.json());
+    },
+  },
 };
