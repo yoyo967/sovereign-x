@@ -1,169 +1,183 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CreditCard, Shield, Zap, Check, Lock, Star } from 'lucide-react';
-import { useRequireAuth } from '@/hooks/useRequireAuth';
-import { api } from '@/lib/api';
+import { Check, Shield, Zap, Star } from 'lucide-react';
+import { useRBAC } from '@/hooks/useRBAC';
+import { SovereignCard } from '@/components/ui/SovereignCard';
+
+// ─── Plan definitions ─────────────────────────────────────────────────────────
+
+const PLANS = [
+  {
+    id: 'FREE',
+    name: 'Free',
+    price: 0,
+    color: '#888888',
+    icon: <Zap size={20} />,
+    features: [
+      '3 Verträge scannen & analysieren',
+      '1 Life-Case verwalten',
+      '10 KI-Chats pro Monat',
+      'Basis-Finanzübersicht',
+      'Genehmigungen & HITL',
+    ],
+    cta: null,
+  },
+  {
+    id: 'PRO',
+    name: 'Pro',
+    price: 14.99,
+    color: '#BB86FC',
+    icon: <Star size={20} />,
+    features: [
+      'Unbegrenzte Verträge',
+      '10 Life-Cases gleichzeitig',
+      '100 KI-Chats pro Monat',
+      'Erweiterte KI-Strategie',
+      'CSV-Import Finanzen',
+      'Prioritäts-Support',
+    ],
+    cta: 'Upgrade auf PRO',
+    stripeLink: '#',
+  },
+  {
+    id: 'SHIELD',
+    name: 'Shield',
+    price: 29.99,
+    color: '#03DAC6',
+    icon: <Shield size={20} />,
+    features: [
+      'Alles aus PRO',
+      'Family Vault (bis 5 Mitglieder)',
+      'Voice & Kamera-Vision KI',
+      'finAPI PSD2 Bankverbindung',
+      'Biometrische Absicherung',
+      'NIS2-konformes Audit-Log',
+    ],
+    cta: 'Upgrade auf SHIELD',
+    stripeLink: '#',
+  },
+] as const;
+
+type PlanId = 'FREE' | 'PRO' | 'SHIELD';
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function BillingPage() {
-  const { user, loading: authLoading } = useRequireAuth();
-  const [currentTier, setCurrentTier] = useState<string>('FREE');
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user) return;
-    async function fetchTier() {
-      try {
-        const dashboard = await api.user.getDashboard();
-        setCurrentTier(dashboard.tier || 'FREE');
-      } catch (err) {
-        console.error('Failed to load billing info:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchTier();
-  }, [user]);
-
-  if (authLoading) return null;
-
-  const plans = [
-    { 
-      name: 'FREE', price: '€0', 
-      features: ['Max. 3 Verträge', 'Basis-Scan', 'Manuelle Freigaben', 'Standard-Support'],
-      color: 'var(--sovereign-slate)', badgeClass: 'badge-free'
-    },
-    { 
-      name: 'PRO', price: '€6.99', 
-      features: ['Unlimitierte Verträge', 'Deep Clause Engine', 'Agenten-Autopilot', 'Priority Support'],
-      color: '#00b8d4', badgeClass: 'badge-pro', aura: 'floating-aura'
-    },
-    { 
-      name: 'SHIELD', price: '€14.99', 
-      features: ['Alles von PRO', 'Bank-Anbindung (PSD2)', 'Finance Guardian', 'Legal Claims Network'],
-      color: 'var(--sovereign-purple)', badgeClass: 'badge-shield', aura: 'floating-aura-purple'
-    },
-  ];
+  const { tier } = useRBAC();
+  const currentTier = (tier ?? 'FREE').toUpperCase() as PlanId;
 
   return (
-    <div style={{ maxWidth: '1280px' }}>
-      <header style={{ marginBottom: '56px', textAlign: 'center' }}>
-        <div style={{ 
-          width: '56px', height: '56px', borderRadius: '16px',
-          background: 'rgba(0, 229, 255, 0.1)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 20px', boxShadow: '0 0 30px rgba(0, 229, 255, 0.15)'
-        }}>
-          <CreditCard size={28} color="var(--sovereign-cyan)" />
-        </div>
-        <h1 style={{ 
-          fontSize: '2.5rem', fontWeight: 800, marginBottom: '8px',
-          fontFamily: 'var(--font-space-grotesk, sans-serif)', letterSpacing: '-0.03em'
-        }}>
-          Executive Billing
-        </h1>
-        <p style={{ color: 'var(--sovereign-slate)', fontSize: '1.05rem', margin: 0 }}>
-          Verwalte deine Subscriptions und Premium-Kapazitäten.
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: 860, margin: '0 auto' }}>
+
+      {/* Header */}
+      <div>
+        <h1 style={{ margin: '0 0 4px', fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.03em' }}>Abrechnung & Plan</h1>
+        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--s-text-muted)' }}>
+          Dein aktueller Plan: <span style={{ fontWeight: 700, color: PLANS.find((p) => p.id === currentTier)?.color ?? '#888' }}>{currentTier}</span>
         </p>
-      </header>
+      </div>
 
-      {loading ? (
-        <div style={{ display: 'flex', gap: '24px', justifyContent: 'center' }}>
-          {[1,2,3].map(i => <div key={i} className="skeleton skeleton-card" style={{ width: '380px', height: '500px' }} />)}
-        </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', position: 'relative' }}>
-          {plans.map((plan, i) => {
-            const isActive = currentTier === plan.name;
-            return (
-              <motion.div 
-                key={plan.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15 }}
-                className={isActive ? 'glass-card-level-2' : 'glass-card-level-1'} 
-                style={{ 
-                  padding: '40px 32px', 
-                  border: isActive ? `2px solid ${plan.color}` : '1px solid var(--sovereign-glass-border)',
-                  position: 'relative', overflow: 'hidden',
-                  display: 'flex', flexDirection: 'column'
-                }}
+      {/* Plan Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+        {PLANS.map((plan, i) => {
+          const isCurrent = currentTier === plan.id;
+          return (
+            <motion.div key={plan.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+              <SovereignCard
+                variant={isCurrent ? 'elevated' : 'glass'}
+                glow={isCurrent}
+                animate={false}
+                style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
               >
-                {/* Aura Glow Behind */}
-                {plan.aura && (
-                  <div 
-                    className={plan.aura} 
-                    style={{ position: 'absolute', top: '-100px', right: '-100px', width: '300px', height: '300px', opacity: isActive ? 0.3 : 0.05, zIndex: 0 }} 
-                  />
-                )}
-
-                <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                    <span className={plan.badgeClass} style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
-                      {plan.name}
+                {/* Plan Header */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 10, background: `${plan.color}18`, border: `1px solid ${plan.color}35`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: plan.color }}>
+                      {plan.icon}
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: plan.color, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{plan.name}</p>
+                      <p style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: plan.color }}>
+                        {plan.price === 0 ? 'Kostenlos' : `€${plan.price.toFixed(2)}`}
+                        {plan.price > 0 && <span style={{ fontSize: '0.7rem', fontWeight: 400, color: 'var(--s-text-faint)' }}>/mo</span>}
+                      </p>
+                    </div>
+                  </div>
+                  {isCurrent && (
+                    <span style={{ padding: '3px 8px', borderRadius: 20, background: `${plan.color}18`, border: `1px solid ${plan.color}40`, fontSize: '0.6rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: plan.color }}>
+                      AKTIV
                     </span>
-                    {isActive && (
-                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--sovereign-success)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <Check size={14} /> AKTIVER PLAN
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div style={{ marginBottom: '40px' }}>
-                    <p style={{ fontSize: '3.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.04em', lineHeight: 1 }}>
-                      {plan.price}
-                    </p>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--sovereign-slate)', margin: '4px 0 0', fontWeight: 600 }}>
-                      pro Monat, monatlich kündbar.
-                    </p>
-                  </div>
-                  
-                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 48px', display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
-                    {plan.features.map(feat => (
-                      <li key={feat} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '0.95rem', color: 'var(--sovereign-alabaster)' }}>
-                        <div style={{ padding: '2px', background: `${plan.color}20`, borderRadius: '50%', flexShrink: 0 }}>
-                          <Check size={14} color={plan.color} />
-                        </div>
-                        {feat}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {isActive ? (
-                    <button className="secondary-button" style={{ padding: '16px', fontSize: '0.9rem', opacity: 0.6 }} disabled>
-                      Derzeit aktiv
-                    </button>
-                  ) : (
-                    <button 
-                      className="primary-aura-button" 
-                      style={{ 
-                        padding: '16px', fontSize: '0.9rem', 
-                        background: plan.name === 'SHIELD' 
-                          ? 'linear-gradient(135deg, var(--sovereign-cyan), var(--sovereign-purple))' 
-                          : undefined
-                      }}
-                    >
-                      Upgraden zu {plan.name}
-                    </button>
                   )}
                 </div>
-              </motion.div>
-            );
-          })}
+
+                {/* Features */}
+                <ul style={{ margin: '0 0 20px', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+                  {plan.features.map((f) => (
+                    <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.8rem', color: 'var(--s-text-muted)', lineHeight: 1.4 }}>
+                      <Check size={14} style={{ color: plan.color, flexShrink: 0, marginTop: 2 }} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                {isCurrent ? (
+                  <div style={{ padding: '8px 12px', borderRadius: 8, background: `${plan.color}08`, border: `1px solid ${plan.color}20`, textAlign: 'center', fontSize: '0.78rem', color: plan.color, fontWeight: 600 }}>
+                    ✓ Dein aktueller Plan
+                  </div>
+                ) : plan.cta && currentTier !== 'SHIELD' ? (
+                  <a
+                    href={plan.stripeLink}
+                    style={{
+                      display: 'block', padding: '10px', borderRadius: 10, textAlign: 'center',
+                      background: `${plan.color}18`, border: `1px solid ${plan.color}40`,
+                      color: plan.color, fontSize: '0.85rem', fontWeight: 700,
+                      textDecoration: 'none', transition: 'background 0.15s',
+                    }}
+                  >
+                    {plan.cta}
+                  </a>
+                ) : (
+                  <div style={{ padding: '8px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', textAlign: 'center', fontSize: '0.75rem', color: 'var(--s-text-faint)' }}>
+                    Nicht verfügbar
+                  </div>
+                )}
+              </SovereignCard>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Current Plan Details */}
+      <SovereignCard variant="glass" animate={false}>
+        <p style={{ margin: '0 0 14px', fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--s-text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Rechnungsdetails</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '16px' }}>
+          {[
+            { label: 'Plan', value: currentTier },
+            { label: 'Nächste Zahlung', value: currentTier === 'FREE' ? '—' : '01.05.2026' },
+            { label: 'Zahlungsmethode', value: currentTier === 'FREE' ? '—' : '**** 4242' },
+            { label: 'Status', value: 'Aktiv' },
+          ].map(({ label, value }) => (
+            <div key={label}>
+              <p style={{ margin: '0 0 2px', fontSize: '0.6rem', color: 'var(--s-text-faint)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</p>
+              <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600 }}>{value}</p>
+            </div>
+          ))}
+        </div>
+      </SovereignCard>
+
+      {/* SHIELD plan gate hint for lower tiers */}
+      {currentTier !== 'SHIELD' && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '14px 18px', borderRadius: 12, background: 'rgba(3,218,198,0.05)', border: '1px solid rgba(3,218,198,0.15)' }}>
+          <Shield size={20} style={{ color: '#03DAC6', flexShrink: 0 }} />
+          <div style={{ flex: 1 }}>
+            <p style={{ margin: '0 0 2px', fontWeight: 700, color: '#03DAC6', fontSize: '0.9rem' }}>Family Vault & Bankverbindung freischalten</p>
+            <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--s-text-muted)' }}>SHIELD gibt dir Zugriff auf Family Vault, Voice-KI, finAPI PSD2 und biometrische Absicherung.</p>
+          </div>
+          <a href="#shield" style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(3,218,198,0.1)', border: '1px solid rgba(3,218,198,0.3)', color: '#03DAC6', fontSize: '0.78rem', fontWeight: 700, textDecoration: 'none', whiteSpace: 'nowrap' }}>Upgrade auf SHIELD</a>
         </div>
       )}
-
-      {/* Enterprise / Guardian Security Banner */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} style={{ marginTop: '56px' }}>
-        <div className="glass-card-level-1" style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '24px', background: 'rgba(0, 0, 0, 0.4)' }}>
-          <Shield size={32} color="var(--sovereign-slate)" />
-          <div>
-            <p style={{ fontWeight: 700, margin: '0 0 4px', color: 'var(--sovereign-alabaster)' }}>Zahlungen via Stripe gesichert</p>
-            <p style={{ fontSize: '0.85rem', color: 'var(--sovereign-slate)', margin: 0 }}>Wir speichern keine Kreditkartendaten. Alle Zahlungsverkehrsdaten werden verschlüsselt von Stripe Inc. verarbeitet.</p>
-          </div>
-        </div>
-      </motion.div>
     </div>
   );
 }

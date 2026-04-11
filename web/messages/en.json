@@ -789,6 +789,8 @@
       },
       "nav": {
         "tenants": "Tenant Matrix",
+        "senate": "Senate Queue",
+        "health": "System Health",
         "security": "Security Status",
         "aiAudit": "AI Audit Export",
         "slo": "SLO / Error Budget"
@@ -922,6 +924,66 @@
         "desc": "All members of your vault are covered by your Sovereign Shield. Claims, AI negotiations and optimisations apply to all shared contracts.",
         "sharedAssets": "Shared Assets: {count}",
         "sharedAssetsDesc": "Mark any contract in your vault as \"Shared\" to activate family-wide AI optimisation and legal oversight."
+      }
+    },
+    "terminal": {
+      "title": "Senate Terminal",
+      "subtitle": "Direct access to the SOVEREIGN AI Senate",
+      "killSwitch": "Kill Switch",
+      "killSwitchActive": "AI stopped",
+      "euAiAct": "EU AI Act — Art. 13 (Transparency): This system is an AI assistant of risk category LIMITED.",
+      "voiceShield": "Voice Mode (SHIELD)",
+      "cameraShield": "Camera Vision (SHIELD)",
+      "inputPlaceholder": "Enter message…"
+    },
+    "cases": {
+      "title": "Life Cases",
+      "subtitle": "Manage active cases",
+      "newCase": "New Case",
+      "pipeline": "Case Pipeline",
+      "stages": {
+        "OPEN": "Open",
+        "IN_PROGRESS": "In Progress",
+        "WAITING": "Waiting",
+        "ESCALATED": "Escalated",
+        "LEGAL": "Legal",
+        "NEGOTIATING": "Negotiating",
+        "RESOLVED": "Resolved"
+      },
+      "mahnstufen": {
+        "label": "Collections",
+        "stufen": ["Reminder", "1st Notice", "2nd Notice", "Final Notice", "Collections / Legal"]
+      }
+    },
+    "vault": {
+      "title": "Family Vault",
+      "subtitle": "Shared financial management",
+      "invite": "Invite",
+      "tabs": {
+        "members": "Members",
+        "contracts": "Contracts",
+        "audit": "Audit Log"
+      },
+      "roles": {
+        "ADMIN": "Admin",
+        "MEMBER": "Member",
+        "VIEWER": "Viewer"
+      },
+      "shieldGate": "Family Vault requires SHIELD plan"
+    },
+    "components": {
+      "emptyState": {
+        "defaultTitle": "No Data",
+        "defaultDesc": "Nothing to show yet."
+      },
+      "errorState": {
+        "defaultMessage": "An error occurred.",
+        "retry": "Try again"
+      },
+      "degradationBanner": {
+        "partial": "Partial outage — some features are unavailable.",
+        "readOnly": "Read-only mode — write operations are disabled.",
+        "offline": "Offline mode — no connection to server."
       }
     }
   }

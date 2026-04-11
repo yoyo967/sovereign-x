@@ -1,23 +1,27 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { useTranslations } from 'next-intl';
 import {
-  Zap, TrendingUp, Shield, AlertTriangle, FileText,
-  ChevronRight, CheckCircle, Eye, ArrowUpRight,
-  Bot, Globe, Scale, Activity, Clock
+  FileText, TrendingUp, ShieldCheck, Zap, AlertTriangle,
+  Activity, ChevronRight, Clock, CheckCircle2,
 } from 'lucide-react';
-import { api } from '@/lib/api';
 import { useRBAC } from '@/hooks/useRBAC';
+import { api } from '@/lib/api';
+import { SovereignCard } from '@/components/ui/SovereignCard';
+import { RiskBadge } from '@/components/ui/RiskBadge';
+import { ConfidenceBadge } from '@/components/ui/ConfidenceBadge';
+import { SkeletonLoader } from '@/components/ui/SkeletonLoader';
+import { ErrorState } from '@/components/ui/ErrorState';
 
-// ─── Types ──────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface DashboardData {
   tier: string;
   totalContracts: number;
   activeContracts: number;
   totalMonthlyCostEur: number;
-  totalAnnualCostEur: number;
   totalSavingsEur: number;
   pendingApprovals: number;
   activeClaims: number;
@@ -27,533 +31,306 @@ interface DashboardData {
     merchantName?: string;
     amount?: number;
     description?: string;
+    confidence?: number;
   }>;
 }
 
-// ─── Sovereignty Score Ring ──────────────────────────────
-function SovereigntyScore({ score }: { score: number }) {
-  const circumference = 2 * Math.PI * 52;
+// ─── Sovereignty Score Ring ───────────────────────────────────────────────────
+
+function SovereigntyRing({ score }: { score: number }) {
+  const r = 40;
+  const circumference = 2 * Math.PI * r;
   const offset = circumference - (score / 100) * circumference;
+  const color = score >= 75 ? 'var(--sovereign-success, #00E676)' : score >= 50 ? 'var(--sovereign-cyan)' : '#FFD600';
 
   return (
-    <div className="sovereignty-score-ring">
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <defs>
-          <linearGradient id="cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#00e5ff" />
-            <stop offset="100%" stopColor="#bb86fc" />
-          </linearGradient>
-        </defs>
-        <circle className="score-track" cx="60" cy="60" r="52" />
-        <motion.circle
-          className="score-fill"
-          cx="60" cy="60" r="52"
-          strokeDasharray={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset: offset }}
-          transition={{ duration: 1.5, ease: 'easeOut', delay: 0.3 }}
-          stroke="url(#cyan-gradient)"
-        />
-      </svg>
-      <div className="sovereignty-score-value">{score}</div>
-    </div>
-  );
-}
-
-// ─── Stat Card ──────────────────────────────────────────
-function StatCard({
-  label, value, sub, icon: Icon, color = 'var(--sovereign-cyan)', delay = 0
-}: {
-  label: string;
-  value: string | number;
-  sub?: string;
-  icon: React.ElementType;
-  color?: string;
-  delay?: number;
-}) {
-  return (
-    <motion.div
-      className="stat-card"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-        <span style={{ color: 'var(--sovereign-slate)', fontSize: '0.85rem', fontWeight: 500, letterSpacing: '0.02em' }}>
-          {label}
-        </span>
-        <div style={{
-          width: '36px', height: '36px', borderRadius: '10px',
-          background: `${color}15`, display: 'flex',
-          alignItems: 'center', justifyContent: 'center'
-        }}>
-          <Icon size={18} color={color} />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ position: 'relative', width: 100, height: 100 }}>
+        <svg width={100} height={100} style={{ transform: 'rotate(-90deg)' }}>
+          <circle cx={50} cy={50} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={8} />
+          <motion.circle
+            cx={50} cy={50} r={r}
+            fill="none" stroke={color} strokeWidth={8}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            initial={{ strokeDashoffset: circumference }}
+            animate={{ strokeDashoffset: offset }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+          />
+        </svg>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ fontSize: '1.6rem', fontWeight: 800, color, lineHeight: 1 }}>{score}</span>
+          <span style={{ fontSize: '0.55rem', color: 'var(--s-text-faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>SCORE</span>
         </div>
       </div>
-      <p style={{ fontSize: '2rem', fontWeight: 800, margin: '0 0 4px 0', letterSpacing: '-0.03em', lineHeight: 1 }}>
-        {value}
-      </p>
-      {sub && (
-        <span style={{ fontSize: '0.78rem', color, fontWeight: 500 }}>{sub}</span>
-      )}
-    </motion.div>
-  );
-}
-
-// ─── Loading Skeleton ────────────────────────────────────
-function DashboardSkeleton() {
-  return (
-    <div style={{ maxWidth: '1280px' }}>
-      <div className="skeleton skeleton-title" style={{ width: '300px', marginBottom: '8px' }} />
-      <div className="skeleton skeleton-text" style={{ width: '400px', marginBottom: '40px' }} />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '40px' }}>
-        {[1, 2, 3, 4].map(i => <div key={i} className="skeleton skeleton-card" />)}
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '28px' }}>
-        <div className="skeleton" style={{ height: '320px' }} />
-        <div className="skeleton" style={{ height: '320px' }} />
-      </div>
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════
-// MAIN DASHBOARD COMPONENT
-// ═══════════════════════════════════════════════════════
-export default function DashboardOverview() {
-  const t = useTranslations('dashboard');
-  const { tier: rbacTier } = useRBAC();
+// ─── KPI Card ─────────────────────────────────────────────────────────────────
 
+function KpiCard({ icon: Icon, label, value, sub, color, onClick }: {
+  icon: React.ElementType; label: string; value: string | number; sub?: string; color: string; onClick?: () => void;
+}) {
+  return (
+    <SovereignCard variant="default" onClick={onClick}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 12 }}>
+        <div style={{ width: 36, height: 36, borderRadius: '10px', background: `${color}12`, border: `1px solid ${color}25`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon size={17} color={color} />
+        </div>
+        {onClick && <ChevronRight size={14} color="var(--s-text-faint)" />}
+      </div>
+      <p style={{ margin: '0 0 4px', fontSize: '0.72rem', color: 'var(--s-text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>{label}</p>
+      <p style={{ margin: '0 0 4px', fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}>{value}</p>
+      {sub && <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--s-text-muted)' }}>{sub}</p>}
+    </SovereignCard>
+  );
+}
+
+// ─── Agents ───────────────────────────────────────────────────────────────────
+
+const AGENTS: Array<{ id: string; name: string; status: 'active' | 'working' | 'ready' | 'alert' }> = [
+  { id: 'A01', name: 'Contract Analyzer', status: 'active' },
+  { id: 'A02', name: 'Finance Guardian',  status: 'active' },
+  { id: 'A03', name: 'Claim Agent',       status: 'ready' },
+  { id: 'A04', name: 'Negotiation AI',    status: 'ready' },
+  { id: 'A05', name: 'PSD2 Connector',    status: 'ready' },
+  { id: 'A06', name: 'Senate Reviewer',   status: 'active' },
+  { id: 'A07', name: 'Audit Recorder',    status: 'active' },
+  { id: 'A08', name: 'Notification Hub',  status: 'ready' },
+];
+
+function AgentDot({ status }: { status: 'active' | 'working' | 'ready' | 'alert' }) {
+  const colors = { active: 'var(--sovereign-success, #00E676)', working: 'var(--sovereign-cyan)', ready: 'var(--s-text-faint)', alert: 'var(--sovereign-riskred)' };
+  const c = colors[status];
+  return (
+    <motion.span
+      animate={status === 'active' || status === 'working' ? { opacity: [1, 0.4, 1] } : {}}
+      transition={{ repeat: Infinity, duration: 2 }}
+      style={{ width: 7, height: 7, borderRadius: '50%', background: c, display: 'inline-block', boxShadow: status === 'active' ? `0 0 6px ${c}` : 'none', flexShrink: 0 }}
+    />
+  );
+}
+
+// ─── Insight config ───────────────────────────────────────────────────────────
+
+const INSIGHT_CONFIG: Record<string, { label: string; icon: React.ElementType; color: string }> = {
+  PRICE_INCREASE:      { label: 'Preiserhöhung',          icon: TrendingUp,   color: '#FFD600' },
+  NEW_SUBSCRIPTION:    { label: 'Neues Abo',               icon: FileText,     color: 'var(--sovereign-cyan)' },
+  SAVINGS_OPPORTUNITY: { label: 'Einsparpotenzial',        icon: TrendingUp,   color: 'var(--sovereign-success, #00E676)' },
+  UNUSUAL_ACTIVITY:    { label: 'Ungewöhnl. Aktivität',    icon: AlertTriangle, color: 'var(--sovereign-riskred)' },
+  DUPLICATE_PAYMENT:   { label: 'Doppelzahlung',           icon: AlertTriangle, color: 'var(--sovereign-riskred)' },
+  CONTRACT_DETECTED:   { label: 'Vertrag erkannt',         icon: FileText,     color: 'var(--sovereign-purple)' },
+};
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function DashboardPage() {
+  const router = useRouter();
+  const { tier } = useRBAC();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchDashboard() {
-      try {
-        setLoading(true);
-        const result = await api.user.getDashboard();
-        setData(result);
-      } catch (err) {
-        console.error('Dashboard fetch error:', err);
-        setError(t('common.error.connectionFailed'));
-        setData({
-          tier: rbacTier,
-          totalContracts: 0,
-          activeContracts: 0,
-          totalMonthlyCostEur: 0,
-          totalAnnualCostEur: 0,
-          totalSavingsEur: 0,
-          pendingApprovals: 0,
-          activeClaims: 0,
-          recentInsights: [],
-        });
-      } finally {
-        setLoading(false);
-      }
+  const load = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const d = await api.user.getDashboard();
+      setData(d);
+    } catch {
+      setError('Dashboard-Daten konnten nicht geladen werden.');
+    } finally {
+      setLoading(false);
     }
-    fetchDashboard();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) return <DashboardSkeleton />;
+  useEffect(() => { void load(); }, [load]);
 
-  const d = data!;
-  const tierKey = d.tier === 'SHIELD' ? 'shield' : d.tier === 'PRO' ? 'pro' : 'free';
-  const tierLabel = t(`tier.${tierKey}`);
-  const tierClass = d.tier === 'SHIELD' ? 'badge-shield' : d.tier === 'PRO' ? 'badge-pro' : 'badge-free';
+  const score = data ? Math.min(100, Math.round(
+    (data.activeContracts > 0 ? 20 : 0) +
+    (data.totalSavingsEur > 0 ? 25 : 0) +
+    (data.pendingApprovals === 0 ? 15 : Math.max(0, 15 - data.pendingApprovals * 3)) +
+    (tier === 'SHIELD' ? 30 : tier === 'PRO' ? 20 : 10) +
+    (data.activeClaims === 0 ? 10 : 5)
+  )) : 0;
 
-  const sovereigntyScore = Math.min(100, Math.round(
-    (d.activeContracts > 0 ? 20 : 0) +
-    (d.totalSavingsEur > 0 ? 25 : 0) +
-    (d.pendingApprovals === 0 ? 15 : 5) +
-    (d.tier === 'SHIELD' ? 30 : d.tier === 'PRO' ? 20 : 10) +
-    (d.activeClaims > 0 ? 10 : 0)
-  ));
-
-  const scoreMessage = sovereigntyScore >= 80
-    ? t('score.excellent')
-    : sovereigntyScore >= 50
-      ? t('score.good')
-      : t('score.start');
-
-  const insightTypeLabels: Record<string, string> = {
-    PRICE_INCREASE: t('senate.insightTypes.PRICE_INCREASE'),
-    NEW_SUBSCRIPTION: t('senate.insightTypes.NEW_SUBSCRIPTION'),
-    SAVINGS_OPPORTUNITY: t('senate.insightTypes.SAVINGS_OPPORTUNITY'),
-    UNUSUAL_ACTIVITY: t('senate.insightTypes.UNUSUAL_ACTIVITY'),
-    DUPLICATE_PAYMENT: t('senate.insightTypes.DUPLICATE_PAYMENT'),
-    CONTRACT_DETECTED: t('senate.insightTypes.CONTRACT_DETECTED'),
-  };
-
-  const insightIconMap: Record<string, { icon: React.ElementType; color: string }> = {
-    PRICE_INCREASE: { icon: AlertTriangle, color: 'var(--sovereign-riskred)' },
-    NEW_SUBSCRIPTION: { icon: Eye, color: 'var(--sovereign-gold)' },
-    SAVINGS_OPPORTUNITY: { icon: TrendingUp, color: 'var(--sovereign-success)' },
-    UNUSUAL_ACTIVITY: { icon: Activity, color: 'var(--sovereign-pink)' },
-    DUPLICATE_PAYMENT: { icon: AlertTriangle, color: 'var(--sovereign-gold)' },
-    CONTRACT_DETECTED: { icon: FileText, color: 'var(--sovereign-cyan)' },
-  };
-
-  function getInsightMeta(type?: string) {
-    const key = type ?? '';
-    return insightIconMap[key] ?? { icon: Zap, color: 'var(--sovereign-cyan)' };
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <SkeletonLoader variant="kpi" count={4} />
+        <SkeletonLoader variant="card" count={2} />
+      </div>
+    );
   }
 
-  const agents = [
-    { key: 'negotiation', status: 'active', icon: Scale },
-    { key: 'switch', status: 'ready', icon: Globe },
-    { key: 'claim', status: 'ready', icon: Shield },
-    { key: 'finance', status: 'active', icon: Eye },
-  ] as const;
+  if (error) return <ErrorState message={error} onRetry={load} />;
 
-  const quickActions = [
-    { labelKey: 'addContract', descKey: 'addContractDesc', descParams: undefined, icon: FileText, href: '/dashboard/contracts', color: 'var(--sovereign-cyan)' },
-    { labelKey: 'checkApprovals', descKey: 'checkApprovalsDesc', descParams: { count: d.pendingApprovals }, icon: CheckCircle, href: '/dashboard/approvals', color: 'var(--sovereign-gold)' },
-    { labelKey: 'analyzeFinance', descKey: 'analyzeFinanceDesc', descParams: undefined, icon: TrendingUp, href: '/dashboard/finance', color: 'var(--sovereign-purple)' },
-    { labelKey: 'submitClaim', descKey: 'submitClaimDesc', descParams: undefined, icon: Shield, href: '/dashboard/claims', color: 'var(--sovereign-teal)' },
-  ] as const;
+  const d = data ?? {
+    tier: 'FREE', totalContracts: 0, activeContracts: 0,
+    totalMonthlyCostEur: 0, totalSavingsEur: 0,
+    pendingApprovals: 0, activeClaims: 0, recentInsights: [],
+  };
 
   return (
-    <div style={{ maxWidth: '1280px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
 
-      {/* ─── Header ─── */}
-      <motion.header
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        style={{ marginBottom: '36px' }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div>
-            <h1 style={{
-              fontSize: '2.2rem', fontWeight: 800, marginBottom: '6px',
-              fontFamily: 'var(--font-space-grotesk, sans-serif)',
-              letterSpacing: '-0.03em'
-            }}>
-              {t('overview.title')}
-            </h1>
-            <p style={{ color: 'var(--sovereign-slate)', fontSize: '1rem' }}>
-              {t('overview.subtitle')}
-            </p>
-          </div>
-          {d.pendingApprovals > 0 && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              style={{
-                background: 'rgba(255, 64, 129, 0.1)',
-                border: '1px solid rgba(255, 64, 129, 0.2)',
-                borderRadius: '12px', padding: '8px 16px',
-                display: 'flex', alignItems: 'center', gap: '8px'
-              }}
-            >
-              <Clock size={14} color="var(--sovereign-pink)" />
-              <span style={{ fontSize: '0.8rem', color: 'var(--sovereign-pink)', fontWeight: 600 }}>
-                {t('overview.approvalBadge', { count: d.pendingApprovals })}
-              </span>
-            </motion.div>
-          )}
+      {/* Title */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+        <div>
+          <h1 style={{ margin: '0 0 4px', fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.03em' }}>Overview</h1>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--s-text-muted)' }}>
+            {new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+          </p>
         </div>
-      </motion.header>
-
-      {/* ─── Error Banner ─── */}
-      {error && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          style={{
-            background: 'rgba(255, 214, 0, 0.06)',
-            border: '1px solid rgba(255, 214, 0, 0.15)',
-            borderRadius: '14px', padding: '14px 20px',
-            marginBottom: '24px', display: 'flex',
-            alignItems: 'center', gap: '10px'
-          }}
-        >
-          <AlertTriangle size={16} color="var(--sovereign-gold)" />
-          <span style={{ fontSize: '0.85rem', color: 'var(--sovereign-gold)' }}>
-            {error} {t('common.error.showingBasic')}
-          </span>
-        </motion.div>
-      )}
-
-      {/* ─── Quick Stats Grid ─── */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '20px', marginBottom: '36px'
-      }}>
-        <StatCard
-          label={t('stats.monthlyCost')}
-          value={`€${d.totalMonthlyCostEur.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`}
-          sub={t('stats.annualCostSub', { amount: `€${d.totalAnnualCostEur.toLocaleString('de-DE')}` })}
-          icon={TrendingUp}
-          delay={0.1}
-        />
-        <StatCard
-          label={t('stats.activeContracts')}
-          value={d.activeContracts}
-          sub={t('stats.totalContractsSub', { count: d.totalContracts })}
-          icon={FileText}
-          color="var(--sovereign-purple)"
-          delay={0.2}
-        />
-        <StatCard
-          label={t('stats.savings')}
-          value={`€${d.totalSavingsEur.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`}
-          sub={t('stats.savingsSub')}
-          icon={Zap}
-          color="var(--sovereign-success)"
-          delay={0.3}
-        />
-        <StatCard
-          label={t('stats.pendingActions')}
-          value={d.pendingApprovals + d.activeClaims}
-          sub={t('stats.pendingActionsSub', { approvals: d.pendingApprovals, claims: d.activeClaims })}
-          icon={CheckCircle}
-          color="var(--sovereign-gold)"
-          delay={0.4}
-        />
+        {d.pendingApprovals > 0 && (
+          <button className="primary-aura-button" onClick={() => router.push('/dashboard/approvals')} style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.82rem' }}>
+            <CheckCircle2 size={14} />
+            {d.pendingApprovals} ausstehend
+          </button>
+        )}
       </div>
 
-      {/* ─── Senate Feed + Score ─── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: '28px', marginBottom: '36px' }}>
+      {/* KPI row */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+        <KpiCard icon={TrendingUp}   label="Monat. Kosten"  value={`€${d.totalMonthlyCostEur.toFixed(0)}`}  sub={`${d.totalContracts} Verträge gesamt`}         color="var(--sovereign-cyan)"             onClick={() => router.push('/dashboard/contracts')} />
+        <KpiCard icon={FileText}     label="Aktive Verträge" value={d.activeContracts}                       sub="Laufende Abos & Dienste"                       color="var(--sovereign-purple)"           onClick={() => router.push('/dashboard/contracts')} />
+        <KpiCard icon={TrendingUp}   label="Eingespart"      value={`€${d.totalSavingsEur.toFixed(0)}`}      sub="Durch KI-Optimierung"                          color="var(--sovereign-success, #00E676)" onClick={() => router.push('/dashboard/finance')} />
+        <KpiCard icon={AlertTriangle} label="Alerts"          value={d.pendingApprovals + d.activeClaims}     sub={`${d.pendingApprovals} Genehm. · ${d.activeClaims} Cases`} color="#FFD600"          onClick={() => router.push('/dashboard/approvals')} />
+      </div>
 
-        {/* Algorithmic Senate Feed */}
-        <motion.section
-          className="glass-card-level-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          style={{ padding: '28px' }}
-        >
-          <div className="section-header" style={{ marginBottom: '20px' }}>
-            {t('senate.title')}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {d.recentInsights.length > 0 ? (
-              d.recentInsights.map((insight, i) => {
-                const { icon: InsightIcon, color } = getInsightMeta(insight.type);
-                const label = insight.type ? (insightTypeLabels[insight.type] ?? t('senate.insightTypes.DEFAULT')) : t('senate.insightTypes.DEFAULT');
-                return (
-                  <motion.div
-                    key={insight.id ?? i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.1 }}
-                    style={{
-                      display: 'flex', gap: '14px', padding: '16px',
-                      background: 'rgba(255,255,255,0.02)', borderRadius: '16px',
-                      border: '1px solid var(--sovereign-silver)',
-                      cursor: 'pointer'
-                    }}
-                    whileHover={{ backgroundColor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.15)' }}
-                  >
-                    <div style={{
-                      width: '40px', height: '40px', borderRadius: '12px',
-                      background: `${color}12`, display: 'flex',
-                      alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                    }}>
-                      <InsightIcon size={18} color={color} />
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                        <p style={{ fontWeight: 600, fontSize: '0.9rem', margin: 0 }}>
-                          {insight.merchantName ?? label}
-                        </p>
-                        <span className={`deadline-chip${insight.type === 'PRICE_INCREASE' ? ' deadline-chip-urgent' : ''}`}>
-                          {label}
-                        </span>
-                      </div>
-                      <p style={{ fontSize: '0.82rem', color: 'var(--sovereign-slate)', margin: 0, lineHeight: 1.5 }}>
-                        {insight.description ?? t('senate.defaultDescription')}
-                      </p>
-                      {insight.amount != null && (
-                        <p style={{ fontSize: '0.82rem', color, margin: '6px 0 0', fontWeight: 600 }}>
-                          {insight.amount > 0 ? '+' : ''}€{Math.abs(insight.amount).toFixed(2)}/Monat
-                        </p>
-                      )}
-                    </div>
-                    <ChevronRight size={16} color="var(--sovereign-slate)" style={{ alignSelf: 'center', flexShrink: 0 }} />
-                  </motion.div>
-                );
-              })
+      {/* Main grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '20px', alignItems: 'start' }}>
+
+        {/* Left */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+          {/* Senate feed */}
+          <SovereignCard variant="default">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>Senate Feed</h2>
+              <span style={{ fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: 'var(--s-text-faint)', letterSpacing: '0.1em' }}>LIVE · KI-ANALYSE</span>
+            </div>
+            {d.recentInsights.length === 0 ? (
+              <p style={{ textAlign: 'center', color: 'var(--s-text-faint)', fontSize: '0.85rem', padding: '20px 0' }}>
+                Keine aktuellen Insights — KI analysiert im Hintergrund.
+              </p>
             ) : (
-              <div style={{ textAlign: 'center', padding: '48px 24px', color: 'var(--sovereign-slate)' }}>
-                <div style={{
-                  width: '56px', height: '56px', borderRadius: '50%',
-                  background: 'var(--sovereign-glass-10)', margin: '0 auto 16px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>
-                  <Bot size={24} color="var(--sovereign-cyan)" />
-                </div>
-                <p style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--sovereign-alabaster)', margin: '0 0 6px' }}>
-                  {t('senate.emptyTitle')}
-                </p>
-                <p style={{ fontSize: '0.82rem', margin: 0 }}>
-                  {t('senate.emptyText')}
-                </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {d.recentInsights.slice(0, 6).map((ins, i) => {
+                  const cfg = INSIGHT_CONFIG[ins.type ?? ''] ?? { label: ins.type ?? 'Info', icon: Activity, color: 'var(--s-text-muted)' };
+                  const Icon = cfg.icon;
+                  return (
+                    <motion.div
+                      key={ins.id ?? i}
+                      initial={{ opacity: 0, x: -6 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.04 }}
+                      style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '10px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--s-divider)' }}
+                    >
+                      <div style={{ width: 30, height: 30, borderRadius: '8px', background: `${cfg.color}10`, border: `1px solid ${cfg.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <Icon size={14} color={cfg.color} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ margin: 0, fontSize: '0.82rem', fontWeight: 600 }}>{ins.merchantName ?? cfg.label}</p>
+                        <p style={{ margin: '2px 0 0', fontSize: '0.73rem', color: 'var(--s-text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ins.description ?? ''}</p>
+                      </div>
+                      {ins.amount != null && (
+                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: cfg.color, whiteSpace: 'nowrap', fontFamily: 'var(--font-mono)' }}>
+                          {ins.amount >= 0 ? `+€${ins.amount.toFixed(2)}` : `€${ins.amount.toFixed(2)}`}
+                        </span>
+                      )}
+                      {ins.confidence != null && <ConfidenceBadge score={ins.confidence} size="sm" />}
+                    </motion.div>
+                  );
+                })}
               </div>
             )}
-          </div>
-        </motion.section>
+          </SovereignCard>
 
-        {/* Sovereignty Score + Tier */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <motion.section
-            className="glass-card-level-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55 }}
-            style={{ padding: '28px', textAlign: 'center' }}
-          >
-            <div className="section-header" style={{ justifyContent: 'center', marginBottom: '24px' }}>
-              {t('score.title')}
+          {/* Agent status */}
+          <SovereignCard variant="default">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>Agenten-Status</h2>
+              <span style={{ fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: 'var(--sovereign-success, #00E676)', letterSpacing: '0.1em' }}>A01–A08 ONLINE</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-              <SovereigntyScore score={sovereigntyScore} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+              {AGENTS.map((agent) => (
+                <div key={agent.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--s-divider)' }}>
+                  <AgentDot status={agent.status} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ margin: 0, fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--s-text-faint)', letterSpacing: '0.06em' }}>{agent.id}</p>
+                    <p style={{ margin: 0, fontSize: '0.78rem', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{agent.name}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--sovereign-slate)', margin: '0 0 4px', lineHeight: 1.5 }}>
-              {scoreMessage}
-            </p>
-          </motion.section>
-
-          <motion.section
-            className="glass-card-level-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            style={{ padding: '28px', textAlign: 'center', flex: 1 }}
-          >
-            <div className="section-header" style={{ justifyContent: 'center', marginBottom: '20px' }}>
-              {t('tier.title')}
-            </div>
-            <div style={{
-              width: '80px', height: '80px', borderRadius: '50%',
-              background: d.tier === 'SHIELD'
-                ? 'linear-gradient(135deg, var(--sovereign-cyan), var(--sovereign-purple))'
-                : d.tier === 'PRO'
-                  ? 'linear-gradient(135deg, var(--sovereign-cyan), #00b8d4)'
-                  : 'linear-gradient(135deg, rgba(158,158,158,0.3), rgba(158,158,158,0.1))',
-              margin: '0 auto 16px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: d.tier !== 'FREE' ? '0 0 30px rgba(0, 229, 255, 0.2)' : 'none'
-            }}>
-              <Shield size={36} color="white" />
-            </div>
-            <h4 style={{ fontSize: '1.3rem', marginBottom: '4px', fontWeight: 800, letterSpacing: '-0.02em' }}>
-              {tierLabel.toUpperCase()}
-            </h4>
-            <span className={tierClass}>{tierLabel} Tier</span>
-            <div style={{ marginTop: '20px' }}>
-              {d.tier === 'FREE' ? (
-                <button className="primary-aura-button" style={{ width: '100%' }}>
-                  {t('common.upgradeToPro')}
-                </button>
-              ) : (
-                <button className="secondary-button" style={{ width: '100%' }}>
-                  {t('common.managePlan')}
-                </button>
-              )}
-            </div>
-          </motion.section>
+          </SovereignCard>
         </div>
-      </div>
 
-      {/* ─── Agent Status + Quick Actions ─── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
+        {/* Right */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-        {/* Agent Status */}
-        <motion.section
-          className="glass-card-level-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          style={{ padding: '28px' }}
-        >
-          <div className="section-header">{t('agents.title')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {agents.map((agent, i) => (
-              <motion.div
-                key={agent.key}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 + i * 0.08 }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '14px',
-                  padding: '14px 16px', borderRadius: '14px',
-                  background: agent.status === 'active' ? 'rgba(0, 229, 255, 0.03)' : 'transparent',
-                  border: `1px solid ${agent.status === 'active' ? 'rgba(0, 229, 255, 0.1)' : 'transparent'}`,
-                }}
-              >
-                <div style={{
-                  width: '36px', height: '36px', borderRadius: '10px',
-                  background: agent.status === 'active' ? 'rgba(0, 229, 255, 0.08)' : 'var(--sovereign-glass-10)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>
-                  <agent.icon size={16} color={agent.status === 'active' ? 'var(--sovereign-cyan)' : 'var(--sovereign-slate)'} />
+          {/* Sovereignty score */}
+          <SovereignCard variant="elevated" style={{ textAlign: 'center', padding: '24px 20px' }}>
+            <p style={{ margin: '0 0 16px', fontSize: '0.65rem', color: 'var(--s-text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>SOVEREIGNTY SCORE</p>
+            <SovereigntyRing score={score} />
+            <p style={{ margin: '14px 0 0', fontSize: '0.78rem', color: 'var(--s-text-muted)', lineHeight: 1.5 }}>
+              {score >= 75 ? 'Exzellente Datensouveränität' : score >= 50 ? 'Guter Schutz — ausbaufähig' : 'Optimierungsbedarf erkannt'}
+            </p>
+          </SovereignCard>
+
+          {/* Quick actions */}
+          <SovereignCard variant="default" padding="16px">
+            <p style={{ margin: '0 0 12px', fontSize: '0.65rem', color: 'var(--s-text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>SCHNELLZUGRIFF</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              {[
+                { label: 'Vertrag hochladen',    href: '/dashboard/contracts', icon: FileText,       color: 'var(--sovereign-cyan)' },
+                { label: 'Finance Guardian',     href: '/dashboard/finance',   icon: TrendingUp,     color: 'var(--sovereign-success, #00E676)' },
+                { label: 'Neuen Case erstellen', href: '/dashboard/cases',     icon: ShieldCheck,    color: 'var(--sovereign-purple)' },
+                { label: 'KI konsultieren',      href: '/dashboard/terminal',  icon: Zap,            color: '#FFD600' },
+              ].map(({ label, href, icon: Icon, color }) => (
+                <button
+                  key={href}
+                  onClick={() => router.push(href)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--s-divider)', cursor: 'pointer', color: 'var(--s-text)', textAlign: 'left', transition: 'background 0.15s' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
+                >
+                  <Icon size={14} color={color} />
+                  <span style={{ fontSize: '0.82rem', fontWeight: 500, flex: 1 }}>{label}</span>
+                  <ChevronRight size={12} color="var(--s-text-faint)" />
+                </button>
+              ))}
+            </div>
+          </SovereignCard>
+
+          {/* Alerts */}
+          {d.pendingApprovals > 0 && (
+            <SovereignCard variant="danger" onClick={() => router.push('/dashboard/approvals')} padding="16px">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Clock size={17} color="var(--sovereign-riskred)" />
+                <div>
+                  <p style={{ margin: 0, fontSize: '0.84rem', fontWeight: 700, color: 'var(--sovereign-riskred)' }}>{d.pendingApprovals} ausstehend</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '0.73rem', color: 'var(--s-text-muted)' }}>Jetzt prüfen →</p>
                 </div>
+              </div>
+            </SovereignCard>
+          )}
+
+          {d.activeClaims > 0 && (
+            <SovereignCard variant="default" onClick={() => router.push('/dashboard/cases')} padding="16px">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <ShieldCheck size={17} color="var(--sovereign-purple)" />
                 <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: 600, fontSize: '0.88rem', margin: '0 0 2px' }}>
-                    {t(`agents.items.${agent.key}.name`)}
-                  </p>
-                  <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0 }}>
-                    {t(`agents.items.${agent.key}.desc`)}
-                  </p>
+                  <p style={{ margin: 0, fontSize: '0.84rem', fontWeight: 700 }}>{d.activeClaims} aktive Cases</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '0.73rem', color: 'var(--s-text-muted)' }}>Status prüfen →</p>
                 </div>
-                <span className={`agent-dot ${agent.status === 'active' ? 'agent-dot-active' : 'agent-dot-ready'}`} />
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Quick Actions */}
-        <motion.section
-          className="glass-card-level-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75 }}
-          style={{ padding: '28px' }}
-        >
-          <div className="section-header">{t('quickActions.title')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {quickActions.map((action, i) => (
-              <motion.a
-                key={action.labelKey}
-                href={action.href}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.85 + i * 0.08 }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '14px',
-                  padding: '14px 16px', borderRadius: '14px',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid var(--sovereign-silver)',
-                  textDecoration: 'none', color: 'inherit', cursor: 'pointer',
-                }}
-              >
-                <div style={{
-                  width: '36px', height: '36px', borderRadius: '10px',
-                  background: `${action.color}12`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>
-                  <action.icon size={16} color={action.color} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: 600, fontSize: '0.88rem', margin: '0 0 2px' }}>
-                    {t(`quickActions.${action.labelKey}`)}
-                  </p>
-                  <p style={{ fontSize: '0.78rem', color: 'var(--sovereign-slate)', margin: 0 }}>
-                    {action.descParams
-                      ? t(`quickActions.${action.descKey}`, action.descParams)
-                      : t(`quickActions.${action.descKey}`)
-                    }
-                  </p>
-                </div>
-                <ArrowUpRight size={14} color="var(--sovereign-slate)" />
-              </motion.a>
-            ))}
-          </div>
-        </motion.section>
+                <RiskBadge level="medium" size="sm" />
+              </div>
+            </SovereignCard>
+          )}
+        </div>
       </div>
     </div>
   );

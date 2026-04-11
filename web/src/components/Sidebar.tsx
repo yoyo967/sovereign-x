@@ -3,148 +3,201 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard, FileText, Wallet, ShieldCheck, CheckCircle,
-  CreditCard, Users, Settings, Zap, Shield, ShieldAlert,
+  LayoutDashboard, Terminal, FileText, Wallet, ShieldCheck,
+  CheckCircle, CreditCard, Lock, Settings, Zap, Shield,
+  ShieldAlert, Users, Activity, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRBAC } from '@/hooks/useRBAC';
+import { useUiStore } from '@/stores/uiStore';
 
-function cn(...classes: (string | false | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+interface NavItem {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+  exact?: boolean;
 }
 
-const NAV_ITEMS = [
-  { name: 'Overview', href: '/dashboard', icon: LayoutDashboard, exact: true },
-  { name: 'Brainstormer AI', href: '/dashboard/ai', icon: Zap },
-  { name: 'Verträge', href: '/dashboard/contracts', icon: FileText },
-  { name: 'Finanzen', href: '/dashboard/finance', icon: Wallet },
-  { name: 'Genehmigungen', href: '/dashboard/approvals', icon: CheckCircle },
-  { name: 'Forderungen', href: '/dashboard/claims', icon: ShieldCheck },
-  { name: 'Family Vault', href: '/dashboard/family', icon: Users },
-  { name: 'Abrechnung', href: '/dashboard/billing', icon: CreditCard },
-  { name: 'Einstellungen', href: '/dashboard/settings', icon: Settings },
+// ─── Navigation config ───────────────────────────────────────────────────────
+
+const NAV_ITEMS: NavItem[] = [
+  { name: 'Overview',          href: '/dashboard',             icon: LayoutDashboard, exact: true },
+  { name: 'Twin Terminal',     href: '/dashboard/terminal',    icon: Terminal },
+  { name: 'Verträge',          href: '/dashboard/contracts',   icon: FileText },
+  { name: 'Finance Guardian',  href: '/dashboard/finance',     icon: Wallet },
+  { name: 'Genehmigungen',     href: '/dashboard/approvals',   icon: CheckCircle },
+  { name: 'Life-Cases',        href: '/dashboard/cases',       icon: ShieldCheck },
+  { name: 'Family Vault',      href: '/dashboard/vault',       icon: Users },
+  { name: 'Abrechnung',        href: '/dashboard/billing',     icon: CreditCard },
+  { name: 'Einstellungen',     href: '/dashboard/settings',    icon: Settings },
 ];
 
-const ADMIN_ITEM = { name: 'Platform Admin', href: '/dashboard/admin', icon: ShieldAlert };
+const ADMIN_ITEMS: NavItem[] = [
+  { name: 'Tenants',           href: '/dashboard/admin',       icon: ShieldAlert, exact: true },
+  { name: 'Senate Queue',      href: '/dashboard/admin/senate',icon: Lock },
+  { name: 'System Health',     href: '/dashboard/admin/health',icon: Activity },
+];
 
-export default function Sidebar() {
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function isActive(href: string, pathname: string, exact?: boolean) {
+  return exact ? pathname === href : pathname.startsWith(href);
+}
+
+// ─── NavLink ─────────────────────────────────────────────────────────────────
+
+function NavLink({ item, collapsed, admin }: { item: NavItem; collapsed: boolean; admin?: boolean }) {
   const pathname = usePathname();
-  const { user } = useAuth();
-  const { tier, hasScope } = useRBAC();
-
-  const displayName = user?.displayName || user?.email?.split('@')[0] || 'Executive User';
-  const email = user?.email || '';
-
-  const tierLabel = tier === 'SHIELD' ? 'Shield' : tier === 'PRO' ? 'Pro' : tier === 'FREE' ? 'Free' : '…';
-  const tierColor = tier === 'SHIELD' ? 'var(--sovereign-purple)' : tier === 'PRO' ? 'var(--sovereign-cyan)' : 'var(--sovereign-slate)';
-  const isPlatformAdmin = hasScope('platform:admin');
+  const active = isActive(item.href, pathname, item.exact);
+  const Icon = item.icon;
+  const accent = admin ? 'var(--sovereign-riskred)' : 'var(--sovereign-cyan)';
+  const activeGlow = admin ? 'rgba(255,23,68,0.08)' : 'rgba(0,212,255,0.08)';
 
   return (
-    <aside className="sidebar">
-      {/* ─── Brand ─── */}
-      <div style={{ marginBottom: '36px', padding: '0 12px' }}>
-        <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <h2 style={{
-            fontSize: '1.15rem', fontWeight: 800,
-            letterSpacing: '-0.02em', color: 'white',
-            display: 'flex', alignItems: 'center', gap: '10px',
-            fontFamily: 'var(--font-space-grotesk, sans-serif)', margin: 0,
-          }}>
-            <div style={{
-              width: '32px', height: '32px', borderRadius: '10px',
-              background: 'linear-gradient(135deg, var(--sovereign-cyan), var(--sovereign-purple))',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 0 16px rgba(0, 229, 255, 0.25)',
-            }}>
-              <Zap size={16} color="white" />
+    <Link
+      href={item.href}
+      title={collapsed ? item.name : undefined}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: collapsed ? 0 : '10px',
+        padding: collapsed ? '10px' : '9px 12px',
+        borderRadius: '10px',
+        textDecoration: 'none',
+        fontSize: '0.85rem',
+        fontWeight: active ? 600 : 400,
+        color: active ? accent : 'var(--s-text-muted)',
+        background: active ? activeGlow : 'transparent',
+        borderLeft: `2px solid ${active ? accent : 'transparent'}`,
+        transition: 'all 0.15s',
+        overflow: 'hidden',
+        justifyContent: collapsed ? 'center' : 'flex-start',
+        marginBottom: 2,
+      }}
+      onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
+      onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = 'transparent'; }}
+    >
+      <Icon size={17} style={{ flexShrink: 0 }} />
+      {!collapsed && <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</span>}
+    </Link>
+  );
+}
+
+// ─── Section label ────────────────────────────────────────────────────────────
+
+function SectionLabel({ label, collapsed, color = 'var(--s-text-faint)' }: { label: string; collapsed: boolean; color?: string }) {
+  if (collapsed) return <div style={{ height: 1, background: 'var(--s-divider)', margin: '12px 8px' }} />;
+  return (
+    <p style={{
+      fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
+      color, padding: '0 14px', margin: '16px 0 8px',
+    }}>
+      {label}
+    </p>
+  );
+}
+
+// ─── Main Sidebar ─────────────────────────────────────────────────────────────
+
+export default function Sidebar() {
+  const { user } = useAuth();
+  const { tier, hasScope } = useRBAC();
+  const { sidebarCollapsed, toggleSidebar } = useUiStore();
+  const collapsed = sidebarCollapsed;
+
+  const isPlatformAdmin = hasScope('platform:admin');
+  const displayName = user?.displayName || user?.email?.split('@')[0] || 'User';
+  const initial = displayName.charAt(0).toUpperCase();
+
+  const tierColor = tier === 'SHIELD' ? 'var(--sovereign-purple)' : tier === 'PRO' ? 'var(--sovereign-cyan)' : 'var(--s-text-faint)';
+  const tierBg    = tier === 'SHIELD' ? 'rgba(187,134,252,0.08)' : tier === 'PRO' ? 'rgba(0,212,255,0.08)' : 'rgba(255,255,255,0.04)';
+
+  const sidebarWidth = collapsed ? 64 : 260;
+
+  return (
+    <aside
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100vh',
+        width: sidebarWidth,
+        background: 'linear-gradient(180deg, rgba(8,14,26,0.98) 0%, rgba(6,11,21,0.98) 100%)',
+        borderRight: '1px solid var(--s-border)',
+        backdropFilter: 'blur(20px)',
+        display: 'flex',
+        flexDirection: 'column',
+        zIndex: 50,
+        transition: 'width 0.25s cubic-bezier(0.4,0,0.2,1)',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Brand */}
+      <div style={{ padding: collapsed ? '20px 14px' : '20px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--s-divider)', flexShrink: 0 }}>
+        {!collapsed && (
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit', flex: 1, minWidth: 0 }}>
+            <div style={{ width: 30, height: 30, borderRadius: '9px', background: 'linear-gradient(135deg, var(--sovereign-cyan), var(--sovereign-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(0,212,255,0.2)', flexShrink: 0 }}>
+              <Zap size={15} color="white" />
             </div>
-            SOVEREIGN
-          </h2>
-        </Link>
-        <p style={{
-          fontSize: '0.65rem', color: 'var(--sovereign-slate)',
-          margin: '6px 0 0 42px', letterSpacing: '0.1em', textTransform: 'uppercase',
-        }}>
-          Autonomous Life-OS
-        </p>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 800, letterSpacing: '-0.02em', fontFamily: 'var(--font-space-grotesk, sans-serif)' }}>SOVEREIGN</p>
+              <p style={{ margin: 0, fontSize: '0.58rem', color: 'var(--s-text-faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Autonomous Life-OS</p>
+            </div>
+          </Link>
+        )}
+        {collapsed && (
+          <div style={{ width: 30, height: 30, borderRadius: '9px', background: 'linear-gradient(135deg, var(--sovereign-cyan), var(--sovereign-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+            <Zap size={15} color="white" />
+          </div>
+        )}
+        <button
+          onClick={toggleSidebar}
+          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid var(--s-border)', borderRadius: '7px', cursor: 'pointer', color: 'var(--s-text-muted)', padding: '4px 6px', display: 'flex', flexShrink: 0, marginLeft: collapsed ? 'auto' : '8px' }}
+          title={collapsed ? 'Sidebar ausklappen' : 'Sidebar einklappen'}
+        >
+          {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
+        </button>
       </div>
 
-      {/* ─── Main Navigation ─── */}
-      <nav style={{ flex: 1 }}>
-        <div style={{
-          fontSize: '0.65rem', fontWeight: 700, color: 'var(--sovereign-slate)',
-          letterSpacing: '0.1em', textTransform: 'uppercase',
-          padding: '0 16px', marginBottom: '12px',
-        }}>
-          Navigation
-        </div>
-        {NAV_ITEMS.map((item) => {
-          const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href);
-          const Icon = item.icon;
-          return (
-            <Link key={item.href} href={item.href} className={cn('nav-link', isActive && 'active')}>
-              <Icon size={17} />
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
+      {/* Navigation */}
+      <nav style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '8px 8px', scrollbarWidth: 'none' }}>
+        <SectionLabel label="Navigation" collapsed={collapsed} />
 
-        {/* ─── Platform Admin section (platform:admin only) ─── */}
+        {NAV_ITEMS.map((item) => (
+          <NavLink key={item.href} item={item} collapsed={collapsed} />
+        ))}
+
+        {/* Platform Admin section */}
         {isPlatformAdmin && (
           <>
-            <div style={{
-              fontSize: '0.65rem', fontWeight: 700, color: 'rgba(255,23,68,0.5)',
-              letterSpacing: '0.1em', textTransform: 'uppercase',
-              padding: '0 16px', margin: '20px 0 10px',
-            }}>
-              Platform
-            </div>
-            <Link
-              href={ADMIN_ITEM.href}
-              className={cn('nav-link', pathname.startsWith(ADMIN_ITEM.href) && 'active')}
-              style={{
-                color: pathname.startsWith(ADMIN_ITEM.href) ? 'var(--sovereign-riskred)' : undefined,
-                borderLeft: pathname.startsWith(ADMIN_ITEM.href) ? '2px solid var(--sovereign-riskred)' : '2px solid transparent',
-              }}
-            >
-              <ADMIN_ITEM.icon size={17} />
-              <span>{ADMIN_ITEM.name}</span>
-            </Link>
+            <SectionLabel label="Platform" collapsed={collapsed} color="rgba(255,23,68,0.5)" />
+            {ADMIN_ITEMS.map((item) => (
+              <NavLink key={item.href} item={item} collapsed={collapsed} admin />
+            ))}
           </>
         )}
       </nav>
 
-      {/* ─── User Info ─── */}
-      <div style={{ marginTop: 'auto', padding: '16px', borderTop: '1px solid var(--sovereign-silver)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{
-            width: '36px', height: '36px', borderRadius: '10px',
-            background: 'linear-gradient(135deg, rgba(0,229,255,0.15), rgba(187,134,252,0.15))',
-            border: '1px solid rgba(0,229,255,0.1)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '0.85rem', fontWeight: 700, color: 'var(--sovereign-cyan)',
-          }}>
-            {displayName.charAt(0).toUpperCase()}
+      {/* User card */}
+      <div style={{ padding: collapsed ? '12px 8px' : '12px 14px', borderTop: '1px solid var(--s-divider)', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: collapsed ? 0 : '10px', justifyContent: collapsed ? 'center' : 'flex-start' }}>
+          <div style={{ width: 32, height: 32, borderRadius: '9px', background: 'rgba(0,212,255,0.1)', border: '1px solid rgba(0,212,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 700, color: 'var(--sovereign-cyan)', flexShrink: 0 }}>
+            {initial}
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontSize: '0.82rem', fontWeight: 600, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {displayName}
-            </p>
-            <p style={{ fontSize: '0.7rem', color: 'var(--sovereign-slate)', margin: '2px 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {email}
-            </p>
-          </div>
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '4px',
-            padding: '4px 8px', borderRadius: '6px',
-            background: tier === 'SHIELD' ? 'rgba(187,134,252,0.1)' : tier === 'PRO' ? 'rgba(0,229,255,0.1)' : 'rgba(255,255,255,0.05)',
-            border: `1px solid ${tier === 'SHIELD' ? 'rgba(187,134,252,0.2)' : tier === 'PRO' ? 'rgba(0,229,255,0.2)' : 'transparent'}`,
-          }}>
-            <Shield size={10} color={tierColor} />
-            <span style={{ fontSize: '0.65rem', fontWeight: 800, color: tierColor, textTransform: 'uppercase' }}>
-              {tierLabel}
+          {!collapsed && (
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{displayName}</p>
+              <p style={{ margin: 0, fontSize: '0.65rem', color: 'var(--s-text-faint)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</p>
+            </div>
+          )}
+          {!collapsed && (
+            <span style={{ fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '5px', background: tierBg, color: tierColor, border: `1px solid ${tierColor}30`, flexShrink: 0 }}>
+              <Shield size={9} style={{ display: 'inline', marginRight: 3, verticalAlign: 'middle' }} />
+              {tier}
             </span>
-          </div>
+          )}
         </div>
       </div>
     </aside>

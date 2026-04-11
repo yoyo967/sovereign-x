@@ -798,6 +798,8 @@
       },
       "nav": {
         "tenants": "Tenant-Matrix",
+        "senate": "Senate Queue",
+        "health": "System Health",
         "security": "Sicherheitsstatus",
         "aiAudit": "KI-Audit Export",
         "slo": "SLO / Error Budget"
@@ -931,6 +933,66 @@
         "desc": "Alle Mitglieder deines Vaults stehen unter deinem Sovereign Shield. Claims, KI-Verhandlungen und Optimierungen gelten für alle geteilten Verträge.",
         "sharedAssets": "Geteilte Assets: {count}",
         "sharedAssetsDesc": "Markiere einen beliebigen Vertrag in deinem Tresor als 'Geteilt', um die familienweite KI-Optimierung und Rechtsüberwachung zu aktivieren."
+      }
+    },
+    "terminal": {
+      "title": "Senate Terminal",
+      "subtitle": "Direktzugang zum SOVEREIGN KI-Senat",
+      "killSwitch": "Kill-Switch",
+      "killSwitchActive": "KI gestoppt",
+      "euAiAct": "EU AI Act — Art. 13 (Transparenz): Dieses System ist ein KI-Assistent der Risikokategorie LIMITED.",
+      "voiceShield": "Voice-Modus (SHIELD)",
+      "cameraShield": "Kamera-Vision (SHIELD)",
+      "inputPlaceholder": "Nachricht eingeben…"
+    },
+    "cases": {
+      "title": "Life-Cases",
+      "subtitle": "Aktive Fälle verwalten",
+      "newCase": "Neuer Fall",
+      "pipeline": "Case Pipeline",
+      "stages": {
+        "OPEN": "Offen",
+        "IN_PROGRESS": "In Bearbeitung",
+        "WAITING": "Wartend",
+        "ESCALATED": "Eskaliert",
+        "LEGAL": "Rechtlich",
+        "NEGOTIATING": "Verhandlung",
+        "RESOLVED": "Gelöst"
+      },
+      "mahnstufen": {
+        "label": "Mahnwesen",
+        "stufen": ["Erinnerung", "1. Mahnung", "2. Mahnung", "Letzte Mahnung", "Inkasso / Klage"]
+      }
+    },
+    "vault": {
+      "title": "Family Vault",
+      "subtitle": "Gemeinsame Finanzverwaltung",
+      "invite": "Einladen",
+      "tabs": {
+        "members": "Mitglieder",
+        "contracts": "Verträge",
+        "audit": "Audit-Log"
+      },
+      "roles": {
+        "ADMIN": "Admin",
+        "MEMBER": "Mitglied",
+        "VIEWER": "Zuschauer"
+      },
+      "shieldGate": "Family Vault erfordert SHIELD-Plan"
+    },
+    "components": {
+      "emptyState": {
+        "defaultTitle": "Keine Daten",
+        "defaultDesc": "Es gibt noch nichts anzuzeigen."
+      },
+      "errorState": {
+        "defaultMessage": "Ein Fehler ist aufgetreten.",
+        "retry": "Erneut versuchen"
+      },
+      "degradationBanner": {
+        "partial": "Eingeschränkter Betrieb — einige Funktionen sind nicht verfügbar.",
+        "readOnly": "Nur-Lese-Modus — Schreiboperationen sind deaktiviert.",
+        "offline": "Offline-Modus — keine Verbindung zum Server."
       }
     }
   }

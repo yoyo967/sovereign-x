@@ -5,7 +5,7 @@ import { useRequireAuth } from '@/hooks/useRequireAuth';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ShieldAlert, Users, Lock, FileSearch, Activity, ArrowLeft } from 'lucide-react';
+import { ShieldAlert, Users, Lock, FileSearch, Activity, ArrowLeft, Gavel, HeartPulse } from 'lucide-react';
 
 // ─── Access Denied ────────────────────────────────────────────────────────────
 
@@ -41,6 +41,8 @@ function AccessDenied({ t }: { t: ReturnType<typeof useTranslations> }) {
 
 const NAV_ITEMS: Array<{ key: string; href: string; icon: React.ElementType; exact?: boolean }> = [
   { key: 'tenants', href: '/dashboard/admin', icon: Users, exact: true },
+  { key: 'senate', href: '/dashboard/admin/senate', icon: Gavel },
+  { key: 'health', href: '/dashboard/admin/health', icon: HeartPulse },
   { key: 'security', href: '/dashboard/admin/security', icon: ShieldAlert },
   { key: 'aiAudit', href: '/dashboard/admin/ai-audit', icon: FileSearch },
   { key: 'slo', href: '/dashboard/admin/slo', icon: Activity },
