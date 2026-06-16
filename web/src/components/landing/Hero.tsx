@@ -219,19 +219,19 @@ export default function Hero() {
                 label: t("stats.contracts"),
                 value: stats.totalContractsAnalyzed > 0
                   ? stats.totalContractsAnalyzed.toLocaleString()
-                  : "12.400+",
+                  : "—",
               },
               {
                 label: t("stats.value"),
                 value: stats.totalSavingsEur > 0
                   ? `€${stats.totalSavingsEur.toLocaleString()}`
-                  : "€2,8M",
+                  : "—",
               },
               {
                 label: t("stats.nodes"),
                 value: stats.totalUsers > 0
                   ? stats.totalUsers.toLocaleString()
-                  : "3.200+",
+                  : "—",
               },
             ].map((stat, i) => (
               <div

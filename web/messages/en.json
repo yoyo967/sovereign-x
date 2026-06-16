@@ -157,33 +157,33 @@
     }
   },
   "socialProof": {
-    "tag": "08 — TRUST & PROOF",
+    "tag": "08 — ARCHITECTURE & TRANSPARENCY",
     "headline1": "Built on",
     "headline2": "Foundation.",
-    "sub": "SOVEREIGN 2030 combines cutting-edge technology, legal precision, and the trust of users who have reclaimed their data.",
+    "sub": "SOVEREIGN 2030 combines modern cloud architecture with legal precision and privacy by design. Prototype stage — honest, not hype, with no fabricated user numbers.",
     "stats": {
-      "0": { "value": "247+", "label": "Verified Reviews", "suffix": "" },
-      "1": { "value": "4.8", "label": "App Rating", "suffix": "/5" },
-      "2": { "value": "€2.4k", "label": "Avg. Savings/User/Year", "suffix": "" },
-      "3": { "value": "100%", "label": "EU AI Act Compliant", "suffix": "" }
+      "0": { "value": "4", "label": "APEX Layers", "suffix": "" },
+      "1": { "value": "EU", "label": "Data Residency", "suffix": "" },
+      "2": { "value": "8", "label": "Modules", "suffix": "" },
+      "3": { "value": "HITL", "label": "Human Decides", "suffix": "" }
     },
     "testimonials": {
       "0": {
-        "quote": "SOVEREIGN uncovered three hidden subscriptions within 48 hours and automatically cancelled them. €340 savings in the first month.",
-        "name": "Markus T.",
-        "role": "Freelancer, Munich",
+        "quote": "Concept: automatically detect hidden subscriptions and contract traps and prepare cancellations — the user stays in the decision.",
+        "name": "Use case",
+        "role": "Consumer · subscriptions & contracts",
         "tier": "PRO"
       },
       "1": {
-        "quote": "As a lawyer, I was skeptical. But the contract analysis is more precise than expected — including BGB paragraphs and risk classification.",
-        "name": "Dr. Sabine K.",
-        "role": "Attorney, Berlin",
+        "quote": "Concept: contract analysis with clause classification and risk scoring — as a tool, not legal advice.",
+        "name": "Use case",
+        "role": "Legal & compliance",
         "tier": "SHIELD"
       },
       "2": {
-        "quote": "Finally a tool that genuinely represents my interests. Doesn't sell my data, doesn't collect commissions. Simply: seeks my advantage.",
-        "name": "Jonas M.",
-        "role": "Software Engineer, Hamburg",
+        "quote": "Concept: a system that genuinely represents the user's interests — no data selling, no commissions.",
+        "name": "Use case",
+        "role": "Privacy-first",
         "tier": "PRO"
       }
     },

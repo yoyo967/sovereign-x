@@ -224,12 +224,6 @@ function buildRootJsonLd(locale: string) {
           description: "Maximaler autonomer Schutz für Familie & Business",
         },
       ],
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        reviewCount: "247",
-        bestRating: "5",
-      },
       featureList: [
         "KI-gestützte Vertragsanalyse",
         "Privacy Guardian & Consent Layer",

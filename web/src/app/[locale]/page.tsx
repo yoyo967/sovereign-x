@@ -96,7 +96,6 @@ export default async function LandingPage({
       { "@type": "Offer", name: "PRO", price: "19", priceCurrency: "EUR", availability: "https://schema.org/InStock" },
       { "@type": "Offer", name: "APEX", price: "49", priceCurrency: "EUR", availability: "https://schema.org/InStock" },
     ],
-    aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", reviewCount: "247", bestRating: "5" },
   };
 
   return (

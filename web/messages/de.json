@@ -166,33 +166,33 @@
     }
   },
   "socialProof": {
-    "tag": "08 — VERTRAUEN & BEWEIS",
+    "tag": "08 — ARCHITEKTUR & TRANSPARENZ",
     "headline1": "Gebaut auf",
     "headline2": "Fundament.",
-    "sub": "SOVEREIGN 2030 vereint modernste Technologie, juristische Präzision und das Vertrauen der Nutzer, die ihre Daten zurückgefordert haben.",
+    "sub": "SOVEREIGN 2030 verbindet moderne Cloud-Architektur mit juristischer Präzision und Datenschutz by design. Prototyp-Stand – ehrlich statt Hochglanz, ohne erfundene Nutzerzahlen.",
     "stats": {
-      "0": { "value": "247+", "label": "Verified Reviews", "suffix": "" },
-      "1": { "value": "4.8", "label": "App-Bewertung", "suffix": "/5" },
-      "2": { "value": "€2.4k", "label": "Ø Ersparnis/Nutzer/Jahr", "suffix": "" },
-      "3": { "value": "100%", "label": "EU AI Act Konform", "suffix": "" }
+      "0": { "value": "4", "label": "APEX-Schichten", "suffix": "" },
+      "1": { "value": "EU", "label": "Datenresidenz", "suffix": "" },
+      "2": { "value": "8", "label": "Module", "suffix": "" },
+      "3": { "value": "HITL", "label": "Mensch entscheidet", "suffix": "" }
     },
     "testimonials": {
       "0": {
-        "quote": "SOVEREIGN hat mir in 48 Stunden drei versteckte Abonnements aufgedeckt und automatisch gekündigt. €340 Ersparnis im ersten Monat.",
-        "name": "Markus T.",
-        "role": "Selbstständiger, München",
+        "quote": "Konzept: versteckte Abos und Vertragsfallen automatisch erkennen und Kündigungen vorbereiten – die Freigabe bleibt beim Nutzer.",
+        "name": "Anwendungsfall",
+        "role": "Verbraucher · Abo- & Vertragskosten",
         "tier": "PRO"
       },
       "1": {
-        "quote": "Als Juristin war ich skeptisch. Aber die Vertragsanalyse ist präziser als erwartet — inklusive BGB-Paragraphen und Risikoklassifikation.",
-        "name": "Dr. Sabine K.",
-        "role": "Rechtsanwältin, Berlin",
+        "quote": "Konzept: Vertragsanalyse mit Klausel-Klassifikation und Risiko-Scoring – als Werkzeug, nicht als Rechtsberatung.",
+        "name": "Anwendungsfall",
+        "role": "Recht & Compliance",
         "tier": "SHIELD"
       },
       "2": {
-        "quote": "Endlich ein Tool, das wirklich meine Interessen vertritt. Nicht meine Daten verkauft, nicht Provisionen kassiert. Einfach: meinen Vorteil sucht.",
-        "name": "Jonas M.",
-        "role": "Software-Ingenieur, Hamburg",
+        "quote": "Konzept: ein System, das die Interessen des Nutzers vertritt – keine Datenweitergabe, keine Provisionen.",
+        "name": "Anwendungsfall",
+        "role": "Datenschutz-First",
         "tier": "PRO"
       }
     },

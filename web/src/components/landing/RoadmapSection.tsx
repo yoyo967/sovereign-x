@@ -7,12 +7,12 @@ import { useTranslations, useLocale } from "next-intl";
 const PHASES = [
   {
     phase: "PHASE I",
-    period: "Q1–Q2 2025",
-    status: "LIVE",
+    period: "2025",
+    status: "PROTOTYP",
     statusColor: "#00E676",
     title: "Foundation OS",
     description:
-      "Das Kern-OS ist live. Privacy Guardian, Sovereign Twin und Execution Center sind deployed. Erste 500 Sovereign Citizens im Early Access.",
+      "Das Kern-OS ist als Prototyp gebaut: Privacy Guardian, Sovereign Twin und Execution Center. Noch kein öffentlicher Wirkbetrieb, keine Nutzerzahlen.",
     milestones: [
       "Privacy Guardian v1.0 — DSGVO-Automatisierung",
       "Sovereign Twin — Digitales Profil & Auskunft",

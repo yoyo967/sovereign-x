@@ -25,7 +25,7 @@ export async function generateMetadata({
     alternates: { canonical: `${BASE_URL}/${locale}/roadmap` },
     openGraph: {
       title: "Roadmap 2025–2030 | SOVEREIGN 2030",
-      description: "Phase I: Live. Phase IV: 2030. Der vollständige Plan zur digitalen Souveränität.",
+      description: "Phase I: Prototyp. Phase IV: 2030. Der vollständige Plan zur digitalen Souveränität.",
       url: `${BASE_URL}/${locale}/roadmap`,
       siteName: "SOVEREIGN 2030",
       images: [{ url: `${BASE_URL}/og/roadmap.png`, width: 1200, height: 630, alt: "SOVEREIGN Roadmap 2030" }],
@@ -35,7 +35,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: "Roadmap 2025–2030 | SOVEREIGN 2030",
-      description: "Phase I: Live. Phase IV: 2030. Der vollständige Plan.",
+      description: "Phase I: Prototyp. Phase IV: 2030. Der vollständige Plan.",
       images: [`${BASE_URL}/og/roadmap.png`],
     },
   };
@@ -47,10 +47,10 @@ const PHASES = [
     phase: "PHASE I",
     title: "Foundation OS",
     period: "Q1–Q2 2025",
-    status: "LIVE" as const,
-    statusColor: "#00E676",
+    status: "PROTOTYP" as const,
+    statusColor: "#7BE4F1",
     description:
-      "Das Kern-OS ist live. Privacy Guardian, Sovereign Twin und Execution Center sind deployed. Erste Sovereign Citizens im Early Access mit vollständiger DSGVO- und EU AI Act-Compliance.",
+      "Das Kern-OS ist als Prototyp gebaut: Privacy Guardian, Sovereign Twin und Execution Center. EU-Datenresidenz, EU-AI-Act-/DSGVO-Architektur. Noch kein öffentlicher Wirkbetrieb, keine Nutzerzahlen.",
     quarters: [
       {
         q: "Q1 2025",
@@ -66,7 +66,7 @@ const PHASES = [
         features: [
           { name: "EU AI Act Compliance Layer", desc: "Automatische Klassifizierung aller KI-Interaktionen, Transparenz-Reporting", status: "live" },
           { name: "Security Senate v1.0", desc: "Datenleck-Monitoring, Passwort-Audit, Breach-Alerts", status: "live" },
-          { name: "Early Access Programm", desc: "3.200+ Sovereign Citizens, Community-Feedback-Schleife", status: "live" },
+          { name: "Early-Access-Programm", desc: "geplant – Community-Feedback-Schleife", status: "roadmap" },
           { name: "Mobile Web (PWA)", desc: "Progressive Web App, Push-Notifications, Offline-Grundfunktionen", status: "live" },
         ],
       },
@@ -166,7 +166,7 @@ const PHASES = [
 ];
 
 const STATUS_LABELS: Record<string, string> = {
-  live: "LIVE",
+  live: "PROTOTYP",
   dev: "IN DEV",
   roadmap: "ROADMAP",
   vision: "VISION",
@@ -372,7 +372,7 @@ export default async function RoadmapPage({
                           height: 5,
                           borderRadius: "50%",
                           background: phase.statusColor,
-                          ...(phase.status === "LIVE"
+                          ...(phase.status === "PROTOTYP"
                             ? { animation: "pulse 2s ease-in-out infinite" }
                             : {}),
                         }}
